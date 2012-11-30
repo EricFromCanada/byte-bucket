@@ -37,12 +37,14 @@
 			<string>.txt</string>
 		</dict>
 	</array>
+	<key>BBLMReferenceSearchURLTemplate</key>
+	<string>http://sphinx-doc.org/search.html?q=__SYMBOLNAME__</string>
+	<key>BBLMCommentLineDefault</key>
+	<string>.. </string>
 	<key>BBLMColorsSyntax</key>
 	<true/>
 	<key>BBLMScansFunctions</key>
 	<true/>
-	<key>BBLMIsCaseSensitive</key>
-	<false/>
 	<key>BBLMCanSpellCheckCodeRuns</key>
 	<true/>
 	<key>Language Features</key>
@@ -51,33 +53,35 @@
 		<string>-\w.:</string>
 		<key>String Pattern</key>
 		<string><![CDATA[(?x:
-			(?<![-\w]):(?!\s)([-\w]+:)?(\\:|[-\w+'"=. \t])+(?<!\s):	|	(?# role/directive option/field name)
-			\|(?!\s)(\\\||[^|\r])+(?<!\s)\|_{0,2}				| (?# substitution)
-			(?<!\w)[a-zA-Z0-9][-\w]*__?(?!\w)						|	(?# hyperlink reference)
-			(?<![`\\])`(?!\s)(\\`|[^`])+(?<!\s)`_{0,2}	|	(?# phrase reference/interpreted text)
-			_`(\\`|[^`])+`															| (?# inline internal target)
-			\[([-\w#.]+|\*)\]_													| (?# footnote/citation reference)
-			(?<=\.\.)[ \t]+\[([-\w#.]+|\*)\](?=\s)			| (?# footnote/citation target)
-			(?<=\.\.)[ \t]+_((\\:|[^:\r])+|`(\\`|[^`\r])+`):(?=\s)	(?# hyperlink target)
+			(?<![-\w]):(?!\s)([-\w]+:)?(\\:|[-\w+'"=. \t])+(?<!\s): | (?# role/directive option/field name)
+			\|(?!\s)(\\\||[^|\r])+(?<!\s)\|_{0,2}                   | (?# substitution)
+			(?<!\w)[a-zA-Z0-9][-\w]*__?(?!\w)                       | (?# hyperlink reference)
+			(?<![`\\])`(?!\s)(\\`|[^`])+(?<!\s)`_{0,2}              | (?# phrase reference/interpreted text)
+			_`(\\`|[^`])+`                                          | (?# inline internal target)
+			\[([-\w#.]+|\*)\]_                                      | (?# footnote/citation reference)
+			(?<=\.\.)[ \t]+\[([-\w#.]+|\*)\](?=\s)                  | (?# footnote/citation target)
+			(?<=\.\.)[ \t]+_((\\:|[^:\r])+|`(\\`|[^`\r])+`):(?=\s)    (?# hyperlink target)
 		)]]></string>
-		<key>Comment Pattern</key><!-- BUG: matches directives with a specified Sphinx domain -->
+		<key>Comment Pattern</key>
+		<!-- BUG: doesn't match a comment at top  -->
+		<!-- BUG: matches directives with a specified Sphinx domain -->
 		<string><![CDATA[(?x:
-			^[ \t]*\.\. (
+			(?<=^)[ \t]*\r
+			([ \t]*)\.\. (
 				[ \t]+ (
-					[^\w[|][^\r]* |
-					[-a-zA-Z0-9]+ (
-						[^-a-zA-Z0-9\r] (
-							[^:\r] | $
-						) [^\r]* | $
-					)
-				) \r (
-					[ \t]*\r
-				)? | [ \t]*\r
+					[-a-zA-Z0-9]+ (?(?=:)
+						:( [^:][^\r]* | $ ) |
+						( [^-a-zA-Z0-9][^\r]* | $ )
+					) | [^\w[|\s][^\r]*
+				) | [ \t]*
 			) (
-				[ \t]+[^\r]+\r (
-					[ \t]*\r
-				)?
-			)*
+				\r (
+					([ \t]*(\.\.[ \t]*)?)? | (
+						(?(1) (\t|[ \t]{2}) | [ \t] )
+						[ \t]*[^\r]+
+					)
+				)
+			)* \r(?=[ \t]*$)
 		)]]></string>
 		<key>Function Pattern</key>
 		<string><![CDATA[(?x:
@@ -187,7 +191,6 @@
 		<string>data::</string>
 		<string>exception::</string>
 		<string>function::</string>
-		<string>class::</string>
 		<string>attribute::</string>
 		<string>method::</string>
 		<string>staticmethod::</string>
@@ -199,7 +202,6 @@
 		<string>type::</string>
 		<string>var::</string>
 		<string>directive::</string>
-		<string>role::</string>
 		<string>automodule::</string>
 		<string>autoclass::</string>
 		<string>autoexception::</string>
@@ -213,7 +215,6 @@
 		<string>doctest::</string>
 		<string>testcode::</string>
 		<string>testoutput::</string>
-		<string>math::</string>
 		<string>graphviz::</string>
 		<string>graph::</string>
 		<string>digraph::</string>
