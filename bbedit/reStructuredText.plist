@@ -18,6 +18,15 @@
 		~/Library/Application Support/TextWrangler/Language Modules/
 
 	and relaunch BBEdit or TextWrangler.
+	
+	Known issues:
+	- doesn't highlight directives if a space comes before the double colon
+	- BB/TW misses highlighting comments starting on the file's 1st or 2nd line
+	- highlights directives containing underscores or single colons as comments,
+	  e.g. directives with a specified Sphinx domain
+	- requires all lines of a comment to have the same padding sequence,
+	  e.g. doesn't highlight a comment whose first line starts with a space and
+	  subsequent lines start with a tab, which is still acceptable indentation
 -->
 <dict>
 	<key>BBEditDocumentType</key>
@@ -63,30 +72,26 @@
 			(?<=\.\.)[ \t]+_((\\:|[^:\r])+|`(\\`|[^`\r])+`):(?=\s)    (?# hyperlink target)
 		)]]></string>
 		<key>Comment Pattern</key>
-		<!-- BUG: doesn't match a comment at top  -->
-		<!-- BUG: matches directives with a specified Sphinx domain -->
 		<string><![CDATA[(?x:
-			(?<=^)[ \t]*\r
-			([ \t]*)\.\. (
+			(\A | ^[ \t]*\r)
+			(?P<pad>[ \t]*)\.\. (
 				[ \t]+ (
-					[-a-zA-Z0-9]+ (?(?=:)
-						:( [^:][^\r]* | $ ) |
-						( [^-a-zA-Z0-9][^\r]* | $ )
+					[-+a-zA-Z0-9\.]+ (?(?=\ ?:)
+						\ ?:(([^:] | :(?=[^\s]))[^\r]* | $)
+						| ([^-+a-zA-Z0-9\.][^\r]* | $)
 					) | [^\w[|\s][^\r]*
 				) | [ \t]*
 			) (
 				\r (
-					([ \t]*(\.\.[ \t]*)?)? | (
-						(?(1) (\t|[ \t]{2}) | [ \t] )
-						[ \t]*[^\r]+
-					)
+					[ \t]*(\.\.[ \t]*)?
+					| (?P=pad)[ \t]+[^\r]+
 				)
-			)* \r(?=[ \t]*$)
+			)*(\r(?=[ \t]*$) | \Z)
 		)]]></string>
 		<key>Function Pattern</key>
 		<string><![CDATA[(?x:
 			(?P<function>
-				^[ ]?(?P<function_name>[^\r]+)\r
+				^\ ?(?P<function_name>[^\r]+)\r
 				^(?P<bar>[-=`:.'"~^_*+#!$%&(),/;<>?@[\]\{|}])(?P=bar)+\s*$
 				(?s).*?
 			)
