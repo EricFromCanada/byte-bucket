@@ -20,10 +20,10 @@
 	and relaunch BBEdit or TextWrangler.
 	
 	Known issues:
-	- doesn't highlight directives if a space comes before the double colon
-	- BB/TW misses highlighting comments starting on the file's 1st or 2nd line
+	- skips highlighting directives as keywords if a space comes before the ::
+	- BB/TW may skip highlighting comments starting on the file's 1st or 2nd line
 	- highlights directives containing single colons as comments,
-	  e.g. directives with a specified Sphinx domain
+	  e.g. Sphinx directives with a specified domain
 	- requires all lines of a comment to have the same padding sequence,
 	  e.g. doesn't highlight a comment whose first line starts with a space and
 	  subsequent lines start with a tab, which is still acceptable indentation
