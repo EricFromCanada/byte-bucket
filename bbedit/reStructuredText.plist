@@ -56,20 +56,29 @@
 	<true/>
 	<key>BBLMCanSpellCheckCodeRuns</key>
 	<true/>
+	<key>BBLMIsCaseSensitive</key>
+	<false/>
 	<key>Language Features</key>
 	<dict>
 		<key>Identifier and Keyword Character Class</key>
 		<string>-\w.:</string>
 		<key>String Pattern</key>
 		<string><![CDATA[(?x:
-			(?<![-\w]):(?!\s)([-\w]+:)?(\\:|[-\w+'"=. \t])+(?<!\s): | (?# role/directive option/field name)
-			\|(?!\s)(\\\||[^|\r])+(?<!\s)\|_{0,2}                   | (?# substitution)
-			(?<!\w)[a-zA-Z0-9][-\w]*__?(?!\w)                       | (?# hyperlink reference)
-			(?<![`\\])`(?!\s)(\\`|[^`])+(?<!\s)`_{0,2}              | (?# phrase reference/interpreted text)
-			_`(\\`|[^`])+`                                          | (?# inline internal target)
-			\[([-\w#.]+|\*)\]_                                      | (?# footnote/citation reference)
-			(?<=\.\.)[ \t]+\[([-\w#.]+|\*)\](?=\s)                  | (?# footnote/citation target)
-			(?<=\.\.)[ \t]+_((\\:|[^:\r])+|`(\\`|[^`\r])+`):(?=\s)    (?# hyperlink target)
+			(?<![\w~@#$%^&*)\]}>|\\;.,!?]):(?!\s)
+			([-\w]+:)?(\\:|[-\w+'"=. \t])+
+			(?<!\s):(?!(?P<end>[\w~@#$%^&*([{<|+=]))      | (?# role/directive option/field name)
+			(?<![\w~@#$%^&*)\]}>|\\;.,!?])\|(?!\s)
+			(\\\||[^|\r])+(?<![\s\\])\|_{0,2}(?!(?P>end)) | (?# substitution)
+			(?<![\w~@#$%^&*)\]}>|\\;.,!?])[a-zA-Z0-9]
+			[-\w]*__?(?!(?P>end))                         | (?# hyperlink reference)
+			(?<![\w~@#$%^&*)\]}>|\\;.,!?`])`(?!\s)
+			(\\`|[^`])+(?<!\s)`_{0,2}(?!(?P>end))         | (?# phrase reference/interpreted text)
+			(?<![\w~@#$%^&*)\]}>|\\;.,!?])_`(?!\s)
+			(\\`|[^`])+(?<!\s)`(?!(?P>end))               | (?# inline internal target)
+			(?<![\w~@#$%^&*)\]}>|\\;.,!?])\[
+			([-\w#.]+|\*)\]_(?!(?P>end))                  | (?# footnote/citation reference)
+			(?<=\.\.)[ \t]+\[([-\w#.]+|\*)\](?=\s)        | (?# footnote/citation target)
+			(?<=\.\.)[ \t]+_((\\:|[^:\r])+|`(\\`|[^`\r])+`):(?=[ \t]*$)   (?# hyperlink target)
 		)]]></string>
 		<key>Comment Pattern</key>
 		<string><![CDATA[(?x:
@@ -83,8 +92,7 @@
 				) | [ \t]*
 			) (
 				\r (
-					[ \t]*(\.\.[ \t]*)?
-					| (?P=pad)[ \t]+[^\r]+
+					(?P=pad)(\.\.[ \t]*)?([ \t]+[^\r]+)? | [ \t]*
 				)
 			)*(\r(?=[ \t]*$) | \Z)
 		)]]></string>
