@@ -66,19 +66,21 @@
 		<string><![CDATA[(?x:
 			(?<![\w~@#$%^&*)\]}>|+=\\;.,!?]):(?!\s)
 			(\\:|:(?=[a-z0-9])|[^:\r])+
-			(?<!\s):(?!(?P<end>[\w~@#$%^&*([{<|+=]))      | (?# role/directive option/field name)
+			(?<!\s):(?!(?P<end>[\w~@#$%^&*([{<|+=]))         | (?# role/directive option/field name)
 			(?<![\w~@#$%^&*)\]}>|+=\\;.,!?`])\|(?!\s)
 			(\|(?=(?P>end)|`)|[^|\r])+
-			(?<![\s\\])\|_{0,2}(?!(?P>end)|`)               | (?# substitution)
+			(?<![\s\\])\|_{0,2}(?!(?P>end)|`)                | (?# substitution)
 			(?<![_~@#$%^&*)\]}>|+=\\;.,!?`])\b[a-z0-9]
 			([-_+.:](?=[a-z0-9])|[a-z0-9])*__?(?!(?P>end)|`) | (?# hyperlink reference)
 			(?<![\w~@#$%^&*)\]}>|+=\\;.,!?`])`(?!\s)
-			(\\`|[^`])+(?<!\s)`_{0,2}(?!(?P>end))         | (?# phrase reference/interpreted text)
-			(?<![\w~@#$%^&*)\]}>|+=\\;.,!?])_`(?!\s)
-			(\\`|[^`])+(?<!\s)`(?!(?P>end))               | (?# inline internal target)
+			(\\`|`(?=[_~@#$%^&*([{<|+=])|[^`])+
+			(?<![\s\\])`_{0,2}(?!(?P>end))                   | (?# phrase reference/interpreted text)
+			(?<![\w~@#$%^&*)\]}>|+=\\;.,!?`])_`(?!\s)
+			(\\`|`(?=[_~@#$%^&*([{<|+=`])|[^`])+
+			(?<![\s\\])`(?!(?P>end)|`)                       | (?# inline internal target)
 			(?<![\w~@#$%^&*)\]}>|+=\\;.,!?])\[
-			([-\w#.]+|\*)\]_(?!(?P>end))                  | (?# footnote/citation reference)
-			(?<=\.\.)[ \t]+\[([-\w#.]+|\*)\](?=\s)        | (?# footnote/citation target)
+			([-\w#.]+|\*)\]_(?!(?P>end))                     | (?# footnote/citation reference)
+			(?<=\.\.)[ \t]+\[([-\w#.]+|\*)\](?=\s)           | (?# footnote/citation target)
 			(?<=\.\.)[ \t]+_((\\:|[^:\r])+|`(\\`|[^`\r])+`):(?=[ \t]*)   (?# hyperlink target)
 		)]]></string>
 		<key>Comment Pattern</key>
