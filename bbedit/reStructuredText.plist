@@ -4,7 +4,7 @@
 <!--
 	BBEdit codeless language module for reStructuredText files.
 	Eric Knibbe
-	Version 0.1
+	Version 1.0
 
 	Parses each section title as a function name so they show up in the function
 	popup. (Can't indent them according to heading level nor nest fold markers in
@@ -22,11 +22,14 @@
 	Known issues:
 	- skips highlighting directives as keywords if a space comes before the ::
 	- BB/TW may skip highlighting comments starting on the file's 1st or 2nd line
+	- generally requires backticks within backtick-delimited markup to be escaped
 	- highlights directives containing single colons as comments,
-	  e.g. Sphinx directives with a specified domain
-	- requires all lines of a comment to have the same padding sequence,
+	  e.g. directives specifying a non-standard Sphinx domain
+	- requires all lines of a comment to use the same padding sequence,
 	  e.g. doesn't highlight a comment whose first line starts with a space and
 	  subsequent lines start with a tab, which is still acceptable indentation
+
+	Feedback is welcome.		<http://ericfromcanada.bitbucket.org/>
 -->
 <dict>
 	<key>BBEditDocumentType</key>
@@ -66,7 +69,7 @@
 		<string><![CDATA[(?x:
 			(?<![\w~@#$%^&*)\]}>|+=\\;.,!?]|\\`):(?!\s)
 			(\\:|:(?=[a-z0-9])|[^:\r])+
-			(?<!\s):(?!(?P<end>[\w~@#$%^&*([{<|+=]))         | (?# role/directive option/field name)
+			(?<!\s):(?!(?P<end>[\w~@#$%^&*([{<|+=])|])       | (?# role/directive option/field name)
 			(?<![\w~@#$%^&*)\]}>|+=\\;.,!?`])\|(?!\s)
 			(\|(?=(?P>end)|`)|[^|\r])+
 			(?<![\s\\])\|_{0,2}(?!(?P>end)|`)                | (?# substitution)
@@ -74,7 +77,7 @@
 			([-_+.:](?=[a-z0-9])|[a-z0-9])*__?(?!(?P>end)|`) | (?# hyperlink reference)
 			(?<![\w~@#$%^&*)\]}>|+=\\;.,!?`])`(?!\s)
 			(\\`|`(?=[_~@#$%^&*([{<|+=])|[^`])+
-			(?<=[^\s\\]|\\\ )`_{0,2}(?!(?P>end))             | (?# phrase reference/interpreted text)
+			(?<=\\\ |[^\s\\])`_{0,2}(?!(?P>end)|`)             | (?# phrase reference/interpreted text)
 			(?<![\w~@#$%^&*)\]}>|+=\\;.,!?`])_`(?!\s)
 			(\\`|`(?=[_~@#$%^&*([{<|+=`])|[^`])+
 			(?<![\s\\])`(?!(?P>end)|`)                       | (?# inline internal target)
@@ -88,9 +91,9 @@
 		<string><![CDATA[(?x:
 			(\A | ^[ \t]*\r) (
 				(?P<pad>[ \t]*)\.\. (
-					[ \t]+ (
+					[ \t]+\b(?!(py|c|cpp|js|rst):) (
 						([-+.a-z0-9] | (?<!\b)_)+ (?(?=\ ?:)
-							\ ?:(([^:] | :(?=[^\s]))[^\r]* | $)
+							\ ?:((:(?=[^\s]) | [^:])[^\r]* | $)
 							| ([^-+.\w][^\r]* | $)
 						) | [^\w[|\s][^\r]*
 					) | [ \t]*
