@@ -1,5 +1,5 @@
-﻿# Script to close the Safari Web Inspector.
-# Use a utility like Butler to bind to a separate keystroke, such as "⌥⇧⌘I".
+# Script to close the Safari Web Inspector.
+# Use a utility like Butler to bind to a separate keystroke, such as Cmd-Opt-Shift-I.
 # Obsolete with Safari 6, in which the keystroke finally toggles the inspector.
 
 if version of application "Safari" starts with "5" then
