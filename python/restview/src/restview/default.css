@@ -1,0 +1,287 @@
+/*
+ * Stylesheet for ReStructuredText by Marius Gedminas.
+ * (I didn't like the default one)
+ *
+ * XXX: I'm doing it incorrectly:
+ * http://docutils.sourceforge.net/docs/howto/html-stylesheets.html
+ */
+
+body {
+    font-family: Verdana, sans;
+    margin: 3em;
+    max-width: 50em;
+}
+
+p {
+    text-align: justify;
+}
+p.rubric {
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Monospace text */
+
+tt {
+    font-family: Andale Mono, Courier New, monospace;
+    color: #234F32;
+}
+
+/* Definition lists */
+
+dt {
+    font-weight: bold;
+}
+dd {
+    margin-bottom: 1em;
+}
+
+/* Admonitions */
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+    font-weight: bold;
+}
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+    color: red;
+    font-weight: bold;
+}
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+    margin: 2em;
+    background: #fff7cc;
+    padding: 1em;
+}
+
+/* Doctest blocks */
+
+pre.doctest-block {
+    color: #008000;
+}
+
+/* Literal blocks */
+
+pre.literal-block {
+    color: #AA4400;
+    margin-left: 40px;
+}
+
+/* Indented quotations */
+
+blockquote > p {
+    color: #000080;
+}
+
+/* Tables */
+
+table {
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    border-left: none;
+    border-right: none;
+    border-collapse: collapse;
+    margin: 0.5em 0;
+}
+tr:first-child > th {
+    border-top: none;
+}
+th {
+    border-top: hidden;
+    border-left: hidden;
+    border-right: hidden;
+    border-bottom: none;
+    text-align: left;
+}
+tr:first-child > td {
+    border-top: 1px solid black;
+}
+table[rules=none] tr:first-child > td {
+    border-top: none;
+}
+td {
+    border-top: hidden;
+    border-left: hidden;
+    border-right: hidden;
+    border-bottom: none;
+    padding: 1px 4px;
+}
+td, th {
+    padding-left: 1em;
+}
+td:first-child,
+th:first-child {
+    padding-left: 4px;
+}
+
+td p:first-child {
+    margin-top: 0;
+}
+th.field-name, th.docinfo-name {
+  white-space: nowrap;
+  padding-left: 0;
+}
+
+/* Table of Contents */
+
+p.topic-title {
+    font-weight: bold;
+    font-size: 120%;
+}
+
+a.toc-backref {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* Footnotes */
+
+a.footnote-reference,
+a.fn-backref {
+    font-size: xx-small;
+    vertical-align: super;
+    line-height: normal;
+    text-decoration: none;
+}
+a.footnote-reference:hover,
+a.fn-backref:hover {
+    text-decoration: underline;
+}
+
+table.footnote {
+    border: none;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: 20px;
+    margin-right: 0.5em;
+    font-size: small;
+}
+table.footnote td {
+    border: none;
+    padding-top: 1em;
+    padding-left: 0px;
+}
+table.footnote tr:first-child > td.label {
+    border-top: 1px solid #eee;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+table.footnote + table.footnote {
+    margin-top: 0;
+}
+table.footnote + table.footnote td {
+    border: none;
+    padding-top: 0;
+}
+
+/* System messages (aka errors) */
+
+div.system-message {
+    border-left: 3px double red;
+    margin-left: 19px;
+    padding-left: 19px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: red;
+}
+div.system-messages h1 {
+    color: red;
+}
+div.system-message p.system-message-title {
+    margin-top: 0;
+    font-weight: bold;
+}
+
+/* Sidebars */
+
+div.sidebar {
+    margin: 2em;
+    background: #fff7cc;
+    padding: 1em;
+    width: 40%;
+    float: right;
+    clear: right;
+}
+p.sidebar-title {
+    font-weight: bold;
+    font-size: larger;
+}
+p.sidebar-subtitle {
+    font-weight: bold;
+}
+
+/* Rules taken from the original */
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+div.topic {
+  margin: 2em }
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+span.option {
+  white-space: nowrap }
+
+span.problematic {
+  color: red }
+
+ul.auto-toc {
+  list-style-type: none }
+
+/* ... many more are missing ... */
