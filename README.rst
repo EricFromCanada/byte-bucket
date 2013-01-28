@@ -1,15 +1,41 @@
 .. title:: Eric's bits of code
 
+==============================
+ ericfromcanada.bitbucket.org
+==============================
+
 Various pieces of code I've written, in case someone else finds them useful.
 
 `Browse all files <https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/src/>`_
 
-`keyputter.sh <https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bash/keyputter.sh>`_
-  Handy if you have a bunch of servers you need to install your SSH key onto.
-  
+AppleScript
+-----------
+
 `close Safari Web Inspector script <https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/applescript/close%20Safari%20Web%20Inspector.applescript>`_
   Before Safari 6, the Web Inspector shortcut would only open it. Attach 
   this AppleScript to another shortcut to make it closeable.
+  
+bash
+----
+
+`keyputter.sh <https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bash/keyputter.sh>`_
+  Handy if you have a bunch of servers you need to install your SSH key onto.
+
+`svn-user-htdigest.sh <https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bash/svn-user-htdigest.sh>`_
+  Use this to generate an htdigest file of users from an svnserve passwd file.
+  Useful if you have a Trac installation using HTTPAuth and you need to grant
+  your SVN users access.
+  
+BBEdit
+------
+
+`reST codeless language module <https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bbedit/reStructuredText.plist>`_
+  Language module for BBEdit and TextWrangler which highlights elements 
+  in reStructuredText files and lists section titles in the function pop-up
+  menu. Recognizes both standard reST directives and Sphinx additions.
+
+JavaScript
+----------
   
 `touch-menus-plus.js <https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/javascript/touch-menus-plus.js>`_
   Makes navigation links with drop-down menus usable on iOS by only enabling
@@ -20,10 +46,8 @@ Various pieces of code I've written, in case someone else finds them useful.
   
   `See it in action <http://www.treefrog.ca/>`_
 
-`reST codeless language module <https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bbedit/reStructuredText.plist>`_
-  Language module for BBEdit and TextWrangler which highlights elements 
-  in reStructuredText files and lists section titles in the function pop-up
-  menu. Recognizes both standard reST directives and Sphinx additions.
+Python
+------
 
 `restview (improved) <https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/python/restview/>`_
   My branch of the excellent restview_, a tool for previewing reST documents
