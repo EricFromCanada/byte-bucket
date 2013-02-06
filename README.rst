@@ -33,6 +33,10 @@ BBEdit
   Language module for BBEdit and TextWrangler which highlights elements 
   in reStructuredText files and lists section titles in the function pop-up
   menu. Recognizes both standard reST directives and Sphinx additions.
+  
+  I recommend also setting these options for editing reStructuredText: enabling
+  auto-indent and auto-expand tabs, setting tab width to 3 spaces, disabling 
+  soft wrap text, and setting the page guide to 80 characters. 
 
 JavaScript
 ----------

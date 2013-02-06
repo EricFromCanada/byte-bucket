@@ -4,7 +4,7 @@
 <!--
 	BBEdit codeless language module for reStructuredText files.
 	Eric Knibbe
-	Version 1.0
+	Version 1.1
 
 	Parses each section title as a function name so they show up in the function
 	popup. (Can't indent them according to heading level nor nest fold markers in
@@ -22,6 +22,8 @@
 	Known issues:
 	- skips highlighting directives as keywords if a space comes before the ::
 	- BB/TW may skip highlighting comments starting on the file's 1st or 2nd line
+	- can't highlight comments sharing a line with or directly following
+	  directives due to a limitation with regular expressions
 	- generally requires backticks within backtick-delimited markup to be escaped
 	- highlights directives containing single colons as comments,
 	  e.g. directives specifying a non-standard Sphinx domain
@@ -67,10 +69,10 @@
 		<string>-\w.:</string>
 		<key>String Pattern</key>
 		<string><![CDATA[(?x:
-			(?<![\w~@#$%^&*)\]}>|+=\\;.,!?]|\\`):(?!\s)
-			(\\:|:(?=[a-z0-9])|[^:\r])+
+			(?<![\w~@#$%^&*)\]}>|+=\\;.,!?]|\\`):(?![:\s])
+			(\\:|:(?=[a-z0-9])|[^:,([{<)\]}>\r])+
 			(?<!\s):(?!(?P<end>[\w~@#$%^&*([{<|+=])|])       | (?# role/directive option/field name)
-			(?<![\w~@#$%^&*)\]}>|+=\\;.,!?`])\|(?!\s)
+			(?<![\w~@#$%^&*)\]}>|+=\\;.,!?`])\|(?![|\s])
 			(\|(?=(?P>end)|`)|[^|\r])+
 			(?<![\s\\])\|_{0,2}(?!(?P>end)|`)                | (?# substitution)
 			(?<![_~@#$%^&*)\]}>|+=\\;.,!?`])\b[a-z0-9]
