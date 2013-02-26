@@ -18,6 +18,7 @@ or
 Needs docutils and a web browser.  Will syntax-highlight code or doctest blocks
 if you have pygments installed.
 """
+from __future__ import print_function
 
 import os
 import re
@@ -26,21 +27,45 @@ import socket
 import optparse
 import threading
 import webbrowser
-import BaseHTTPServer
-import SocketServer
+
+try:
+    import BaseHTTPServer
+except ImportError:
+    import http.server as BaseHTTPServer
+
+try:
+    import SocketServer
+except ImportError:
+    import socketserver as SocketServer
+
 import cgi
-import urllib
-import time
-import urlparse
+
+try:
+    from urllib import unquote
+except ImportError:
+    from urllib.parse import unquote
+
+try:
+    from urlparse import parse_qs
+except ImportError:
+    from urllib.parse import parse_qs
 
 from docutils import core
 from docutils.writers import html4css1
+import time
 
 try:
     import pygments
     from pygments import lexers, formatters
 except ImportError:
     pygments = None
+
+
+try:
+    unicode
+except NameError:
+    unicode = str
+
 
 __version__ = "1.3.0dev"
 
@@ -60,7 +85,7 @@ class MyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         content = self.do_GET_or_HEAD()
 
     def do_GET_or_HEAD(self):
-        self.path = urllib.unquote(self.path)
+        self.path = unquote(self.path)
         root = self.server.renderer.root
         command = self.server.renderer.command
         if self.path == '/':
@@ -75,7 +100,7 @@ class MyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 return self.handle_list(root)
         elif self.path.startswith('/polling?'):
             saved_atime = last_atime
-            self.path = urlparse.parse_qs(self.path.split('?', 1)[-1])['pathname'][0]
+            self.path = parse_qs(self.path.split('?', 1)[-1])['pathname'][0]
             if self.path == '/':
                 self.path = os.path.basename(root)
             self.server.renderer.root_mtime = os.stat(self.translate_path()).st_mtime
@@ -142,7 +167,7 @@ class MyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 return self.handle_rest_data(f.read())
             finally:
                 f.close()
-        except IOError, e:
+        except IOError as e:
             self.log_error('%s', e)
             self.send_error(404, 'File not found: %s' % self.path)
 
@@ -153,7 +178,7 @@ class MyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 return self.handle_rest_data(f.read())
             finally:
                 f.close()
-        except OSError, e:
+        except OSError as e:
             self.log_error('%s' % e)
             self.send_error(500, 'Command execution failed')
 
@@ -349,7 +374,7 @@ class RestViewer(object):
         try:
             core.publish_string(rest_input, writer=writer,
                                 settings_overrides=settings_overrides)
-        except Exception, e:
+        except Exception as e:
             return self.render_exception(e.__class__.__name__, str(e),
                                          rest_input)
         return self.return_markup(writer.output)
@@ -447,11 +472,11 @@ def parse_address(addr):
         ('', 1234)
 
         >>> try: parse_address('notanumber')
-        ... except ValueError, e: print e
+        ... except ValueError as e: print(e)
         Invalid address: notanumber
 
         >>> try: parse_address('la:la:la')
-        ... except ValueError, e: print e
+        ... except ValueError as e: print(e)
         Invalid address: la:la:la
 
     """
@@ -533,12 +558,12 @@ def main():
     if opts.listen:
         try:
             server.local_address = parse_address(opts.listen)
-        except ValueError, e:
+        except ValueError as e:
             sys.exit(str(e))
     host = get_host_name(server.local_address[0])
     port = server.listen()
     url = 'http://%s:%d/' % (host, port)
-    print "Listening on %s" % url
+    print("Listening on %s" % url)
     if opts.browser:
         # launch the web browser in the background as it may block
         t = threading.Thread(target=webbrowser.open, args=(url, ))
