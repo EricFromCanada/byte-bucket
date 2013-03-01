@@ -26,7 +26,7 @@
     docstring
     :see: resource
     :parent: typename
-    method:: signature
+    member:: signature
       ...                 <-- same as method::
     :import: traitname
     provide:: signature
@@ -34,13 +34,16 @@
   thread:: name
     ...               <-- same as type::
 
-  - no way to tell if member methods are public/protected/private
+  - no way to tell if member methods are public/protected/private (issue #7494)
   - only line-wraps description blocks, not signatures or attribute descriptions
   - needs a way to warn of misspelled @params
   - replace auto-collect with output to file
   - may need some more line breaks added after Lasso domain is written
   - could support special attributes, e.g. @example after which spacing is preserved
-  - couldn't test ->addTrait on traits due to segfault (bug #7491, fixed for 9.2.6)
+  - couldn't test ->addTrait on traits due to segfault (issue #7491, fixed for 9.2.6)
+  
+  - change import to put all on one comma-separated line
+  - use returnas for return w/ type specified
 
   <?
 */
@@ -280,9 +283,9 @@ define writeDocs(element, directive::string, nesting::integer=0) => {^
 
   // check if #element is a thread or thread's type
   if (#element->type == ::tag)
-    if (#element->asString->endswith('_thread$'))
+    if (#element->asString->endsWith('_thread$'))
       #directive = 'thread'
-    else (#element->gettype->parent->asString->endswith('_thread$'))
+    else (#element->gettype->parent->asString->endsWith('_thread$'))
       #directive = 'thread'
       #element = #element->gettype->parent  // given thread's type, switch to thread
     /if
@@ -336,14 +339,14 @@ define writeDocs(element, directive::string, nesting::integer=0) => {^
       #indent*(#nesting+1) + ':parent: ' + #element->getType->parent->asString + '\n'
     /if
 
-    // method directive
+    // member directive
     #directive == 'thread' ?      // switch back to thread's type
       #element = tag(#element->asString->removeTrailing('_thread$')&)
-    with method in #element->getType->listMethods
-    where #method->typeName == #element
-    where #method->methodName->asString->isalpha(1) // skip 'x'() & _x() but not x=() or x()
+    with member in #element->getType->listMethods
+    where #member->typeName == #element
+    where #member->methodName->asString->isalpha(1) // skip 'x'() & _x() but not x=() or x()
     do {^
-      writeDocs(#method, 'method', #nesting+1)
+      writeDocs(#member, 'member', #nesting+1)
     ^}
 
     // trait block within type
@@ -405,7 +408,7 @@ define counter_thread => thread {
 //writeDocs(::any, 'trait')
 //writeDocs(::array, 'type')
 //writeDocs(::counter_thread, 'thread')
-// can't write docs for an arbitrary method, as there's currently no way to fetch its ::signature
+// can't write docs for an unbound method, as there's currently no way to fetch its ::signature
 
 writeDocs(::docObject, 'type')
 
