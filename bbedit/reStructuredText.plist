@@ -4,7 +4,7 @@
 <!--
 	BBEdit codeless language module for reStructuredText files.
 	Eric Knibbe
-	Version 1.1
+	Version 1.2
 
 	Parses each section title as a function name so they show up in the function
 	popup. (Can't indent them according to heading level nor nest fold markers in
@@ -93,8 +93,9 @@
 		<string><![CDATA[(?x:
 			(\A | ^[ \t]*\r) (
 				(?P<pad>[ \t]*)\.\. (
-					[ \t]+\b(?!(py|c|cpp|js|rst):) (
-						([-+.a-z0-9] | (?<!\b)_)+ (?(?=\ ?:)
+					[ \t]+ (
+						\b(?!(py|c|cpp|js|rst):)[a-z0-9][-+.\w]*
+						(?(?=\ ?:)
 							\ ?:((:(?=[^\s]) | [^:])[^\r]* | $)
 							| ([^-+.\w][^\r]* | $)
 						) | [^\w[|\s][^\r]*
