@@ -19,7 +19,8 @@ bash
 ----
 
 `keyputter.sh <https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bash/keyputter.sh>`_
-  Handy if you have a bunch of servers you need to install your SSH key onto.
+  Handy if you have a bunch of servers you need to install your SSH key onto and
+  don't have ssh-copy-id.
 
 `svn-user-htdigest.sh <https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bash/svn-user-htdigest.sh>`_
   Use this to generate an htdigest file of users from an svnserve passwd file.
@@ -50,6 +51,17 @@ JavaScript
   
   `See it in action <http://www.treefrog.ca/>`_
 
+`Lasso lexer for highlight.js <https://github.com/isagalaev/highlight.js>`_
+  Contributed a lexer for the Lasso programming language for highlight.js_, a
+  JS-based syntax highlighter. Expect to see it in the next release.
+
+Lasso
+-----
+
+`sphinxifier.lasso <https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/lasso/sphinxifier.lasso>`
+  Script for generating API documentation for Sphinx directly from Lasso code. 
+  (Mostly a proof-of-concept at this point.)
+
 Python
 ------
 
@@ -60,10 +72,11 @@ Python
 
 `Lasso lexer for Pygments <https://bitbucket.org/EricFromCanada/pygments-main>`_
   Contributed a lexer for the Lasso programming language for the Pygments_
-  syntax highlighter. Expect to see it included in Pygments 1.6.
+  syntax highlighter. It's included in Pygments 1.6.
 
 Find me on Twitter_.
 
+.. _highlight.js: http://softwaremaniacs.org/soft/highlight/en/
 .. _restview: http://mg.pov.lt/restview/
 .. _Pygments: http://pygments.org/
 .. _Twitter: https://twitter.com/EricFromCanada
