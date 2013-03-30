@@ -58,7 +58,7 @@ JavaScript
 Lasso
 -----
 
-`sphinxifier.lasso <https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/lasso/sphinxifier.lasso>`
+`sphinxifier.lasso <https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/lasso/sphinxifier.lasso>`_
   Script for generating API documentation for Sphinx directly from Lasso code. 
   (Mostly a proof-of-concept at this point.)
 
