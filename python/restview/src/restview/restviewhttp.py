@@ -15,7 +15,7 @@ or
 or
     restviewhttp --help
 
-Needs docutils and a web browser.  Will syntax-highlight code or doctest blocks
+Needs docutils and a web browser. Will syntax-highlight code or doctest blocks
 if you have pygments installed.
 """
 from __future__ import print_function
@@ -134,13 +134,13 @@ class MyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         elif self.path.endswith('.txt') or self.path.endswith('.rst'):
             return self.handle_rest_file(self.translate_path())
         else:
-            self.send_error(501, 'File type not supported: %s' % self.path)
+            self.send_error(501, "File type not supported: %s" % self.path)
 
     def translate_path(self):
         root = self.server.renderer.root
         path = self.path.lstrip('/')
         if not isinstance(root, str):
-            (idx, path) = path.split('/', 1)
+            idx, path = path.split('/', 1)
             root = root[int(idx)]
         if not os.path.isdir(root):
             root = os.path.dirname(root)
@@ -150,7 +150,7 @@ class MyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         try:
             data = file(filename, 'rb').read()
         except IOError:
-            self.send_error(404, 'File not found: %s' % self.path)
+            self.send_error(404, "File not found: %s" % self.path)
         else:
             self.send_response(200)
             self.send_header("Content-Type", ctype)
@@ -168,8 +168,8 @@ class MyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             finally:
                 f.close()
         except IOError as e:
-            self.log_error('%s', e)
-            self.send_error(404, 'File not found: %s' % self.path)
+            self.log_error("%s", e)
+            self.send_error(404, "File not found: %s" % self.path)
 
     def handle_command(self, command):
         try:
@@ -179,8 +179,8 @@ class MyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             finally:
                 f.close()
         except OSError as e:
-            self.log_error('%s' % e)
-            self.send_error(500, 'Command execution failed')
+            self.log_error("%s" % e)
+            self.send_error(500, "Command execution failed")
 
     def handle_rest_data(self, data):
         html = self.server.renderer.rest_to_html(data)
@@ -197,7 +197,7 @@ class MyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         if not dirname.endswith('/'):
             dirname += '/'
         files = []
-        for (dirpath, dirnames, filenames) in os.walk(dirname):
+        for dirpath, dirnames, filenames in os.walk(dirname):
             dirnames[:] = [dn for dn in dirnames
                            if not dn.startswith('.')
                            and not dn.endswith('.egg-info')]
@@ -210,7 +210,7 @@ class MyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
     def handle_dir(self, dirname):
         files = [(fn, fn) for fn in self.collect_files(dirname)]
-        html = self.render_dir_listing('RST files in %s' % os.path.abspath(dirname), files)
+        html = self.render_dir_listing("RST files in %s" % os.path.abspath(dirname), files)
         if isinstance(html, unicode):
             html = html.encode('UTF-8')
         self.send_response(200)
@@ -221,15 +221,15 @@ class MyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
     def handle_list(self, list_of_files_or_dirs):
         files = []
-        for (idx, fn) in enumerate(list_of_files_or_dirs):
+        for idx, fn in enumerate(list_of_files_or_dirs):
             if os.path.isdir(fn):
                 files.extend([(os.path.join(str(idx), f),
                                os.path.join(fn, f))
-                               for f in self.collect_files(fn)])
+                              for f in self.collect_files(fn)])
             else:
                 files.append((os.path.join(str(idx), os.path.basename(fn)),
                               fn))
-        html = self.render_dir_listing('RST files', files)
+        html = self.render_dir_listing("RST files", files)
         if isinstance(html, unicode):
             html = html.encode('UTF-8')
         self.send_response(200)
@@ -241,7 +241,7 @@ class MyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     def render_dir_listing(self, title, files):
         files = ''.join([FILE_TEMPLATE.replace('$href', cgi.escape(href))
                                       .replace('$file', cgi.escape(fn))
-                         for (href, fn) in files])
+                         for href, fn in files])
         return (DIR_TEMPLATE.replace('$title', cgi.escape(title))
                             .replace('$files', files))
 
@@ -249,7 +249,9 @@ class MyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 DIR_TEMPLATE = """\
 <!DOCTYPE html>
 <html>
-<head><title>$title</title></head>
+<head>
+<title>$title</title>
+</head>
 <body>
 <h1>$title</h1>
 <ul>
@@ -270,7 +272,7 @@ window.onload = function () {
         if (window.XMLHttpRequest) {
             xmlHttp = new XMLHttpRequest();
         } else if (window.ActiveXObject) {
-            xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+            xmlHttp = new ActiveXObject('Microsoft.XMLHTTP');
         }
         xmlHttp.onreadystatechange = function () {
             if (xmlHttp.readyState == 4 && xmlHttp.status == '200') {
@@ -290,7 +292,8 @@ window.onbeforeunload = function () {
 ERROR_TEMPLATE = """\
 <!DOCTYPE html>
 <html>
-<head><title>$title</title></head>
+<head>
+<title>$title</title>
 <style type="text/css">
 pre.error {
     border-left: 3px double red;
@@ -301,6 +304,7 @@ pre.error {
     color: red;
 }
 </style>
+</head>
 <body>
 <h1>$title</h1>
 <pre class="error">
@@ -319,7 +323,7 @@ class ThreadingHTTPServer(SocketServer.ThreadingMixIn, BaseHTTPServer.HTTPServer
 
     # tone down exception messages in the console
     def handle_error(self, request, client_address):
-        print 'Exception detected during processing of request from',
+        print "Exception detected during processing of request from",
         print client_address
 
 
@@ -335,6 +339,8 @@ class RestViewer(object):
     css_url = None
     css_path = os.path.join(os.path.dirname(os.path.realpath(__file__)),
                             'default.css')
+
+    strict = None
 
     def __init__(self, root, command=None):
         self.root = root
@@ -356,7 +362,7 @@ class RestViewer(object):
         """
         self.server.serve_forever()
 
-    def rest_to_html(self, rest_input):
+    def rest_to_html(self, rest_input, settings=None):
         """Render ReStructuredText."""
         writer = html4css1.Writer()
         if pygments is not None:
@@ -371,25 +377,33 @@ class RestViewer(object):
                                   'embed_stylesheet': True}
         else:
             settings_overrides = {}
+
+        if self.strict:
+            settings_overrides['halt_level'] = 1
+
+        if settings:
+            settings_overrides.update(settings)
+
         try:
             core.publish_string(rest_input, writer=writer,
                                 settings_overrides=settings_overrides)
         except Exception as e:
             return self.render_exception(e.__class__.__name__, str(e),
                                          rest_input)
-        return self.return_markup(writer.output)
+        return self.get_markup(writer.output)
 
     def render_exception(self, title, error, source):
         html = (ERROR_TEMPLATE.replace('$title', cgi.escape(title))
                               .replace('$error', cgi.escape(error))
                               .replace('$source', cgi.escape(source)))
-        return self.return_markup(html)
+        return self.get_markup(html)
 
-    def return_markup(self, markup):
+    def get_markup(self, markup):
         if self.command is None:
             return markup.replace('</body>', AJAX_STR + '</body>')
         else:
-            return markup.replace('</title>', cgi.escape(self.command) + '</title>')
+            return markup.replace('</title>',
+                                  ' -e "' + cgi.escape(self.command) + '"</title>')
 
 
 class SyntaxHighlightingHTMLTranslator(html4css1.HTMLTranslator):
@@ -428,8 +442,10 @@ class SyntaxHighlightingHTMLTranslator(html4css1.HTMLTranslator):
 
     def visit_literal(self, node):
         self.in_text = True
-        html4css1.HTMLTranslator.visit_literal(self, node)
-        self.in_text = False
+        try:
+            html4css1.HTMLTranslator.visit_literal(self, node)
+        finally:
+            self.in_text = False
 
     def visit_reference(self, node):
         self.in_reference = True
@@ -452,11 +468,15 @@ class SyntaxHighlightingHTMLTranslator(html4css1.HTMLTranslator):
             >>> link_local_files = SyntaxHighlightingHTMLTranslator.link_local_files
             >>> link_local_files('e.g. see README.txt for more info')
             'e.g. see <a href="README.txt">README.txt</a> for more info'
+            >>> link_local_files('e.g. see docs/HACKING.rst for more info')
+            'e.g. see <a href="docs/HACKING.rst">docs/HACKING.rst</a> for more info'
+            >>> link_local_files('what about http://example.com/README.txt ?')
+            'what about http://example.com/README.txt ?'
 
         """
         # jwz was right...
-        text = re.sub("([-_a-zA-Z0-9]+[.]txt)", r'<a href="\1">\1</a>', text)
-        return text
+        return re.sub(r"(^|\s)([-_a-zA-Z0-9/]+[.](txt|rst))",
+                      r'\1<a href="\2">\2</a>', text)
 
 
 def parse_address(addr):
@@ -482,11 +502,11 @@ def parse_address(addr):
     """
     if ':' in addr:
         try:
-            (host, port) = addr.split(':')
+            host, port = addr.split(':')
         except ValueError:
             raise ValueError('Invalid address: %s' % addr)
     else:
-        (host, port) = ('localhost', addr)
+        host, port = 'localhost', addr
     if host == '*':
         host = '' # any
     try:
@@ -505,10 +525,21 @@ def get_host_name(listen_on):
         ip_addr = socket.inet_aton(listen_on)
     except socket.error: # probably a hostname or ''
         ip_addr = None
-    if listen_on == '' or ip_addr == '\0\0\0\0':
+    if listen_on == '' or ip_addr == b'\0\0\0\0':
         return socket.gethostname()
     else:
         return listen_on
+
+
+def launch_browser(url):
+    """Launch the web browser for a given URL.
+
+    Does not block.
+    """
+    # Do it in the background as it may block
+    t = threading.Thread(target=webbrowser.open, args=(url,))
+    t.setDaemon(True)
+    t.start()
 
 
 def main():
@@ -534,7 +565,10 @@ def main():
     parser.add_option('--css',
                       help='use the specified stylesheet',
                       action='store', dest='css_path', default=None)
-    (opts, args) = parser.parse_args(sys.argv[1:])
+    parser.add_option('--strict',
+                      help='halt at the slightest problem',
+                      action='store_true', default=False)
+    opts, args = parser.parse_args(sys.argv[1:])
     if not args and not opts.execute:
         parser.error("at least one argument expected")
     if args and opts.execute:
@@ -555,20 +589,20 @@ def main():
         else:
             server.css_path = opts.css_path
             server.css_url = None
+
+    server.strict = opts.strict
+
     if opts.listen:
         try:
             server.local_address = parse_address(opts.listen)
         except ValueError as e:
-            sys.exit(str(e))
+            parser.error(str(e))
     host = get_host_name(server.local_address[0])
     port = server.listen()
     url = 'http://%s:%d/' % (host, port)
     print("Listening on %s" % url)
     if opts.browser:
-        # launch the web browser in the background as it may block
-        t = threading.Thread(target=webbrowser.open, args=(url, ))
-        t.setDaemon(True)
-        t.start()
+        launch_browser(url)
     try:
         server.serve()
     except KeyboardInterrupt:
