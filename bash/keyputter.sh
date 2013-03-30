@@ -8,6 +8,6 @@
 while read HOST
 do
 	echo "Installing on ${HOST}..."
-	cat ~/.ssh/id_dsa.pub | ssh root@${HOST} 'test ! -d "/root/.ssh" && mkdir /root/.ssh; cat - >> ~/.ssh/authorized_keys'
+	cat ~/.ssh/id_dsa.pub | ssh root@${HOST} 'test ! -d "/root/.ssh" && mkdir -p /root/.ssh; cat - >> ~/.ssh/authorized_keys'
 done <<EOF
 server.com
