@@ -181,15 +181,15 @@ table.footnote + table.footnote td {
 
 /* System messages (aka errors) */
 
+div.system-messages h1 {
+    color: red;
+}
 div.system-message {
     border-left: 3px double red;
     margin-left: 19px;
     padding-left: 19px;
     padding-top: 10px;
     padding-bottom: 10px;
-    color: red;
-}
-div.system-messages h1 {
     color: red;
 }
 div.system-message p.system-message-title {

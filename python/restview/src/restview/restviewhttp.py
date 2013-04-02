@@ -23,6 +23,7 @@ from __future__ import print_function
 import os
 import re
 import sys
+import time
 import socket
 import optparse
 import threading
@@ -38,7 +39,10 @@ try:
 except ImportError:
     import socketserver as SocketServer
 
-import cgi
+try:
+    from html import escape
+except ImportError:
+    from cgi import escape
 
 try:
     from urllib import unquote
@@ -52,7 +56,6 @@ except ImportError:
 
 from docutils import core
 from docutils.writers import html4css1
-import time
 
 try:
     import pygments
@@ -68,13 +71,13 @@ except NameError:
 
 
 __version__ = "1.3.0dev"
+last_atime = 0
 
 
 class MyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     """HTTP request handler that renders ReStructuredText on the fly."""
 
     server_version = "restviewhttp/" + __version__
-    last_atime = 0
 
     def do_GET(self):
         content = self.do_GET_or_HEAD()
@@ -82,7 +85,7 @@ class MyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             self.wfile.write(content)
 
     def do_HEAD(self):
-        content = self.do_GET_or_HEAD()
+        self.do_GET_or_HEAD()
 
     def do_GET_or_HEAD(self):
         self.path = unquote(self.path)
@@ -111,7 +114,7 @@ class MyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                         self.send_header("Cache-Control", "no-cache, no-store, max-age=0")
                         self.end_headers()
                         self.server.renderer.root_mtime = os.stat(self.translate_path()).st_mtime
-                    except Exception, e:
+                    except Exception as e:
                         self.log_error('%s (client closed "%s" before acknowledgement)', e, self.path)
                     finally:
                         return
@@ -119,7 +122,7 @@ class MyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             try:
                 self.send_response(204)
                 self.end_headers()
-            except Exception, e:
+            except Exception as e:
                 self.log_error('%s (client closed "%s" before cancellation)', e, self.path)
             finally:
                 return
@@ -239,10 +242,10 @@ class MyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         return html
 
     def render_dir_listing(self, title, files):
-        files = ''.join([FILE_TEMPLATE.replace('$href', cgi.escape(href))
-                                      .replace('$file', cgi.escape(fn))
+        files = ''.join([FILE_TEMPLATE.replace('$href', escape(href))
+                                      .replace('$file', escape(fn))
                          for href, fn in files])
-        return (DIR_TEMPLATE.replace('$title', cgi.escape(title))
+        return (DIR_TEMPLATE.replace('$title', escape(title))
                             .replace('$files', files))
 
 
@@ -377,7 +380,7 @@ class RestViewer(object):
                                   'embed_stylesheet': True}
         else:
             settings_overrides = {}
-
+        settings_overrides['syntax_highlight'] = 'short'
         if self.strict:
             settings_overrides['halt_level'] = 1
 
@@ -393,9 +396,9 @@ class RestViewer(object):
         return self.get_markup(writer.output)
 
     def render_exception(self, title, error, source):
-        html = (ERROR_TEMPLATE.replace('$title', cgi.escape(title))
-                              .replace('$error', cgi.escape(error))
-                              .replace('$source', cgi.escape(source)))
+        html = (ERROR_TEMPLATE.replace('$title', escape(title))
+                              .replace('$error', escape(error))
+                              .replace('$source', escape(source)))
         return self.get_markup(html)
 
     def get_markup(self, markup):
@@ -403,7 +406,7 @@ class RestViewer(object):
             return markup.replace('</body>', AJAX_STR + '</body>')
         else:
             return markup.replace('</title>',
-                                  ' -e "' + cgi.escape(self.command) + '"</title>')
+                                  ' -e "' + escape(self.command) + '"</title>')
 
 
 class SyntaxHighlightingHTMLTranslator(html4css1.HTMLTranslator):
