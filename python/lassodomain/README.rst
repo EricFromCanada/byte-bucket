@@ -8,30 +8,37 @@ Lasso Domain
 About
 =====
 
-This extension adds a Lasso domain to Sphinx. It is currently a somewhat
-functional work in progress.
+This extension adds support for the Lasso language to Sphinx.
+
+The following objects are supported:
+
+* Unbound method
+* Trait
+
+  * Require
+  * Provide
+
+* Type/Thread
+
+  * Member method
+  * Provide
+
+Methods are associated with their type or trait using the arrow operator::
+
+	Type->member_method
 
 
 Usage
 =====
 
-After installing lassodomain.py in site-packages/sphinxcontrib, add the
-extension to your list of extensions in conf.py::
+After installing :file:`lassodomain.py` in `site-packages/sphinxcontrib`, add the
+:mod:`sphinxcontrib.lassodomain` extension to the :data:`extensions` list in
+your Sphinx configuration file (:file:`conf.py`)::
 
-  extensions = ['sphinx.ext.autodoc', 'sphinxcontrib.lassodomain']
+  extensions = ['sphinxcontrib.lassodomain']
 
 Also, if your project is primarily Lasso, you'll want to define the primary
 domain as well::
 
   primary_domain = 'ls'
 
-
-Directives and Roles
-====================
-
-This domain provides method, type, trait, thread, provide, and require
-directives, as well as meth, trait, type, and thread roles for 
-cross-referencing. To link to a member method, use member tag syntax, such as 
-``:meth:`Bytes->getrange```.
-
-.. add more examples here
