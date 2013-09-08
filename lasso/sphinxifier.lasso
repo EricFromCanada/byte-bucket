@@ -13,7 +13,7 @@
     :param ...: description        <-- if signature has ... & docComment has @param rest or @param ...
     :param restname: description    <-- if signature has ...restname & docComment has @param restname
     :return: description          <-- from "@return description" in docComment
-    :return type: description     <-- type inserted if not ::any
+    :rtype: return type           <-- rtype inserted if return type not ::any
     :see: resource            <-- from "@see resource" in docComment
   trait:: name
     docstring
@@ -35,19 +35,19 @@
   thread:: name
     ...               <-- same as type::
 
-  Known issues:
-  - does not generate :import: lines for traits added later with ->addTrait
-  - could support special attributes, e.g. @example after which spacing is preserved
-  - no way to show which member methods are public/protected/private (#7494)
-  - no known way of listing thread definitions from a file
-  - grouped require statements will have its docComment apply to only the first
+  Known limitations:
+  - won't generate :import: lines for traits added later with ->addTrait
+  - Lasso applies a docComment to only the first require statement in a group
+  - Lasso has no way to show which member methods are public/protected/private (#7494)
+  - a trait will see its requires disappear as imports are added (#7581)
   - data elements and therefore automatic getters/setters can't have docstrings
+
+  To-do:
   - warn when finding @param lines with no matching parameter
   - replace auto-collect with output to variable
-  - a trait will see its requires disappear as imports are added (#7581)
-
-  - only line-wraps description blocks, not signatures or attribute descriptions
+  - add line-wrapping to signatures and attribute descriptions
   - cut first line of description if it matches the name of the docComment's element
+  - onCreate methods should be listed first
 */
 
 not sys_getenv('LASSO9_RETAIN_COMMENTS') ?
@@ -65,6 +65,7 @@ define docObject => type {
   data indent             // string to use as indent
   data description = ''   // first block of text before @attribute lines
   data paramsorder = array()  // each param's name, since params is an unordered container
+  data paramskeyed = array()  // whether each param is a keyword parameter
   data params = map()     // each is ('pname' = pair(::ptype, 'pdesc')) from #element & @param lines
   data others = array()   // each is (pair('attribute', 'value')) from other @attribute lines
   data result = pair()    // (::rtype, 'rdesc') from #element & @return
@@ -79,6 +80,7 @@ define docObject => type {
       with parray in #element->paramDescs
       do {
         .'paramsorder'->insert(#parray->first)
+        .'paramskeyed'->insert(#parray->get(3)->bitTest(2))
         .'params'->insert(pair(#parray->first, pair(#parray->second, null)))
       }
       if (#element->restName != void) => {
@@ -113,7 +115,9 @@ define docObject => type {
       if (#word1 == 'param') => {
         protect => {        // in case name following @param is misspelled
           // first check if the given @param name matches the signature's ->restName
-          if (#element->restName != void && #word2 == #element->restName || #word2 == '...') => {
+          if (#element->restName != void &&
+              #word2 == #element->restName ||
+              #word2 == '...') => {
             .'params'->insert(pair(
                 (#word2 == 'rest' ? '...' | #word2),
                 pair(#ptype, #words->remove(1,2)&join(' '))
@@ -133,21 +137,26 @@ define docObject => type {
 
   /**! @return description block, wrapped and indented */
   public description()::string => {
-    return (.'description'->size != 0 ? string_wrap(.'description', .'indent')+'\n' | '')
+    return (.'description'->size != 0 ? string_wrap(.'description', .'indent') + '\n' | '')
   }
 
   /**! @return parameter descriptions as roles */
   public params()::string => {
     local(attributes = '')
     protect => {
-      .'paramsorder'->forEach => {
+      pairup(.'paramsorder', .'paramskeyed')->forEach => {
+        local(name = #1->first)
         #attributes->append(.'indent' + ':param')
-        .'params'->get(#1)->first != ::any ?
-          #attributes->append(' ' + .'params'->get(#1)->first->asString)
-        #attributes->append(' ' + #1->asString + ':')
-        .'params'->get(#1)->second != null ?
-          #attributes->append(' ' + .'params'->get(#1)->second->asString + '\n')
-          | #attributes->append('\n')
+        if (.'params'->get(#name)->first != ::any &&
+            .'params'->get(#name)->first != ::rest) => {
+          #attributes->append(' ' + .'params'->get(#name)->first->asString)
+        }
+        #attributes->append(' ' + (#1->second ? '-') + #name->asString + ':')
+        if (.'params'->get(#name)->second != null) => {
+          #attributes->append(' ' + .'params'->get(#name)->second->asString + '\n')
+        else
+          #attributes->append('\n')
+        }
       }
     }
     return #attributes
@@ -156,11 +165,11 @@ define docObject => type {
   /**! @return other doc comment attributes as roles */
   public others()::string => {
     local(attributes = '')
-    if (.'result'->first != null || .'result'->second != null) => {
-      #attributes->append(.'indent' + ':return')
-      .'result'->first != null ?
-        #attributes->append(' ' + .'result'->first->asString)
-      #attributes->append(': ' + .'result'->second->asString + '\n')
+    if (.'result'->second != null) => {
+      #attributes->append(.'indent' + ':return: ' + .'result'->second->asString + '\n')
+    }
+    if (.'result'->first != null) => {
+      #attributes->append(.'indent' + ':rtype: `' + .'result'->first->asString + '`\n')
     }
     with attr in .'others'
     do {
@@ -173,7 +182,7 @@ define docObject => type {
 /**!
   Wraps the given string to the specified length.
   Modified to accept a string for indenting each line.
-  (indent was originally a named parameter, but issue #7408 prevented that)
+  (indent was originally a keyword parameter, but issue #7408 prevented that)
   @see http://www.lassosoft.com/tagswap/detail/string_wrap
 */
 define string_wrap(
@@ -202,7 +211,9 @@ define string_wrap(
       )
       while(#lineIn->size > #length) => {
         local('offset' = #length)
-        while(#lineIn->size > #offset && #offset > 0 && !#lineIn->isspace(#offset)) => {
+        while(#lineIn->size > #offset &&
+              #offset > 0 &&
+              !#lineIn->isspace(#offset)) => {
           #offset -= 1
         }
         #offset == 0 ? #offset = #length
@@ -222,17 +233,17 @@ define string_wrap(
   @return   signature as reST string
   @author   Eric Knibbe
 */
-define signature->reString => {
+define signature->asReString => {
   local(
     output = .methodName->asString + '(',
-    cnt = 0,
+    num = 0,
     opt = false,
     size = .paramDescs->size
   )
   with param in .paramDescs
   let name = #param->get(1)
   let type = #param->get(2)
-  let flags = #param->get(3)  // 1st bit: optional param, 2nd bit: named param
+  let flags = #param->get(3)  // 1st bit: optional param, 2nd bit: keyword param
   do {
     if (!#opt && #flags->bitTest(1)) => {
       #opt = true
@@ -242,23 +253,26 @@ define signature->reString => {
       #opt = false
       #output->append(']')
     }
-    #cnt != 0 ?
+    #num != 0 ?
       #output->append(', ')
-    #cnt++
+    #num++
     #flags->bitTest(2) ?
       #output->append('-')
     #output->append(#name->asString)
     #type != ::any ?
-      #output->append('::'+#type->asString)
-    #flags->bitTest(1) && #cnt==#size ?
+      #output->append('::' + #type->asString)
+    #opt && #num==#size && !.restName ?
       #output->append(']')
+    !#opt && #num==#size && .restName ?
+      #output->append('[')
   }
   if (.restName) => {
-    #size != 0 ?
-      #output->append(', ')
+    #size == 0 ?
+      #output->append('[') | #output->append(', ')
     #output->append('...')
     .restName != ::rest ?
       #output->append(.restName->asString)
+    #output->append(']')
   }
   #output->append(')')
   .returnType != ::any ?
@@ -293,8 +307,7 @@ define writeDocs(element, directive::string, nesting::integer=0) => {^
   // initial directive
   '\n' + #indent*#nesting + '.. ' + #directive + ':: '
   #element->type == ::signature ?
-    #element->reString + '\n'
-    | #element->asString->removeTrailing('_thread$')& + '\n'
+    #element->asReString + '\n\n' | #element->asString->removeTrailing('_thread$')& + '\n\n'
 
   // items from docComment
   #docElement->description
@@ -304,13 +317,14 @@ define writeDocs(element, directive::string, nesting::integer=0) => {^
   if (#directive == 'trait') => {
 
     // roles for imported traits
-    if (#element->getType->subTraits->size != 0) => {
-      with trait in #element->getType->subTraits
-      order by #trait->asString
-      do {^
-        #indent*(#nesting+1) + ':import: ' + #trait->asString + '\n'
-      ^}
-    }
+    if (#element->getType->subTraits->size != 0) => {^
+      local(importlist =
+        with trait in #element->getType->subTraits
+        order by #trait->asString
+        select #trait
+      )
+      #indent*(#nesting+1) + ':import: `' + #importlist->join('`, `') + '`\n'
+    ^}
 
     // require directive
     with require in #element->getType->requires
@@ -330,7 +344,7 @@ define writeDocs(element, directive::string, nesting::integer=0) => {^
 
     // role for parent type
     if (#element->getType->parent != ::null) => {^
-      #indent*(#nesting+1) + ':parent: ' + #element->getType->parent->asString + '\n'
+      #indent*(#nesting+1) + ':parent: `' + #element->getType->parent->asString + '`\n'
     ^}
 
     // switch back to thread's type
@@ -361,11 +375,13 @@ define writeDocs(element, directive::string, nesting::integer=0) => {^
         }
       }
 
-      #imports->size ? '\n'
-      with trait in #imports
-      order by #trait->asString
-      do {^
-        #indent*(#nesting+1) + ':import: ' + #trait->asString + '\n'
+      if (#imports->size) => {^
+        local(importlist =
+          with trait in #imports
+          order by #trait->asString
+          select #trait
+        )
+        #indent*(#nesting+1) + ':import: `' + #importlist->join('`, `') + '`\n'
       ^}
 
       // trait provide within type
@@ -404,16 +420,16 @@ iterate($argv) => {
     typecount_orig = sys_listTypes->size,     // staticarray of tags
     traitcount_orig = sys_listTraits->size     // staticarray of tags
   )
-  
+
   // read the files specified
   local(currentfile = file(loop_value))
   sourcefile(#currentfile)->invoke
   stdoutnl(
-    '\n'+'='*#currentfile->name->size+'\n'
-    +#currentfile->name+'\n'
-    +'='*#currentfile->name->size
+    '\n' + '='*#currentfile->name->size + '\n'
+    + #currentfile->name + '\n'
+    + '='*#currentfile->name->size
   )    // print the filename as a heading
-  
+
   // create lists of new types & traits
   local(typelist = array())
   with type in sys_listTypes
@@ -429,7 +445,7 @@ iterate($argv) => {
   do {
     #traitlist->insert(#trait)
   }
-  
+
   // write markup for new unbound methods (must occur before writing types, or this file's methods are included)
   with method in sys_listUnboundMethods
   skip #methodcount_orig
@@ -439,13 +455,13 @@ iterate($argv) => {
   do {
     stdoutnl(writeDocs(#method, 'method'))
   }
-  
+
   // write markup for new types
   with type in #typelist
   do {
     stdoutnl(writeDocs(#type, 'type'))
   }
-  
+
   // write markup for new traits
   with trait in #traitlist
   do {
