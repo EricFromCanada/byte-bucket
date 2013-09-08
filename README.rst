@@ -65,19 +65,21 @@ Lasso
 Python
 ------
 
-`restview (improved) <https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/python/restview/>`_
-  My branch of the excellent restview_, a tool for previewing reST documents
-  in a web browser, with some improvements I made to the CSS, syntax highlighting,
-  and request handling components.
+`Lasso domain for Sphinx <https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/python/lassodomain/sphinxcontrib/lassodomain.py>`_
+   Domain plugin for the Sphinx documentation processor, allowing it to handle
+   descriptions of Lasso syntax.
 
 `Lasso lexer for Pygments <https://bitbucket.org/EricFromCanada/pygments-main>`_
   Contributed a lexer for the Lasso programming language for the Pygments_
   syntax highlighter. It's included in Pygments 1.6.
 
+`restview <https://github.com/mgedmin/restview>`_
+  Contributed CSS, syntax highlighting, and request handling improvements to
+  restview, a tool for previewing reST documents in a web browser.
+
 Find me on Twitter_.
 
 .. _highlight.js: http://softwaremaniacs.org/soft/highlight/en/
-.. _restview: http://mg.pov.lt/restview/
 .. _Pygments: http://pygments.org/
 .. _Twitter: https://twitter.com/EricFromCanada
 
