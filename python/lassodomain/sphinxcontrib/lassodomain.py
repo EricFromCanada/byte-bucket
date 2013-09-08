@@ -21,8 +21,7 @@ from sphinx.util.nodes import make_refnode
 
 
 class LSObject(ObjectDescription):
-    """
-    Description of a Lasso object.
+    """Description of a Lasso object.
     """
     doc_field_types = [
         # :param name: description
@@ -32,28 +31,25 @@ class LSObject(ObjectDescription):
         TypedField('parameter', label=l_('Parameters'), can_collapse=True,
                    names=('param', 'parameter'), typerolename='obj',
                    typenames=('ptype', 'paramtype', 'type')),
-        # :return: description (if no return type specified)
-        Field('return', label=l_('Returns'), has_arg=False,
+        # :return: description
+        Field('returnvalue', label=l_('Returns'), has_arg=False,
               names=('return', 'returns')),
-        # :returnas typename: description (if return type is specified)
-        Field('returnas', label=l_('Returns as'), has_arg=True,
-              names=('returnas','returnsas')),
+        # :rtype: typename
+        Field('returntype', label=l_('Return type'), has_arg=False,
+              names=('rtype', 'returntype')),
+        # :author: name
+        Field('author', label=l_('Author'), has_arg=False,
+              names=('author', 'authors')),
         # :see: resource
         Field('seealso', label=l_('See also'), has_arg=False,
               names=('see', 'url')),
         # :parent: typename
-        Field('parent', label=l_('Parent'), has_arg=False,
-              names=('parent')),
-        # :import: trait_1, trait_2
+        Field('parent', label=l_('Parent type'), has_arg=False,
+              names=('parent', 'super')),
+        # :import: trait_name
         Field('import', label=l_('Imports'), has_arg=False,
               names=('import', 'imports')),
     ]
-
-    def get_signature_prefix(self, sig):
-        """May return a prefix to put before the object name in the
-        signature.
-        """
-        return ''
 
     def needs_arglist(self):
         """May return true if an empty argument list is to be generated even if
@@ -61,32 +57,47 @@ class LSObject(ObjectDescription):
         """
         return False
 
+    def get_signature_prefix(self, sig):
+        """May return a prefix to put before the object name in the signature.
+        """
+        return ''
+
+    def get_index_text(self, objectname, name_obj):
+        """Return the text for the index entry of the object.
+        """
+        raise NotImplementedError('must be implemented in subclasses')
+
     def handle_signature(self, sig, signode):
+        """Transform a Lasso signature into RST nodes.
+        """
         sig = sig.strip()
-        if '(' in sig and sig[-1:] == ')':
+        if '(' in sig:
+            if ')::' in sig:
+                sig, returntype = sig.rsplit('::', 1)
+            else:
+                returntype = None
             prefix, arglist = sig.split('(', 1)
             prefix = prefix.strip()
             arglist = arglist[:-1].strip()
         else:
+            if '::' in sig:
+                sig, returntype = sig.rsplit('::', 1)
+            else:
+                returntype = None
             prefix = sig
             arglist = None
         if '->' in prefix:
-            nameprefix, name = prefix.rsplit('->', 1)
+            name_prefix, name = prefix.rsplit('->', 1)
         else:
-            nameprefix = None
+            name_prefix = None
             name = prefix
 
         objectname = self.env.temp_data.get('ls:object')
-        if nameprefix:
-            #if objectname:
-                # if an object has been set on the page and the item name
-                # includes a prefix, ignore the page object
-                #nameprefix = objectname + '->' + nameprefix
-            fullname = nameprefix + '->' + name
+        if name_prefix:
+            fullname = name_prefix + '->' + name
         elif objectname:
             fullname = objectname + '->' + name
         else:
-            # no current object set and no prefix, denoting an unbound method
             objectname = ''
             fullname = name
 
@@ -96,33 +107,34 @@ class LSObject(ObjectDescription):
         sig_prefix = self.get_signature_prefix(sig)
         if sig_prefix:
             signode += addnodes.desc_annotation(sig_prefix, sig_prefix)
-
-        if nameprefix:
-            signode += addnodes.desc_addname(nameprefix + '->',
-                                             nameprefix + '->')
+        if name_prefix:
+            name_prefix += '->'
+            signode += addnodes.desc_addname(name_prefix, name_prefix)
         signode += addnodes.desc_name(name, name)
         if self.needs_arglist():
             if not arglist:
-                signode += addnodes.desc_parameterlist()    # add empty signature
+                signode += addnodes.desc_parameterlist()
             else:
-                _pseudo_parse_arglist(signode, arglist)     # from the python domain
-        return fullname, nameprefix
+                _pseudo_parse_arglist(signode, arglist)
+            if returntype:
+                signode += addnodes.desc_returns(returntype, returntype)
+        return fullname, name_prefix
 
     def add_target_and_index(self, name_obj, sig, signode):
-        objectname = self.options.get(
-            'object', self.env.temp_data.get('ls:object'))
         fullname = name_obj[0]
+        objectname = self.env.temp_data.get('ls:object')
         if fullname not in self.state.document.ids:
             signode['names'].append(fullname)
             signode['ids'].append(fullname)
-            signode['first'] = not self.names
+            signode['first'] = (not self.names)
             self.state.document.note_explicit_target(signode)
             objects = self.env.domaindata['ls']['objects']
             if fullname in objects:
                 self.state_machine.reporter.warning(
                     'duplicate object description of %s, ' % fullname +
                     'other instance in ' +
-                    self.env.doc2path(objects[fullname][0]),
+                    self.env.doc2path(objects[fullname][0]) +
+                    ', use :noindex: for one of them',
                     line=self.lineno)
             objects[fullname] = self.env.docname, self.objtype
 
@@ -131,38 +143,59 @@ class LSObject(ObjectDescription):
             self.indexnode['entries'].append(('single', indextext,
                                               fullname, ''))
 
-    def get_index_text(self, objectname, name_obj):
-        name, obj = name_obj
-        if self.objtype == 'method':
-            if not obj:
-                return _('%s') % name
-            return _('%s->%s') % (obj, name)
-        elif self.objtype == 'provide':
-            return _('%s->%s') % (obj, name)
-        return _('%s (%s)') % (name, self.objtype)
+    def before_content(self):
+        # needed for automatic qualification of members (reset in subclasses)
+        self.objname_set = False
+
+    def after_content(self):
+        if self.objname_set:
+            self.env.temp_data['ls:object'] = None
 
 
 class LSDefinition(LSObject):
-    """Description of an object definition (types, traits, threads)."""
+    """Description of an object definition (type, trait, thread).
+    """
     def get_signature_prefix(self, sig):
         return self.objtype + ' '
 
+    def get_index_text(self, objectname, name_obj):
+        return _('%s (%s)') % (name_obj[0], self.objtype)
 
-class LSCallable(LSObject):
-    """Description of an object with a signature."""
+    def before_content(self):
+        LSObject.before_content(self)
+        if self.names:
+            self.env.temp_data['ls:object'] = self.names[0][0]
+            self.objname_set = True
+
+
+class LSTag(LSObject):
+    """Description of an object with a signature (method, member).
+    """
     def needs_arglist(self):
         return True
 
+    def get_index_text(self, objectname, name_obj):
+        name = name_obj[0].split('->')[-1]
+        if not (objectname or name_obj[1]):
+            return _('%s() (method)') % name
+        else:
+            objectname = name_obj[0].split('->')[0]
+        return _('%s() (%s member)') % (name, objectname)
 
-class LSTraitTag(LSCallable):
-    """Description of an object within a trait."""
+
+class LSTraitTag(LSTag):
+    """Description of a tag within a trait (require, provide).
+    """
     def get_signature_prefix(self, sig):
         return self.objtype + ' '
 
+    def get_index_text(self, objectname, name_obj):
+        name = name_obj[0].split('->')[-1]
+        return _('%s() (%s %s)') % (name, objectname, self.objtype)
+
 
 class LSXRefRole(XRefRole):
-    """
-    Provides cross reference links for Lasso objects.
+    """Provides cross reference links for Lasso objects.
     """
     def process_link(self, env, refnode, has_explicit_title, title, target):
         refnode['ls:object'] = env.temp_data.get('ls:object')
@@ -181,31 +214,32 @@ class LSXRefRole(XRefRole):
 
 
 class LassoDomain(Domain):
-    """
-    Lasso language domain.
+    """Lasso language domain.
     """
     name = 'ls'
     label = 'Lasso'
     object_types = {
-        'method':  ObjType(l_('method'),  'meth', 'obj'),
-        'trait':   ObjType(l_('trait'),   'trait', 'obj'),
-        'type':    ObjType(l_('type'),    'type', 'obj'),
-        'thread':  ObjType(l_('thread'),  'thread', 'obj'),
-        'provide': ObjType(l_('provide'), 'meth', 'obj'),
-        'require': ObjType(l_('require'), 'meth', 'obj'),
+        'method':  ObjType(l_('method'),  'meth'),
+        'member':  ObjType(l_('member'),  'meth'),
+        'provide': ObjType(l_('provide'), 'meth'),
+        'require': ObjType(l_('require'), 'meth'),
+        'type':    ObjType(l_('type'),    'type'),
+        'trait':   ObjType(l_('trait'),   'trait'),
+        'thread':  ObjType(l_('thread'),  'thread'),
     }
     directives = {
-        'method':  LSCallable,
+        'method':  LSTag,
+        'member':  LSTag,
+        'provide': LSTraitTag,
+        'require': LSTraitTag,  # name and signature only
         'type':    LSDefinition,
         'trait':   LSDefinition,
         'thread':  LSDefinition,
-        'provide': LSTraitTag,
-        'require': LSTraitTag,  # name and signature only
     }
     roles = {
         'meth':   LSXRefRole(fix_parens=True),
-        'trait':  LSXRefRole(),
         'type':   LSXRefRole(),
+        'trait':  LSXRefRole(),
         'thread': LSXRefRole(),
     }
     initial_data = {
