@@ -1,10 +1,10 @@
 #!/usr/bin/lasso9
 /*[*/
 /*
-  Given one or more Lasso files, outputs reference docs for each element
-  in the file for the Lasso domain for Sphinx. Since Lasso defaults to
-  not retaining docComments, prefix with `env LASSO9_RETAIN_COMMENTS=1`
-  when running from the command line. Generates reST markup like so:
+  Given a set of Lasso files or element names, outputs reference docs for each
+  element for the Lasso domain for Sphinx. Since Lasso defaults to not retaining
+  docComments, prefix with `env LASSO9_RETAIN_COMMENTS=1` when running from the
+  command line. Generates reST markup like so:
 
   method:: signature
     docstring                     <-- words from docComment before @attribute lines
@@ -41,11 +41,13 @@
   - Lasso has no way to show which member methods are public/protected/private (#7494)
   - a trait will see its requires disappear as imports are added (#7581)
   - data elements and therefore automatic getters/setters can't have docstrings
+  - doesn't detect redefinitions of existing methods or members
 
   To-do:
   - warn when finding @param lines with no matching parameter
   - replace auto-collect with output to variable
   - add line-wrapping to signatures and attribute descriptions
+  - add detection of members added to built-in types
   - cut first line of description if it matches the name of the docComment's element
   - onCreate methods should be listed first
 */
@@ -53,7 +55,7 @@
 not sys_getenv('LASSO9_RETAIN_COMMENTS') ?
   fail('This program requires the LASSO9_RETAIN_COMMENTS environment variable be set to 1')
 $argc == 1 ?
-  fail('Specify one or more Lasso files to read as arguments')
+  fail('Specify --find=<type or trait regex> and/or one or more Lasso files to read as arguments')
 
 /**!
   Type containing description and attributes of a given tag's doc comment.
@@ -408,37 +410,57 @@ define writeDocs(element, directive::string, nesting::integer=0) => {^
 ^}
 
 /*
-  This script is run with arguments specifying files containing elements to
-  generate reST markup for. Each new method, type, and trait can be read off the
+  This script is run with arguments specifying language elements and/or files to
+  generate reST markup for. Each new type, trait, and method can be read off the
   end of the lists returned by the sys_list* methods.
 */
 iterate($argv) => {
   loop_count == 1 ? loop_continue
-  $argv->first->endsWith(loop_value) ? loop_continue
+  $argv->first->endsWith(loop_value) ? loop_continue  // prevent script from reading itself
   local(
-    methodcount_orig = sys_listUnboundMethods->size,  // staticarray of signatures
     typecount_orig = sys_listTypes->size,     // staticarray of tags
-    traitcount_orig = sys_listTraits->size     // staticarray of tags
+    traitcount_orig = sys_listTraits->size,   // staticarray of tags
+    methodcount_orig = sys_listUnboundMethods->size,  // staticarray of signatures
+    currentfile = file(loop_value),
+    typelist = array(),
+    traitlist = array()
   )
 
-  // read the files specified
-  local(currentfile = file(loop_value))
-  sourcefile(#currentfile)->invoke
+  // if argument is --find=<type or trait regex>, include the results in the output
+  if (loop_value->beginsWith('--find=')) => {
+    local(findarg = '^(?![$])' + loop_value->sub(8)->replace('"','')&replace("'",'')&)
+    sys_listTypes->forEach => {
+      regexp(-find=#findarg, -input=#1->asString, -ignoreCase)->matches ?
+        stdoutnl('\n' + '='*#1->asString->size +
+                 '\n' + #1->asString +
+                 '\n' + '='*#1->asString->size +
+                 '\n' + writeDocs(#1, 'type'))
+    }
+    sys_listTraits->forEach => {
+      regexp(-find=#findarg, -input=#1->asString, -ignoreCase)->matches ?
+        stdoutnl('\n' + '='*#1->asString->size +
+                 '\n' + #1->asString +
+                 '\n' + '='*#1->asString->size +
+                 '\n' + writeDocs(#1, 'trait'))
+    }
+    loop_continue
+  }
+
+  // read each specified file
+  sourcefile(#currentfile, -autoCollect=false)->invoke
   stdoutnl(
-    '\n' + '='*#currentfile->name->size + '\n'
-    + #currentfile->name + '\n'
-    + '='*#currentfile->name->size
+    '\n' + '='*#currentfile->name->size +
+    '\n' + #currentfile->name +
+    '\n' + '='*#currentfile->name->size
   )    // print the filename as a heading
 
   // create lists of new types & traits
-  local(typelist = array())
   with type in sys_listTypes
   skip #typecount_orig
   where not #type->asString->endsWith('$')  // skip thread objects
   do {
     #typelist->insert(#type)
   }
-  local(traitlist = array())
   with trait in sys_listTraits
   skip #traitcount_orig
   where not #trait->asString->beginsWith('$') // skip traits made by combining other traits
