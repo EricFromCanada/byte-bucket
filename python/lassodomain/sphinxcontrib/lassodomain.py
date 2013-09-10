@@ -237,7 +237,7 @@ class LassoDomain(Domain):
         'thread':  LSDefinition,
     }
     roles = {
-        'meth':   LSXRefRole(fix_parens=True),
+        'meth':   LSXRefRole(),
         'type':   LSXRefRole(),
         'trait':  LSXRefRole(),
         'thread': LSXRefRole(),
