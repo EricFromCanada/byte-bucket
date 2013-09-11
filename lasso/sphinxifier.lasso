@@ -4,10 +4,10 @@
   Given a set of Lasso files or element names, outputs reference docs for each
   element for the Lasso domain for Sphinx. Since Lasso defaults to not retaining
   docComments, prefix with `env LASSO9_RETAIN_COMMENTS=1` when running from the
-  command line. Generates reST markup like so:
+  command line. Generates reST markup like so (with extra line breaks):
 
   method:: signature
-    docstring                     <-- words from docComment before @attribute lines
+    docstring                     <-- docComment content before @-prefixed attribute lines
     :param name: description          <-- from "@param name description" in docComment
     :param type name: description     <-- type inserted if not ::any
     :param ...: description        <-- if signature has ... & docComment has @param rest or @param ...
@@ -41,15 +41,8 @@
   - Lasso has no way to show which member methods are public/protected/private (#7494)
   - a trait will see its requires disappear as imports are added (#7581)
   - data elements and therefore automatic getters/setters can't have docstrings
-  - doesn't detect redefinitions of existing methods or members
-
-  To-do:
-  - warn when finding @param lines with no matching parameter
-  - replace auto-collect with output to variable
-  - add line-wrapping to signatures and attribute descriptions
-  - add detection of members added to built-in types
-  - cut first line of description if it matches the name of the docComment's element
-  - onCreate methods should be listed first
+  - little error handling, e.g. when finding @param lines with no matching parameter
+  - uses auto-collect; might be faster with output to variable instead
 */
 
 not sys_getenv('LASSO9_RETAIN_COMMENTS') ?
@@ -97,12 +90,12 @@ define docObject => type {
 
     // fill params & others with data parsed from @attribute lines
     local(      // remove delimiters, trim & collapse whitespace but preserve paragraph breaks
-      components = #element->docComment->removeLeading('/**!')
+      components = #element->docComment->replace(regexp('^/\\*\\*!'),' ')
                                         &removeTrailing('*/')
                                         &removeTrailing('*')
                                         &replace(regexp('[ \\t]*(\\n|\\r\\n?)[ \\t]*'),'\n')
                                         &replace(regexp('[ \\t]+|(?<!\\n)\\n(?!\\n)'),' ')
-                                        &replace(regexp('^@'),' @') // needs leading space if no description
+                                        &replace(regexp('\\n+@'),' @') // first @ always needs leading space
                                         &split(' @')
     )   // array('description','param name Words about parameter','return Words about result')
     #components->first != null ? .'description' = #components->first->trim&;
