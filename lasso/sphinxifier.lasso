@@ -389,6 +389,7 @@ define writeDocs(element, directive::string, nesting::integer=0) => {^
     }
 
     // member directive
+    // refine to detect `data` candidates 
     with member in #element->getType->listMethods
     let m_name = #member->methodName->asString
     where #member->typeName == #element
