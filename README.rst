@@ -6,23 +6,23 @@
 
 Various pieces of code I've written, in case someone else finds them useful.
 
-`Browse all files <https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/src/>`_
+`Browse all files`_
 
 AppleScript
 -----------
 
-`close Safari Web Inspector script <https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/applescript/close%20Safari%20Web%20Inspector.applescript>`_
+`close Safari Web Inspector script`_
   Before Safari 6, the Web Inspector shortcut would only open it. Attach 
   this AppleScript to another shortcut to make it closeable.
   
 bash
 ----
 
-`keyputter.sh <https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bash/keyputter.sh>`_
+`keyputter.sh`_
   Handy if you have a bunch of servers you need to install your SSH key onto and
   don't have ssh-copy-id.
 
-`svn-user-htdigest.sh <https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bash/svn-user-htdigest.sh>`_
+`svn-user-htdigest.sh`_
   Use this to generate an htdigest file of users from an svnserve passwd file.
   Useful if you have a Trac installation using HTTPAuth and you need to grant
   your SVN users access.
@@ -30,7 +30,7 @@ bash
 BBEdit
 ------
 
-`reST codeless language module <https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bbedit/reStructuredText.plist>`_
+`reST codeless language module`_
   Language module for BBEdit and TextWrangler which highlights elements 
   in reStructuredText files and lists section titles in the function pop-up
   menu. Recognizes both standard reST directives and Sphinx additions.
@@ -42,7 +42,7 @@ BBEdit
 JavaScript
 ----------
   
-`touch-menus-plus.js <https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/javascript/touch-menus-plus.js>`_
+`touch-menus-plus.js`_
   Makes navigation links with drop-down menus usable on iOS by only enabling
   the link if its submenu is visible. This is only required if JavaScript is
   used to hide and show submenus, since iOS accounts for CSS-based menus by
@@ -51,34 +51,46 @@ JavaScript
   
   `See it in action <http://www.treefrog.ca/>`_
 
-`Lasso lexer for highlight.js <https://github.com/isagalaev/highlight.js>`_
+`Lasso lexer for highlight.js`_
   Contributed a lexer for the Lasso programming language for highlight.js_, a
   JS-based syntax highlighter. Expect to see it in the next release.
 
 Lasso
 -----
 
-`sphinxifier.lasso <https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/lasso/sphinxifier.lasso>`_
+`sphinxifier.lasso`_
   Script for generating API documentation for Sphinx directly from Lasso code.
 
 Python
 ------
 
-`Lasso domain for Sphinx <https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/python/lassodomain/sphinxcontrib/lassodomain.py>`_
+`Lasso domain for Sphinx`_
    Domain plugin for the Sphinx documentation processor, allowing it to handle
    descriptions of Lasso syntax.
 
-`Lasso lexer for Pygments <https://bitbucket.org/EricFromCanada/pygments-main>`_
+`Lasso lexer for Pygments`_
   Contributed a lexer for the Lasso programming language for the Pygments_
   syntax highlighter. It's included in Pygments 1.6.
 
-`restview <https://github.com/mgedmin/restview>`_
+`restview`_
   Contributed CSS, syntax highlighting, and request handling improvements to
   restview, a tool for previewing reST documents in a web browser.
 
 Find me on Twitter_.
 
+
+.. _Browse all files: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/src/
+.. _close Safari Web Inspector script: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/applescript/close%20Safari%20Web%20Inspector.applescript
+.. _keyputter.sh: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bash/keyputter.sh
+.. _svn-user-htdigest.sh: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bash/svn-user-htdigest.sh
+.. _reST codeless language module: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bbedit/reStructuredText.plist
+.. _touch-menus-plus.js: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/javascript/touch-menus-plus.js
+.. _Lasso lexer for highlight.js: https://github.com/isagalaev/highlight.js
 .. _highlight.js: http://softwaremaniacs.org/soft/highlight/en/
+.. _sphinxifier.lasso: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/lasso/sphinxifier.lasso
+.. _Lasso domain for Sphinx: https://pypi.python.org/pypi/sphinxcontrib-lassodomain/
+.. _Lasso lexer for Pygments: https://bitbucket.org/EricFromCanada/pygments-main
 .. _Pygments: http://pygments.org/
+.. _restview: https://github.com/mgedmin/restview
 .. _Twitter: https://twitter.com/EricFromCanada
 
