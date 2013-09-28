@@ -1,0 +1,229 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=sunburst"></script>
+<script src="lang-lasso.js"></script>
+<style>
+body { margin: 0; padding: 0 }
+pre { margin: 0 }
+</style>
+</head>
+<body onload="adjustHeightInParent()">
+<div style="width: 60em; display: inline-block">
+
+<pre class="prettyprint lang-lasso">
+/**
+	trait_json_serialize
+	Objects with this trait will be assumed to convert to json data
+	when its -&gt;asString method is called
+*/
+define trait_json_serialize =&gt; trait {
+	require asString()
+}
+
+define json_serialize(e::bytes)::string =&gt; ('"' + (string(#e)-&gt;Replace(`\`, `\\`) & Replace('\"', '\\"') & Replace('\r', '\\r') & Replace('\n', '\\n') & Replace('\t', '\\t') & Replace('\f', '\\f') & Replace('\b', '\\b') &) + '"')
+define json_serialize(e::string)::string =&gt; ('"' + (string(#e)-&gt;Replace(`\`, `\\`) & Replace('\"', '\\"') & Replace('\r', '\\r') & Replace('\n', '\\n') & Replace('\t', '\\t') & Replace('\f', '\\f') & Replace('\b', '\\b') &) + '"')
+define json_serialize(e::json_literal)::string =&gt; (#e-&gt;asstring)
+define json_serialize(e::integer)::string =&gt; (#e-&gt;asstring)
+define json_serialize(e::decimal)::string =&gt; (#e-&gt;asstring)
+define json_serialize(e::boolean)::string =&gt; (#e-&gt;asstring)
+define json_serialize(e::null)::string =&gt; ('null')
+define json_serialize(e::date)::string =&gt; ('"' + #e-&gt;format(#e-&gt;gmt ? '%QT%TZ' | '%Q%T') + '"')
+/*
+define json_serialize(e::array)::string =&gt; {
+	local(output) = '';
+	local(delimit) = '';
+	#e-&gt;foreach =&gt; { #output += #delimit + json_serialize(#1); #delimit = ', '; }
+	return('[' + #output + ']');
+}
+define json_serialize(e::staticarray)::string =&gt; {
+	local(output) = '';
+	local(delimit) = '';
+	#e-&gt;foreach =&gt; { #output += #delimit + json_serialize(#1); #delimit = ', '; }
+	return('[' + #output + ']');
+}
+*/
+define json_serialize(e::trait_forEach)::string =&gt; {
+	local(output) = '';
+	local(delimit) = '';
+	#e-&gt;foreach =&gt; { #output += #delimit + json_serialize(#1); #delimit = ', '; }
+	return('[' + #output + ']');
+}
+define json_serialize(e::map)::string =&gt; {
+	local(output = with pr in #e-&gt;eachPair 
+					select json_serialize(#pr-&gt;first-&gt;asString) + ': ' + json_serialize(#pr-&gt;second))
+	return '{' + #output-&gt;join(',') + '}'
+}
+define json_serialize(e::json_object)::string =&gt; {
+	local(output) = '';
+	local(delimit) = '';
+	#e-&gt;foreachpair =&gt; { #output += #delimit + #1-&gt;first + ': ' + json_serialize(#1-&gt;second); #delimit = ', '; }
+	return('{' + #output + '}');
+}
+define json_serialize(e::trait_json_serialize) =&gt; #e-&gt;asString
+define json_serialize(e::any)::string =&gt; json_serialize('&lt;LassoNativeType&gt;' + #e-&gt;serialize + '&lt;/LassoNativeType&gt;')
+
+// Bil Corry fixes for decoding json
+define json_consume_string(ibytes::bytes) =&gt; {
+	local(obytes) = bytes;
+	local(temp) = 0;
+	while((#temp := #ibytes-&gt;export8bits) != 34);
+		#obytes-&gt;import8bits(#temp);
+		(#temp == 92) ? #obytes-&gt;import8bits(#ibytes-&gt;export8bits); // Escape \
+ 	/while;
+	local(output = string(#obytes)-&gt;unescape)
+	//Replace('\\"', '\"') & Replace('\\r', '\r') & Replace('\\n', '\n') & Replace('\\t', '\t') & Replace('\\f', '\f') & Replace('\\b', '\b') &;
+	if(#output-&gt;BeginsWith('&lt;LassoNativeType&gt;') && #output-&gt;EndsWith('&lt;/LassoNativeType&gt;'));
+		Protect;
+			return serialization_reader(xml(#output - '&lt;LassoNativeType&gt;' - '&lt;/LassoNativeType&gt;'))-&gt;read
+		/Protect;
+	else( (#output-&gt;size == 16 or #output-&gt;size == 15) and regexp(`\d{8}T\d{6}Z?`, '', #output)-&gt;matches)
+		return date(#output, -Format=#output-&gt;size == 16?`yyyyMMdd'T'HHmmssZ`|`yyyyMMdd'T'HHmmss`)
+	/if
+	return #output
+}
+
+// Bil Corry fix + Ke fix
+define json_consume_token(ibytes::bytes, temp::integer) =&gt; {
+
+	local(obytes = bytes-&gt;import8bits(#temp) &,
+		delimit = array(9, 10, 13, 32, 44, 58, 93, 125)) // \t\r\n ,:]}
+
+	while(#delimit !&gt;&gt; (#temp := #ibytes-&gt;export8bits))
+		#obytes-&gt;import8bits(#temp)
+	/while
+
+	#temp == 125? // }
+		#ibytes-&gt;marker -= 1
+//============================================================================
+//	Is also end of token if end of array[]
+	#temp == 93? // ]
+		#ibytes-&gt;marker -= 1
+//............................................................................		
+
+	local(output = string(#obytes))
+	#output == 'true'?
+		return true
+	#output == 'false'?
+		return false
+	#output == 'null'?
+		return null
+	string_IsNumeric(#output)?
+	return (#output &gt;&gt; '.')? decimal(#output) | integer(#output)
+
+	return #output
+}
+
+// Bil Corry fix
+define json_consume_array(ibytes::bytes)::array =&gt; {
+	Local(output) = array;
+	local(delimit) = array( 9, 10, 13, 32, 44); // \t\r\n ,
+	local(temp) = 0;
+	While((#temp := #ibytes-&gt;export8bits) != 93); // ]
+		If(#delimit &gt;&gt; #temp);
+			// Discard whitespace
+		Else(#temp == 34); // "
+			#output-&gt;insert(json_consume_string(#ibytes));
+		Else(#temp == 91); // [
+			#output-&gt;insert(json_consume_array(#ibytes));
+		Else(#temp == 123); // {
+			#output-&gt;insert(json_consume_object(#ibytes));
+		Else;
+			#output-&gt;insert(json_consume_token(#ibytes, #temp));
+			(#temp == 93) ? Loop_Abort;
+		/If;
+	/While;
+	Return(#output);
+}
+
+// Bil Corry fix
+define json_consume_object(ibytes::bytes)::map =&gt; {
+	Local('output' = map,
+		'delimit' = array( 9, 10, 13, 32, 44), // \t\r\n ,
+		'temp' = 0,
+		'key' = null,
+		'val' = null);
+	While((#temp := #ibytes-&gt;export8bits) != 125); // }
+		If(#delimit &gt;&gt; #temp);
+			// Discard whitespace
+		Else((#key !== null) && (#temp == 34)); // "
+			#output-&gt;insert(#key = json_consume_string(#ibytes));
+			#key = null;
+		Else((#key !== null) && (#temp == 91)); // [
+			#output-&gt;insert(#key = json_consume_array(#ibytes));
+			#key = null;
+		Else((#key !== null) && (#temp == 123)); // {
+			#output-&gt;insert(#key = json_consume_object(#ibytes));
+			#key = null;
+		Else((#key !== null));
+			#output-&gt;insert(#key = json_consume_token(#ibytes, #temp));
+			#key = null;
+		Else;
+			#key = json_consume_string(#ibytes);
+			while(#delimit &gt;&gt; (#temp := #ibytes-&gt;export8bits));
+			/while;
+			#temp != 58 ? Loop_Abort;
+		/If;
+	/While;
+
+	If((#output &gt;&gt; '__jsonclass__') && (#output-&gt;Find('__jsonclass__')-&gt;isa('array')) && (#output-&gt;Find('__jsonclass__')-&gt;size &gt;= 2) && (#output-&gt;Find('__jsonclass__')-&gt;First == 'deserialize'));
+		Return(#output-&gt;find('__jsonclass__')-&gt;Second-&gt;First);
+	Else((#output &gt;&gt; 'native') && (#output &gt;&gt; 'comment') && (#output-&gt;find('comment') == 'http://www.lassosoft.com/json'));
+		Return(#output-&gt;find('native'));
+	/If;
+	Return(#output);
+}
+
+// Bil Corry fix + Ke fix
+define json_deserialize(ibytes::bytes)::any =&gt; {
+	#ibytes-&gt;removeLeading(bom_utf8);
+
+//============================================================================
+//	Reset marker on provided bytes
+	#ibytes-&gt;marker = 0
+//............................................................................		
+	
+	Local(temp) = #ibytes-&gt;export8bits;
+	If(#temp == 91); // [
+		Return(json_consume_array(#ibytes));
+	Else(#temp == 123); // {
+		Return(json_consume_object(#ibytes));
+	else(#temp == 34) // "
+		return json_consume_string(#ibytes)
+	/If;
+}
+
+define json_deserialize(s::string) =&gt; json_deserialize(bytes(#s))
+
+/**! json_literal - This is a subclass of String used for JSON encoding.
+
+	A json_literal works exactly like a string, but will be inserted directly
+	rather than being encoded into JSON. This allows JavaScript elements
+	like functions to be inserted into JSON objects. This is most useful
+	when the JSON object will be used within a JavaScript on the local page.
+	[Map: 'fn'=Literal('function(){ ...})] =&gt; {'fn': function(){ ...}}
+**/
+define json_literal =&gt; type {
+	parent string
+}
+
+/**! json_object - This is a subclass of Map used for JSON encoding.
+
+	An object works exactly like a map, but when it is encoded into JSON all
+	of the keys will be inserted literally. This makes it easy to create a
+	JavaScript object without extraneous quote marks.
+	Object('name'='value') =&gt; {name: "value"}
+**/
+define json_object =&gt; type {
+	parent map
+	public onCreate(...) =&gt; ..onCreate(:#rest or (:))
+}
+
+define json_rpccall(method::string, params=map, id='', host='') =&gt; {
+	#id == '' ? #host = Lasso_UniqueID;
+	#host == '' ? #host = 'http://localhost/lassoapps.8/rpc/rpc.lasso';
+	Return(Decode_JSON(Include_URL(#host, -PostParams=Encode_JSON(Map('method' = #method, 'params' = #params, 'id' = #id)))));
+}
+</pre>
+
+</div>
+</body></html>
