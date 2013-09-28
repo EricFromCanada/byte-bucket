@@ -92,7 +92,7 @@ Find me on Twitter_.
 .. _Lasso lexer for highlight.js: https://github.com/isagalaev/highlight.js
 .. _highlight.js: http://softwaremaniacs.org/soft/highlight/en/
 .. _Lasso lexer for google-code-prettify: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/javascript/lang-lasso.js
-.. _demo: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/javascript/demo-lasso.html
+.. _demo: http://ericfromcanada.bitbucket.org/javascript/demo-lasso.html
 .. _google-code-prettify: https://code.google.com/p/google-code-prettify/
 .. _sphinxifier.lasso: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/lasso/sphinxifier.lasso
 .. _Lasso domain for Sphinx: https://pypi.python.org/pypi/sphinxcontrib-lassodomain/
