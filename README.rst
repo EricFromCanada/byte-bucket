@@ -55,7 +55,7 @@ JavaScript
   Contributed a lexer for the Lasso programming language for highlight.js_, a
   JS-based syntax highlighter. Expect to see it in the next release.
 
-`Lasso lexer for google-code-prettify`_
+`Lasso lexer for google-code-prettify`_ (demo_)
   Also wrote a Lasso lexer for google-code-prettify_, another JS-based syntax
   highlighter. Hoping to eventually get it working on stackoverflow.com.
 
@@ -92,6 +92,7 @@ Find me on Twitter_.
 .. _Lasso lexer for highlight.js: https://github.com/isagalaev/highlight.js
 .. _highlight.js: http://softwaremaniacs.org/soft/highlight/en/
 .. _Lasso lexer for google-code-prettify: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/javascript/lang-lasso.js
+.. _demo: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/javascript/demo-lasso.html
 .. _google-code-prettify: https://code.google.com/p/google-code-prettify/
 .. _sphinxifier.lasso: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/lasso/sphinxifier.lasso
 .. _Lasso domain for Sphinx: https://pypi.python.org/pypi/sphinxcontrib-lassodomain/
