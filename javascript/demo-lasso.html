@@ -11,7 +11,7 @@ pre { margin: 0 }
 <div style="width: 60em; display: inline-block">
 
 <pre class="prettyprint lang-lasso">
-<?lasso
+&lt;?lasso
 /**
 	trait_json_serialize
 	Objects with this trait will be assumed to convert to json data
@@ -224,7 +224,7 @@ define json_rpccall(method::string, params=map, id='', host='') =&gt; {
 	#host == '' ? #host = 'http://localhost/lassoapps.8/rpc/rpc.lasso';
 	Return(Decode_JSON(Include_URL(#host, -PostParams=Encode_JSON(Map('method' = #method, 'params' = #params, 'id' = #id)))));
 }
-?>
+?&gt;
 </pre>
 
 </div>
