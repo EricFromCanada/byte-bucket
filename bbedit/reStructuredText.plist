@@ -18,7 +18,7 @@
 		~/Library/Application Support/TextWrangler/Language Modules/
 
 	and relaunch BBEdit or TextWrangler.
-	
+
 	Known issues:
 	- skips highlighting directives as keywords if a space comes before the ::
 	- BB/TW may skip highlighting comments starting on the file's 1st or 2nd line

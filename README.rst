@@ -12,9 +12,9 @@ AppleScript
 -----------
 
 `close Safari Web Inspector script`_
-  Before Safari 6, the Web Inspector shortcut would only open it. Attach 
+  Before Safari 6, the Web Inspector shortcut would only open it. Attach
   this AppleScript to another shortcut to make it closeable.
-  
+
 bash
 ----
 
@@ -26,29 +26,33 @@ bash
   Use this to generate an htdigest file of users from an svnserve passwd file.
   Useful if you have a Trac installation using HTTPAuth and you need to grant
   your SVN users access.
-  
+
+`time-machine-NASifier.command`
+  Creates a Time Machine bundle for the current Mac with larger 128MB band files
+  (up from 8MB) to improve performance when backing up to a non-HFS+ NAS.
+
 BBEdit
 ------
 
 `reST codeless language module`_
-  Language module for BBEdit and TextWrangler which highlights elements 
+  Language module for BBEdit and TextWrangler which highlights elements
   in reStructuredText files and lists section titles in the function pop-up
   menu. Recognizes both standard reST directives and Sphinx additions.
-  
+
   I recommend also setting these options for editing reStructuredText: enabling
-  auto-indent and auto-expand tabs, setting tab width to 3 spaces, disabling 
-  soft wrap text, and setting the page guide to 80 characters. 
+  auto-indent and auto-expand tabs, setting tab width to 3 spaces, disabling
+  soft wrap text, and setting the page guide to 80 characters.
 
 JavaScript
 ----------
-  
+
 `touch-menus-plus.js`_
   Makes navigation links with drop-down menus usable on iOS by only enabling
   the link if its submenu is visible. This is only required if JavaScript is
   used to hide and show submenus, since iOS accounts for CSS-based menus by
   preventing a ``:hover`` region's links from activating until any divs it'll
   reveal are displayed.
-  
+
   `See it in action <http://www.treefrog.ca/>`_
 
 `Lasso lexer for highlight.js`_
@@ -100,4 +104,3 @@ Find me on Twitter_.
 .. _Pygments: http://pygments.org/
 .. _restview: https://github.com/mgedmin/restview
 .. _Twitter: https://twitter.com/EricFromCanada
-
