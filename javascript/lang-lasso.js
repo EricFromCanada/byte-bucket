@@ -40,13 +40,13 @@ PR['registerLangHandler'](
           // square or angle bracket delimiters
           [PR['PR_TAG'],          /^[[\]]|<\?(?:lasso(?:script)?|=)|\?>|noprocess|no_square_brackets/i],
           // single-line or block comments
-          [PR['PR_COMMENT'],      /^(?:\/\/[^\r\n]*|\/\*[\s\S]*?\*\/)/],
+          [PR['PR_COMMENT'],      /^\/\/[^\r\n]*|\/\*[\s\S]*?\*\//],
           // local, thread, or member variables, or keyword parameters, or hashbang
           [PR['PR_ATTRIB_NAME'],  /^#\d+|[#$-][a-z_][\w.]*|\.'[a-z_][\w.]*'|#!.+lasso9/i, null, '#$'],
           // tag literals
           [PR['PR_ATTRIB_VALUE'], /^::\s*[a-z_][\w.]*/i],
           // number as hex integer literal, a decimal real literal, or in scientific notation
-          [PR['PR_LITERAL'],      /^(?:\d*\.\d+(?:e[-+]?\d+)?|0x[\da-f]+|\d+)/i, null, '0123456789'],
+          [PR['PR_LITERAL'],      /^\d*\.\d+(?:e[-+]?\d+)?|0x[\da-f]+|\d+/i, null, '0123456789'],
           // constants
           [PR['PR_LITERAL'],      /^(?:true|false|none|minimal|full|all|void|and|or|not|bw|nbw|ew|new|cn|ncn|lt|lte|gt|gte|eq|neq|rx|nrx|ft)\b/i],
           // container or control keywords
