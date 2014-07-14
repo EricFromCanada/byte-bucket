@@ -38,7 +38,7 @@ PR['registerLangHandler'](
         ],
         [
           // square or angle bracket delimiters
-          [PR['PR_TAG'],          /^[[\]]|<\?(?:lasso(?:script)?|=)|\?>/i],
+          [PR['PR_TAG'],          /^[[\]]|<\?(?:lasso(?:script)?|=)|\?>|noprocess|no_square_brackets/i],
           // single-line or block comments
           [PR['PR_COMMENT'],      /^(?:\/\/[^\r\n]*|\/\*[\s\S]*?\*\/)/],
           // local, thread, or member variables, or keyword parameters, or hashbang
