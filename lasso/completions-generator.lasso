@@ -242,6 +242,12 @@ local(f) = file("CodaCompletion.plist")
 			<false/>
 		</dict>
 	</array>
+	<key>SymbolTableContext</key>
+	<dict>
+		<key>MatchContexts</key>
+		<array>
+		</array>
+	</dict>
 	<key>Name</key>
 	<string>Lasso</string>
 	<key>VariablePrefixes</key>
