@@ -27,7 +27,7 @@ bash
   Useful if you have a Trac installation using HTTPAuth and you need to grant
   your SVN users access.
 
-`time-machine-NASifier.command`
+`Time-Machine-NASifier.command`_
   Creates a Time Machine bundle for the current Mac with larger 128MB band files
   (up from 8MB) to improve performance when backing up to a non-HFS+ NAS.
 
@@ -57,14 +57,20 @@ JavaScript
 
 `Lasso lexer for highlight.js`_
   Contributed a lexer for the Lasso programming language for highlight.js_, a
-  JS-based syntax highlighter. Expect to see it in the next release.
+  JS-based syntax highlighter. Included since version 7.4.
 
 `Lasso lexer for google-code-prettify`_ (demo_)
   Also wrote a Lasso lexer for google-code-prettify_, another JS-based syntax
-  highlighter. Hoping to eventually get it working on stackoverflow.com.
+  highlighter. Hoping to eventually get it working on stackoverflow.com. Star
+  the merge request here:
+  http://code.google.com/p/google-code-prettify/issues/detail?id=311
 
 Lasso
 -----
+
+`completions-generator.lasso`_
+  Script which generates a CodaCompletion.plist file for the `Coda 2 Lasso mode
+  <https://github.com/LassoSoft/Lasso-HTML.mode>`_.
 
 `sphinxifier.lasso`_
   Script for generating API documentation for Sphinx directly from Lasso code.
@@ -78,7 +84,7 @@ Python
 
 `Lasso lexer for Pygments`_
   Contributed a lexer for the Lasso programming language for the Pygments_
-  syntax highlighter. It's included in Pygments 1.6.
+  syntax highlighter. Included since Pygments 1.6.
 
 `restview`_
   Contributed CSS, syntax highlighting, and request handling improvements to
@@ -91,6 +97,7 @@ Find me on Twitter_.
 .. _close Safari Web Inspector script: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/applescript/close%20Safari%20Web%20Inspector.applescript
 .. _keyputter.sh: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bash/keyputter.sh
 .. _svn-user-htdigest.sh: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bash/svn-user-htdigest.sh
+.. _Time-Machine-NASifier.command: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bash/Time-Machine-NASifier.command
 .. _reST codeless language module: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bbedit/reStructuredText.plist
 .. _touch-menus-plus.js: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/javascript/touch-menus-plus.js
 .. _Lasso lexer for highlight.js: https://github.com/isagalaev/highlight.js
@@ -98,9 +105,12 @@ Find me on Twitter_.
 .. _Lasso lexer for google-code-prettify: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/javascript/lang-lasso.js
 .. _demo: http://ericfromcanada.bitbucket.org/javascript/demo-lasso.html
 .. _google-code-prettify: https://code.google.com/p/google-code-prettify/
+.. _completions-generator.lasso: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/lasso/completions-generator.lasso
 .. _sphinxifier.lasso: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/lasso/sphinxifier.lasso
 .. _Lasso domain for Sphinx: https://pypi.python.org/pypi/sphinxcontrib-lassodomain/
 .. _Lasso lexer for Pygments: https://bitbucket.org/EricFromCanada/pygments-main
 .. _Pygments: http://pygments.org/
 .. _restview: https://github.com/mgedmin/restview
 .. _Twitter: https://twitter.com/EricFromCanada
+
+.. generate HTML version using `rst2html.py README.rst > index.html`
