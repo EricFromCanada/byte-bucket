@@ -58,4 +58,4 @@ PR['registerLangHandler'](
           // operators
           [PR['PR_PUNCTUATION'],  /^:=|[-+*\/%=<>&|!?\\]/]
         ]),
-    ['lasso']);
+    ['lasso', 'ls', 'lassoscript']);
