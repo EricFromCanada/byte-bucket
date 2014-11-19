@@ -53,8 +53,6 @@ JavaScript
   preventing a ``:hover`` region's links from activating until any divs it'll
   reveal are displayed.
 
-  `See it in action <http://www.treefrog.ca/>`_
-
 `Lasso lexer for highlight.js`_
   Contributed a lexer for the Lasso programming language for highlight.js_, a
   JS-based syntax highlighter. Included since version 7.4.
@@ -101,7 +99,7 @@ Find me on Twitter_.
 .. _reST codeless language module: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bbedit/reStructuredText.plist
 .. _touch-menus-plus.js: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/javascript/touch-menus-plus.js
 .. _Lasso lexer for highlight.js: https://github.com/isagalaev/highlight.js
-.. _highlight.js: http://softwaremaniacs.org/soft/highlight/en/
+.. _highlight.js: https://highlightjs.org/
 .. _Lasso lexer for google-code-prettify: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/javascript/lang-lasso.js
 .. _demo: http://ericfromcanada.bitbucket.org/javascript/demo-lasso.html
 .. _google-code-prettify: https://code.google.com/p/google-code-prettify/
