@@ -2,28 +2,29 @@
 // [
 
 /*
-	CodaCompletion.plist generator
+	CodaCompletion.plist Generator
 
-	Writes a Lasso completions file for Coda 2 in which any keywords present in
-	sys_listTypes have their member methods also added.
+	Writes a Lasso completions file for Coda 2 containing keywords listed in
+	sys_listTypes and their member methods.
 */
 
+fail_if(!$argv->second, -1, "A list of mode keywords is required")
+
 output(" ")	// causes additional methods to be loaded
-lcapi_loadModules
+
+// Load and register contents of $LASSO9_MASTER_HOME/LassoModules/
+database_initialize
 
 // Load all of the libraries from builtins and lassoserver
 // This forces all possible available types and methods to be registered
 local(srcs =
-	tie(
+	(:
 		dir(sys_masterHomePath + 'LassoLibraries/builtins/')->eachFilePath,
-//		dir(sys_masterHomePath + 'LassoLibraries/lassoserver/')->eachFilePath
-// workaround for `session.dylib` preventing script from running
-tie(		(with i in dir(sys_masterHomePath + 'LassoLibraries/lassoserver/')->eachFilePath take 18 select #i),
-		(with i in dir(sys_masterHomePath + 'LassoLibraries/lassoserver/')->eachFilePath skip 19 select #i))
+		dir(sys_masterHomePath + 'LassoLibraries/lassoserver/')->eachFilePath
 	)
 )
 
-with topLevelDir in #srcs
+with topLevelDir in delve(#srcs)
 where not #topLevelDir->lastComponent->beginsWith('.')
 do protect => {
 	handle_error => {
@@ -33,6 +34,10 @@ do protect => {
 	stdoutnl('Loaded: ' + #topLevelDir)
 }
 
+email_initialize
+log_initialize
+session_initialize
+
 /**!
 	completions type
 	Given a list of keywords, generates and prints a list of completions as XML
@@ -40,6 +45,7 @@ do protect => {
 define completions => type {
 
 	data private memberAttributes = map
+	// map( tag('mm.insert') = pair(tag('insert'), true) , ... )	// for now
 	// map( tag('mm.insert') = pair(tag('insert'), list( 'p0::tag', '-p1=?', '...these' )) , ... )
 	data private completionWords = map
 	// map( pair(tag('void'), set()) , pair(tag('array'), set(tag('mm.insert'), tag('mm.remove'), ... )) , ... )
@@ -47,6 +53,7 @@ define completions => type {
 	// require a line break-delimited string of keywords upon initialization
 	public onCreate(input::string) => {
 		with line in #input->eachLine
+		where #line->size > 2
 		let keyword = tag(#line)
 		do {
 			if(sys_listTypes->contains(#keyword)) => {
@@ -55,8 +62,8 @@ define completions => type {
 				where #member->typeName != ::null
 				where #member->typeName != ::any
 				let m_name = #member->methodName->asString
-				where #m_name->isAlpha(1)		// skip operators, 'x'(), _x()
 				where #m_name != 'oncreate'
+				where #m_name->isAlpha(1)		// skip operators, 'x'(), _x()
 				where not #m_name->beginsWith('private_')
 				where not #m_name->endsWith('=')	// skip x=()
 				do #memberIds->insert(.addMemberId(#member))
@@ -93,8 +100,8 @@ define completions => type {
 			#memberId->append('.'+#member->restName)
 		}
 */
-		// compromise: just keep track of if params are possible
-		local(memberParams = #member->paramDescs->size || #member->restName != void)
+		// compromise: just keep track of a boolean indicating if params are possible
+		local(memberParams = boolean(#member->paramDescs->size || #member->restName != void))
 		.memberAttributes->insert(
 			pair(
 				tag(#memberId),						// new key for memberAttributes as tag
@@ -188,7 +195,7 @@ define completions => type {
 }
 
 // start the timer
-local(start) = date_msec
+local(start) = millis
 
 // write the file
 local(f) = file("CodaCompletion.plist")
@@ -262,4 +269,4 @@ local(f) = file("CodaCompletion.plist")
 }
 
 // show the time taken
-stdoutnl('The code took ' + (date_msec - #start) + ' milliseconds to process.')
+stdoutnl('The code took ' + (millis - #start) + ' milliseconds to process.')
