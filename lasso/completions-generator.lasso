@@ -220,7 +220,7 @@ local(f) = file("CodaCompletion.plist")
 	<array>
 		<dict>
 			<key>Regex</key>
-			<string>\b(?&lt;top&gt;[a-z_][\w.]*)\s*(?:\((?&gt;[^()]*(?&gt;\([^()]*\)[^()]*)*)+\)\s*)?-&gt;\s*(?&lt;attribute&gt;[a-z_][\w.]*)\z</string>
+			<string>\b(?&lt;top&gt;[a-z_][\w.]*)\s*(?:\((?&gt;[^()]*(?&gt;\([^()]*\)[^()]*)*)+\)\s*)?-&gt;\\?\s*(?&lt;attribute&gt;[a-z_][\w.]*)\z</string>
 			<key>ShouldCompleteAll</key>
 			<false/>
 			<key>ShouldAppendCompletion</key>
@@ -230,7 +230,7 @@ local(f) = file("CodaCompletion.plist")
 		</dict>
 		<dict>
 			<key>Regex</key>
-			<string>\b(?&lt;top&gt;[a-z_][\w.]*)\s*(?:\((?&gt;[^()]*(?&gt;\([^()]*\)[^()]*)*)+\)\s*)?-&gt;(?&lt;attribute&gt;)\z</string>
+			<string>\b(?&lt;top&gt;[a-z_][\w.]*)\s*(?:\((?&gt;[^()]*(?&gt;\([^()]*\)[^()]*)*)+\)\s*)?-&gt;\\?(?&lt;attribute&gt;)\z</string>
 			<key>ShouldCompleteAll</key>
 			<true/>
 			<key>ShouldAppendCompletion</key>
