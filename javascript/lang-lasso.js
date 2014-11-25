@@ -34,19 +34,23 @@ PR['registerLangHandler'](
           // double quote strings
           [PR['PR_STRING'],       /^\"(?:[^\"\\]|\\[\s\S])*(?:\"|$)/, null, '"'],
           // ticked strings
-          [PR['PR_STRING'],       /^\`[^\`]*(?:\`|$)/, null, '`']
+          [PR['PR_STRING'],       /^\`[^\`]*(?:\`|$)/, null, '`'],
+          // numeral as integer or hexidecimal
+          [PR['PR_LITERAL'],      /^0\x[\da-f]+|\d+/i, null, '0123456789'],
+          // local or thread variables, or hashbang
+          [PR['PR_ATTRIB_NAME'],  /^#\d+|[#$][a-z_][\w.]*|#![ \S]+lasso9\b/i, null, '#$']
         ],
         [
           // square or angle bracket delimiters
           [PR['PR_TAG'],          /^[[\]]|<\?(?:lasso(?:script)?|=)|\?>|noprocess\b|no_square_brackets\b/i],
           // single-line or block comments
           [PR['PR_COMMENT'],      /^\/\/[^\r\n]*|\/\*[\s\S]*?\*\//],
-          // local, thread, or member variables, or keyword parameters, or hashbang
-          [PR['PR_ATTRIB_NAME'],  /^#\d+|[#$-][a-z_][\w.]*|\.\s*'[a-z_][\w.]*'|#!.+lasso9/i, null, '#$'],
+          // numeral as decimal or scientific notation
+          [PR['PR_LITERAL'],      /^\d*\.\d+(?:e[-+]?\d+)?|-?infinity\b|NaN\b/i],
+          // member variables or keyword parameters
+          [PR['PR_ATTRIB_NAME'],  /^-[a-z_][\w.]*|\.\s*'[a-z_][\w.]*'/i],
           // tag literals
           [PR['PR_ATTRIB_VALUE'], /^::\s*[a-z_][\w.]*/i],
-          // number as hex integer literal, a decimal real literal, or in scientific notation
-          [PR['PR_LITERAL'],      /^\d*\.\d+(?:e[-+]?\d+)?|0x[\da-f]+|\d+|infinity\b|NaN\b/i, null, '0123456789'],
           // constants
           [PR['PR_LITERAL'],      /^(?:true|false|none|minimal|full|all|void|and|or|not|bw|nbw|ew|new|cn|ncn|lt|lte|gt|gte|eq|neq|rx|nrx|ft)\b/i],
           // container or control keywords
