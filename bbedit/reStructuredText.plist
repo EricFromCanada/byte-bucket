@@ -96,10 +96,10 @@
 					(?P<pad>[ \t]*)\.\. (
 						[ \t]+ (
 							\b(?!(py|c|cpp|js|rst|ada|cl|c?make|coffee|dqn|erl|go|http|jinja|ls|mat|
-									php|op|rb|scl|spec|wasp):)[a-z0-9][-+.\w]*
+									php|op|rb|scl|spec|wasp):)(?>[a-z0-9]([-._+:](?=[a-z0-9]))?)+
 							(?(?=\ ?:)
-								\ ?:((:(?=[^\s]) | [^:])[^\r]* | $)
-								| ([^-+.\w][^\r]* | $)
+								\ ?:((:(?!\s) | [^:])[^\r]* | $)
+								| ([^a-z0-9][^\r]* | $)
 							) | [^\w[|\s][^\r]*
 						) | [ \t]*
 					) (
