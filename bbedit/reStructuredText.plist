@@ -139,16 +139,14 @@
 		<string>caution::</string>
 		<string>danger::</string>
 		<string>error::</string>
-		<string>hint::</string>
 		<string>important::</string>
 		<string>note::</string>
 		<string>tip::</string>
+		<string>hint::</string>
 		<string>warning::</string>
 		<string>admonition::</string>
-		<string>image::</string>
-		<string>figure::</string>
-		<string>topic::</string>
 		<string>sidebar::</string>
+		<string>topic::</string>
 		<string>line-block::</string><!-- deprecated -->
 		<string>parsed-literal::</string>
 		<string>code::</string>
@@ -159,28 +157,33 @@
 		<string>pull-quote::</string>
 		<string>compound::</string>
 		<string>container::</string>
+		<!-- <string>questions::</string> --><!-- future -->
+		<!-- <string>qa::</string> --><!-- alias -->
+		<!-- <string>faq::</string> --><!-- alias -->
 		<string>table::</string>
 		<string>csv-table::</string>
 		<string>list-table::</string>
+		<string>image::</string>
+		<string>figure::</string>
 		<string>contents::</string>
 		<string>sectnum::</string>
-		<string>section-numbering::</string>
+		<string>section-numbering::</string><!-- alias -->
 		<string>header::</string>
 		<string>footer::</string>
+		<!-- <string>footnotes::</string> --><!-- future -->
+		<!-- <string>citations::</string> --><!-- future -->
 		<string>target-notes::</string>
-		<string>footnotes::</string><!-- future -->
-		<string>citations::</string><!-- future -->
 		<string>meta::</string>
-		<string>imagemap::</string><!-- future -->
+		<!-- <string>imagemap::</string> --><!-- future -->
+		<string>raw::</string>
+		<string>include::</string>
 		<string>replace::</string>
 		<string>unicode::</string>
-		<string>date::</string>
-		<string>include::</string>
-		<string>raw::</string>
 		<string>class::</string>
 		<string>role::</string>
 		<string>default-role::</string>
 		<string>title::</string>
+		<string>date::</string>
 		<string>restructuredtext-test-directive::</string>
 	</array>
 	<key>BBLMPredefinedNameList</key><!-- Sphinx directives -->
@@ -204,6 +207,7 @@
 		<string>object::</string>
 		<string>only::</string>
 		<string>option::</string>
+		<string>cmdoption::</string><!-- old -->
 		<string>productionlist::</string>
 		<string>program::</string>
 		<string>rst-class::</string>
@@ -229,6 +233,7 @@
 		<string>macro::</string>
 		<string>type::</string>
 		<string>var::</string>
+		<string>namespace::</string>
 		<string>directive::</string>
 		<string>automodule::</string>
 		<string>autoclass::</string>
