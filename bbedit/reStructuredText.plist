@@ -95,8 +95,8 @@
 				[ \t]*\.\.[ \t]*\r[ \t]*$ | (
 					(?P<pad>[ \t]*)\.\. (
 						[ \t]+ (
-							\b(?!(py|c|cpp|js|rst|ada|cl|coffee|dqn|erl|go|http|jinja|ls|mat|
-										php|op|rb|scl):)[a-z0-9][-+.\w]*
+							\b(?!(py|c|cpp|js|rst|ada|cl|c?make|coffee|dqn|erl|go|http|jinja|ls|mat|
+									php|op|rb|scl|spec|wasp):)[a-z0-9][-+.\w]*
 							(?(?=\ ?:)
 								\ ?:((:(?=[^\s]) | [^:])[^\r]* | $)
 								| ([^-+.\w][^\r]* | $)
