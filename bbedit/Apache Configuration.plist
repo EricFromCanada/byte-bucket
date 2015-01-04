@@ -732,7 +732,6 @@
 		<string>Win32DisableAcceptEx</string>
 		<string>XBitHack</string>
 
-
 		<!-- Extra directives: -->
 		<string>php_value</string>
 		<string>php_flag</string>
@@ -743,6 +742,73 @@
 	<string>Apch</string>
 	<key>BBLMLanguageDisplayName</key>
 	<string>Apache Configuration File</string>
+	<key>BBLMPredefinedNameList</key>
+	<array>
+
+		<!-- HTTP headers -->
+		<string>{HTTP_ACCEPT}</string>
+		<string>{HTTP_COOKIE}</string>
+		<string>{HTTP_FORWARDED}</string>
+		<string>{HTTP_HOST}</string>
+		<string>{HTTP_PROXY_CONNECTION}</string>
+		<string>{HTTP_REFERER}</string>
+		<string>{HTTP_USER_AGENT}</string>
+
+		<!-- connection and request -->
+		<string>{AUTH_TYPE}</string>
+		<string>{CONN_REMOTE_ADDR}</string>
+		<string>{CONTEXT_PREFIX}</string>
+		<string>{CONTEXT_DOCUMENT_ROOT}</string>
+		<string>{IPV6}</string>
+		<string>{PATH_INFO}</string>
+		<string>{QUERY_STRING}</string>
+		<string>{REMOTE_ADDR}</string>
+		<string>{REMOTE_HOST}</string>
+		<string>{REMOTE_IDENT}</string>
+		<string>{REMOTE_PORT}</string>
+		<string>{REMOTE_USER}</string>
+		<string>{REQUEST_METHOD}</string>
+		<string>{SCRIPT_FILENAME}</string>
+
+		<!-- server internals -->
+		<string>{DOCUMENT_ROOT}</string>
+		<string>{SCRIPT_GROUP}</string>
+		<string>{SCRIPT_USER}</string>
+		<string>{SERVER_ADDR}</string>
+		<string>{SERVER_ADMIN}</string>
+		<string>{SERVER_NAME}</string>
+		<string>{SERVER_PORT}</string>
+		<string>{SERVER_PROTOCOL}</string>
+		<string>{SERVER_SOFTWARE}</string>
+
+		<!-- date and time -->
+		<string>{TIME_YEAR}</string>
+		<string>{TIME_MON}</string>
+		<string>{TIME_DAY}</string>
+		<string>{TIME_HOUR}</string>
+		<string>{TIME_MIN}</string>
+		<string>{TIME_SEC}</string>
+		<string>{TIME_WDAY}</string>
+		<string>{TIME}</string>
+
+		<!-- mod_rewrite -->
+		<string>{API_VERSION}</string>
+		<string>{DOCUMENT_URI}</string>
+		<string>{HTTPS}</string>
+		<string>{IS_SUBREQ}</string>
+		<string>{REQUEST_FILENAME}</string>
+		<string>{REQUEST_SCHEME}</string>
+		<string>{REQUEST_URI}</string>
+		<string>{THE_REQUEST}</string>
+
+		<!-- other -->
+		<string>{LAST_MODIFIED}</string>
+		<string>{CONTENT_TYPE}</string>
+		<string>{HANDLER}</string>
+		<string>{REQUEST_STATUS}</string>
+		<string>{REQUEST_LOG_ID}</string>
+		<string>{CONN_LOG_ID}</string>
+	</array>
 	<key>BBLMScansFunctions</key>
 	<false/>
 
@@ -779,7 +845,7 @@
 		<key>Escape Char in Strings 2</key>
 		<string>\</string>
 		<key>Identifier and Keyword Characters</key>
-		<string>0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz^-_./</string>
+		<string>0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz^-_./{}</string>
 		<key>Open Block Comments</key>
 		<string></string>
 		<key>Open Line Comments</key>
