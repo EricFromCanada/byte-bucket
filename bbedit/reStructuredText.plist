@@ -127,8 +127,9 @@
 				[ \t]*\.\.[ \t]*\r[ \t]*$ | (
 					(?P<pad>[ \t]*)\.\. (
 						[ \t]+ (
-							\b(?!(py|c|cpp|js|rst|ada|cl|c?make|coffee|dqn|erl|go|http|jinja|ls|mat|
-									php|op|rb|scl|spec|wasp):)(?>[a-z0-9]([-._+:](?=[a-z0-9]))?)+
+							\b(?!(py|c|cpp|js|rst|ada|anon|cl|c?make|coffee|dqn|dragon|el|erl|f|
+									go|http|java|jinja|ls|mat|php|op|rb|scl|spec|wasp):)
+									(?>[a-z0-9]([-._+:](?=[a-z0-9]))?)+
 							(?(?=\ ?:)
 								\ ?:((:(?!\s) | [^:])[^\r]* | $)
 								| ([^a-z0-9][^\r]* | $)
