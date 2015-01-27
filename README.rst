@@ -43,6 +43,10 @@ BBEdit
   auto-indent and auto-expand tabs, setting tab width to 3 spaces, disabling
   soft wrap text, and setting the page guide to 80 characters.
 
+`Apache 2.4 Configuration Language Module`_
+   Update of John Gruber's `Apache Configuration Language Module`_ to include
+   Apache 2.4 keywords & some bugfixes.
+
 JavaScript
 ----------
 
@@ -97,6 +101,8 @@ Find me on Twitter_.
 .. _svn-user-htdigest.sh: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bash/svn-user-htdigest.sh
 .. _Time-Machine-NASifier.command: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bash/Time-Machine-NASifier.command
 .. _reST codeless language module: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bbedit/reStructuredText.plist
+.. _Apache 2.4 Configuration Language Module: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bbedit/Apache%20Configuration.plist
+.. _Apache Configuration Language Module: http://daringfireball.net/projects/apacheconfig/
 .. _touch-menus-plus.js: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/javascript/touch-menus-plus.js
 .. _Lasso lexer for highlight.js: https://github.com/isagalaev/highlight.js
 .. _highlight.js: https://highlightjs.org/
