@@ -34,7 +34,7 @@ bash
 BBEdit
 ------
 
-`reST codeless language module`_
+`reStructuredText codeless language module`_
   Language module for BBEdit and TextWrangler which highlights elements
   in reStructuredText files and lists section titles in the function pop-up
   menu. Recognizes both standard reST directives and Sphinx additions.
@@ -43,9 +43,14 @@ BBEdit
   auto-indent and auto-expand tabs, setting tab width to 3 spaces, disabling
   soft wrap text, and setting the page guide to 80 characters.
 
-`Apache 2.4 Configuration Language Module`_
+`Lasso codeless language module`_
+   Language module for BBEdit and TextWrangler for Lasso files. Finds both 8-
+   and 9-style type and function definitions, plus elements not supported by the
+   current BBEdit module such as ticked strings, tag literals, and variables.
+
+`Apache 2.4 Configuration codeless language module`_
    Update of John Gruber's `Apache Configuration Language Module`_ to include
-   Apache 2.4 keywords & some bugfixes.
+   Apache 2.4 keywords and some bugfixes.
 
 JavaScript
 ----------
@@ -100,9 +105,10 @@ Find me on Twitter_.
 .. _keyputter.sh: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bash/keyputter.sh
 .. _svn-user-htdigest.sh: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bash/svn-user-htdigest.sh
 .. _Time-Machine-NASifier.command: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bash/Time-Machine-NASifier.command
-.. _reST codeless language module: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bbedit/reStructuredText.plist
-.. _Apache 2.4 Configuration Language Module: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bbedit/Apache%20Configuration.plist
+.. _reStructuredText codeless language module: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bbedit/reStructuredText.plist
+.. _Apache 2.4 Configuration codeless language module: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bbedit/Apache%20Configuration.plist
 .. _Apache Configuration Language Module: http://daringfireball.net/projects/apacheconfig/
+.. _Lasso codeless language module: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bbedit/Lasso.plist
 .. _touch-menus-plus.js: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/javascript/touch-menus-plus.js
 .. _Lasso lexer for highlight.js: https://github.com/isagalaev/highlight.js
 .. _highlight.js: https://highlightjs.org/
