@@ -60,14 +60,15 @@
 		<key>Comment Pattern</key>
 		<string><![CDATA[(?x:
 			(//.*$)			|	(?# line comment)
-			(?s:/\*.*?\*/)		(?# block comment)
+			(?s:/\*.*?\*/)	|	(?# block comment)
+			(<\?(?:LassoScript|lasso\b|=)|\?>|\[|\])	(?# delimiter)
 			)]]></string>
 		<key>String Pattern</key>
 		<string><![CDATA[(?x:
-			(\#\d+|(?:[#$]|::)[a-z_][\w.]*)	|	(?# variable / tag literal)
 			("(?>\\"|[^"])*")	|	(?# double quote)
 			('(?>\\'|[^'])*')	|	(?# single quote)
-			(`[^`]*`)				(?# backtick)
+			(`[^`]*`)			|	(?# backtick)
+			(\#\d+|(?:[#$]|::)[a-z_][\w.]*)		(?# variable / tag literal)
 		)]]></string>
 		<key>Function Pattern</key>
 		<string><![CDATA[(?sx:
