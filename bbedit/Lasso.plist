@@ -65,14 +65,14 @@
 		<key>Identifier and Keyword Character Class</key>
 		<string>\w.</string>
 		<key>Comment Pattern</key>
-		<string><![CDATA[(?x:
-			//.*$				(?# line comment)	|
-			/\*(?s:.*?)\*/		(?# block comment)	|
+		<string><![CDATA[(?sx:
+			//[^\r]*$			(?# line comment)	|
+			/\*.*?\*/			(?# block comment)	|
 			::[a-z_][\w.]*		(?# tag literal)	|
 			<\?(?:LassoScript|lasso\b|=)|\?>|\[|\]	(?# delimiter)
 		)]]></string>
 		<key>String Pattern</key>
-		<string><![CDATA[(?x:
+		<string><![CDATA[(?sx:
 			"(?>\\.|[^"])*?"	(?# double quote)	|
 			'(?>\\.|[^'])*?'	(?# single quote)	|
 			`[^`]*`				(?# backtick)		|
