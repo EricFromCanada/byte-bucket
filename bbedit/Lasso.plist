@@ -4,7 +4,11 @@
 <!--
 	BBEdit / TextWrangler codeless language module for Lasso files.
 	Eric Knibbe
-	Version 0.1
+	Version 0.2
+
+	Adds both Lasso 8- and 9-style type and function names to the function menu,
+	and highlights elements not supported by the current BBEdit language module
+	such as ticked strings, tag literals, and variables.
 
 	Requires BBEdit 8.5 / TextWrangler 3.5 or later. To install, copy to either:
 
@@ -59,26 +63,27 @@
 		<string>\w.</string>
 		<key>Comment Pattern</key>
 		<string><![CDATA[(?x:
-			(//.*$)			|	(?# line comment)
-			(?s:/\*.*?\*/)	|	(?# block comment)
-			(<\?(?:LassoScript|lasso\b|=)|\?>|\[|\])	(?# delimiter)
-			)]]></string>
+			//.*$				(?# line comment)	|
+			/\*(?s:.*?)\*/		(?# block comment)	|
+			::[a-z_][\w.]*		(?# tag literal)	|
+			<\?(?:LassoScript|lasso\b|=)|\?>|\[|\]	(?# delimiter)
+		)]]></string>
 		<key>String Pattern</key>
 		<string><![CDATA[(?x:
-			("(?>\\"|[^"])*")	|	(?# double quote)
-			('(?>\\'|[^'])*')	|	(?# single quote)
-			(`[^`]*`)			|	(?# backtick)
-			(\#\d+|(?:[#$]|::)[a-z_][\w.]*)		(?# variable / tag literal)
+			"(?>\\.|[^"])*?"	(?# double quote)	|
+			'(?>\\.|[^'])*?'	(?# single quote)	|
+			`[^`]*`				(?# backtick)		|
+			[#$][a-z_][\w.]*|\#\d+	(?# variable)
 		)]]></string>
 		<key>Function Pattern</key>
 		<string><![CDATA[(?sx:
 			(?P<function>
 				(?:define(?:_(?:tag|type)\s*[:(]\s*['"]|\s+)|(?:public|protected|private|provide)\s+)
 				(?P<function_name>
-					[a-z_]\w+=?
+					(?>[a-z_][\w.]*\s*->\s*)?(?:[a-z_][\w.]*=?|[-+*/%])
 				).*?
-				(?=;|=>)
 			)
+			(?=;|=>)
 		)]]></string>
 		<key>Skip Pattern</key>
 		<string><![CDATA[(?x:
