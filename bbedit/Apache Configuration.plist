@@ -4,8 +4,8 @@
 <!--
 	BBEdit codeless language module for Apache configuration files.
 	John Gruber  <http://daringfireball.net/>
-	Version 1.0.8 (unofficial)
-	Sat 3 Jan 2015
+	Version 1.0.9 (unofficial)
+	Tue 3 Feb 2015
 
 	Released under a Creative Commons Attribution-ShareAlike License:
 	<http://creativecommons.org/licenses/by-sa/2.0/>
@@ -808,9 +808,29 @@
 		<string>{REQUEST_STATUS}</string>
 		<string>{REQUEST_LOG_ID}</string>
 		<string>{CONN_LOG_ID}</string>
+
+		<!-- special purpose -->
+		<string>downgrade-1.0</string>
+		<string>force-gzip</string>
+		<string>force-no-vary</string>
+		<string>force-response-1.0</string>
+		<string>gzip-only-text/html</string>
+		<string>no-gzip</string>
+		<string>no-cache</string>
+		<string>nokeepalive</string>
+		<string>prefer-language</string>
+		<string>redirect-carefully</string>
+		<string>suppress-error-charset</string>
+		<string>force-proxy-request-1.0</string>
+		<string>proxy-nokeepalive</string>
+		<string>proxy-sendchunked</string>
+		<string>proxy-sendcl</string>
+		<string>proxy-chain-auth</string>
+		<string>proxy-interim-response</string>
+		<string>proxy-initial-not-pooled</string>
 	</array>
 	<key>BBLMScansFunctions</key>
-	<false/>
+	<true/>
 
 	<key>BBLMFileNamesToMatch</key>
 	<array>
@@ -831,7 +851,7 @@
 		<key>Close Parameter Lists</key>
 		<string></string>
 		<key>Close Statement Blocks</key>
-		<string></string>
+		<string>/Macro</string>
 		<key>Close Strings 1</key>
 		<string>'</string>
 		<key>Close Strings 2</key>
@@ -853,7 +873,7 @@
 		<key>Open Parameter Lists</key>
 		<string></string>
 		<key>Open Statement Blocks</key>
-		<string></string>
+		<string>Macro</string>
 		<key>Open Strings 1</key>
 		<string>'</string>
 		<key>Open Strings 2</key>
@@ -861,7 +881,7 @@
 		<key>Prefix for Functions</key>
 		<string></string>
 		<key>Prefix for Procedures</key>
-		<string></string>
+		<string>Macro</string>
 		<key>Terminator for Prototypes 1</key>
 		<string></string>
 		<key>Terminator for Prototypes 2</key>
