@@ -44,9 +44,10 @@ BBEdit
   soft wrap text, and setting the page guide to 80 characters.
 
 `Lasso codeless language module`_
-   Language module for BBEdit and TextWrangler for Lasso files. Finds both 8-
-   and 9-style type and function definitions, plus elements not supported by the
-   current BBEdit module such as ticked strings, tag literals, and variables.
+   Language module for BBEdit and TextWrangler which adds both Lasso 8- and
+   9-style type and function names to the function menu, and highlights elements
+   not supported by the current BBEdit language module such as ticked strings,
+   tag literals, and variables.
 
 `Apache 2.4 Configuration codeless language module`_
    Update of John Gruber's `Apache Configuration Language Module`_ to include
