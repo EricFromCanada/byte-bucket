@@ -815,19 +815,21 @@
 		<string>force-no-vary</string>
 		<string>force-response-1.0</string>
 		<string>gzip-only-text/html</string>
-		<string>no-gzip</string>
 		<string>no-cache</string>
+		<string>no-gzip</string>
 		<string>nokeepalive</string>
 		<string>prefer-language</string>
 		<string>redirect-carefully</string>
 		<string>suppress-error-charset</string>
 		<string>force-proxy-request-1.0</string>
+		<string>proxy-chain-auth</string>
+		<string>proxy-initial-not-pooled</string>
+		<string>proxy-interim-response</string>
 		<string>proxy-nokeepalive</string>
 		<string>proxy-sendchunked</string>
+		<string>proxy-sendchunks</string>
 		<string>proxy-sendcl</string>
-		<string>proxy-chain-auth</string>
-		<string>proxy-interim-response</string>
-		<string>proxy-initial-not-pooled</string>
+		<string>proxy-sendextracrlf</string>
 	</array>
 	<key>BBLMScansFunctions</key>
 	<true/>
