@@ -6,6 +6,9 @@
 	Eric Knibbe
 	Version 0.2
 
+	Released under a Creative Commons Attribution-ShareAlike License:
+	<http://creativecommons.org/licenses/by-sa/4.0/>
+
 	Adds both Lasso 8- and 9-style type and function names to the function menu,
 	and highlights elements not supported by the current BBEdit language module
 	such as ticked strings, tag literals, and variables.

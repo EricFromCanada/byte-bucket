@@ -2,9 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <!--
-	BBEdit codeless language module for reStructuredText files.
+	BBEdit / TextWrangler codeless language module for reStructuredText files.
 	Eric Knibbe
 	Version 2.0.1
+
+	Released under a Creative Commons Attribution-ShareAlike License:
+	<http://creativecommons.org/licenses/by-sa/4.0/>
 
 	Parses each section title as a function name so they show up in the
 	function popup. Will also highlight directives, directive options, field
@@ -16,7 +19,7 @@
 		~/Library/Application Support/BBEdit/Language Modules/
 		~/Library/Application Support/TextWrangler/Language Modules/
 
-	and relaunch BBEdit or TextWrangler. Also, recommended settings for the 
+	and relaunch BBEdit or TextWrangler. Also, recommended settings for the
 	reStructuredText language are auto-indent and auto-expand tabs enabled, tab
 	width set to 3 spaces, soft wrap text disabled, and page guide set to 80.
 
