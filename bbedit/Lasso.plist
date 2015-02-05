@@ -69,6 +69,7 @@
 			//[^\r]*$			(?# line comment)	|
 			/\*.*?\*/			(?# block comment)	|
 			::[a-z_][\w.]*		(?# tag literal)	|
+			^\#![ \S]+lasso9\b	(?# hashbang)		|
 			<\?(?:LassoScript|lasso\b|=)|\?>|\[|\]	(?# delimiter)
 		)]]></string>
 		<key>String Pattern</key>
