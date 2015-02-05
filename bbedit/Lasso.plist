@@ -81,12 +81,21 @@
 		<key>Function Pattern</key>
 		<string><![CDATA[(?sx:
 			(?P<function>
-				(?:define(?:_(?:tag|type)\s*[:(]\s*['"]|\s+)|(?:public|protected|private|provide)\s+)
+				(?:
+					define(?:_(?:tag|type)\s*[:(]\s*['"]|\s+)	|
+					(?:public|protected|private|provide)\s+		|
+					,\s*(?!(?:public|protected|private)\b)
+				)
 				(?P<function_name>
 					(?>[a-z_][\w.]*\s*->\s*)?(?:[a-z_][\w.]*=?|[-+*/%])
-				).*?
+				)
+				(?(?=['"])
+					.+?(?=\s+/?define_(?:tag|type))
+				|
+					(\s*\((?>[^()]++|(?3))*\))?\s*=>
+					(\s*\{(?>[^{}]++|(?4))*\})?
+				)
 			)
-			(?=;|=>)
 		)]]></string>
 		<key>Skip Pattern</key>
 		<string><![CDATA[(?x:
