@@ -4,7 +4,7 @@
 <!--
 	BBEdit / TextWrangler codeless language module for Lasso files.
 	Eric Knibbe
-	Version 0.2
+	Version 0.3
 
 	Released under a Creative Commons Attribution-ShareAlike License:
 	<http://creativecommons.org/licenses/by-sa/4.0/>
@@ -28,7 +28,7 @@
 	<key>BBLMLanguageDisplayName</key>
 	<string>Lasso</string>
 	<key>BBLMLanguageCode</key>
-	<string>Laso</string>
+	<string>laso</string>
 	<key>BBLMSuffixMap</key>
 	<array>
 		<dict>
