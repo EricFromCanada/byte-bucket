@@ -24,6 +24,7 @@
 	<true/>
 	<key>BBLMKeywordList</key>
 	<array>
+		<string>-include</string>
 		<string>.DEFAULT_GOAL</string>
 		<string>.DEFAULT</string>
 		<string>.DELETE_ON_ERROR</string>
@@ -54,6 +55,7 @@
 		<string>endef</string>
 		<string>endif</string>
 		<string>export</string>
+		<string>GNUMAKEFLAGS</string>
 		<string>GPATH</string>
 		<string>ifdef</string>
 		<string>ifeq</string>
