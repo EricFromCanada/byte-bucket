@@ -53,6 +53,10 @@ BBEdit
    Update of John Gruber's `Apache Configuration Language Module`_ to include
    Apache 2.4 keywords and some bugfixes.
 
+`Make codeless language module`_
+   Update of BBEdit's / TextWrangler's built-in module to include more keywords
+   from GNU make.
+
 JavaScript
 ----------
 
@@ -110,6 +114,7 @@ Find me on Twitter_.
 .. _Apache 2.4 Configuration codeless language module: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bbedit/Apache%20Configuration.plist
 .. _Apache Configuration Language Module: http://daringfireball.net/projects/apacheconfig/
 .. _Lasso codeless language module: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bbedit/Lasso.plist
+.. _Make codeless language module: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bbedit/Make.plist
 .. _touch-menus-plus.js: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/javascript/touch-menus-plus.js
 .. _Lasso lexer for highlight.js: https://github.com/isagalaev/highlight.js
 .. _highlight.js: https://highlightjs.org/
