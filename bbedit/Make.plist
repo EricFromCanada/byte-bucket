@@ -109,6 +109,7 @@
 		<string>firstword</string>
 		<string>flavor</string>
 		<string>foreach</string>
+		<string>guile</string>
 		<string>if</string>
 		<string>info</string>
 		<string>join</string>
