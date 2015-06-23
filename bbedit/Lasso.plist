@@ -276,6 +276,8 @@
 		<string>stack</string>
 		<string>staticarray</string>
 		<string>atbegin</string>
+		<string>bson_iter</string>
+		<string>bson</string>
 		<string>bytes_document_body</string>
 		<string>cache_server_element</string>
 		<string>cache_server</string>
@@ -322,6 +324,7 @@
 		<string>generateforeachkeyed</string>
 		<string>generateforeachunkeyed</string>
 		<string>generateseries</string>
+		<string>hash_map</string>
 		<string>html_atomic_element</string>
 		<string>html_attr</string>
 		<string>html_base</string>
@@ -384,6 +387,8 @@
 		<string>jmethodid</string>
 		<string>jobject</string>
 		<string>jshort</string>
+		<string>json_decode</string>
+		<string>json_encode</string>
 		<string>json_literal</string>
 		<string>json_object</string>
 		<string>lassoapp_compiledsrc_appsource</string>
@@ -411,6 +416,10 @@
 		<string>memory_session_driver_impl</string>
 		<string>memory_session_driver</string>
 		<string>mime_reader</string>
+		<string>mongo_client</string>
+		<string>mongo_collection</string>
+		<string>mongo_cursor</string>
+		<string>mustache_ctx</string>
 		<string>mysql_session_driver_impl</string>
 		<string>mysql_session_driver</string>
 		<string>net_named_pipe</string>
@@ -485,6 +494,8 @@
 		<string>tree_node</string>
 		<string>tree_nullnode</string>
 		<string>ucal</string>
+		<string>usgcpu</string>
+		<string>usgvm</string>
 		<string>web_error_atend</string>
 		<string>web_node_base</string>
 		<string>web_node_content_representation_css_specialized</string>
@@ -498,6 +509,7 @@
 		<string>web_response_impl</string>
 		<string>web_response</string>
 		<string>web_router</string>
+		<string>websocket_handler</string>
 		<string>worker_pool</string>
 		<string>xml_attr</string>
 		<string>xml_cdatasection</string>
@@ -596,6 +608,7 @@
 		<string>web_node_content</string>
 		<string>web_node_postable</string>
 		<string>web_node</string>
+		<string>_ffi</string>
 		<string>__char</string>
 		<string>__sync_timestamp__</string>
 		<string>_admin_addgroup</string>
@@ -1558,6 +1571,8 @@
 		<string>curlopt_krb4level</string>
 		<string>curlopt_low_speed_limit</string>
 		<string>curlopt_low_speed_time</string>
+		<string>curlopt_mail_from</string>
+		<string>curlopt_mail_rcpt</string>
 		<string>curlopt_maxconnects</string>
 		<string>curlopt_maxfilesize_large</string>
 		<string>curlopt_maxfilesize</string>
@@ -1682,7 +1697,25 @@
 		<string>encrypt_hmac</string>
 		<string>encrypt_md5</string>
 		<string>eol</string>
+		<string>error_code_aborted</string>
+		<string>error_code_dividebyzero</string>
+		<string>error_code_filenotfound</string>
+		<string>error_code_invalidparameter</string>
+		<string>error_code_methodnotfound</string>
+		<string>error_code_networkerror</string>
+		<string>error_code_noerror</string>
+		<string>error_code_resnotfound</string>
+		<string>error_code_runtimeassertion</string>
 		<string>error_code</string>
+		<string>error_msg_aborted</string>
+		<string>error_msg_dividebyzero</string>
+		<string>error_msg_filenotfound</string>
+		<string>error_msg_invalidparameter</string>
+		<string>error_msg_methodnotfound</string>
+		<string>error_msg_networkerror</string>
+		<string>error_msg_noerror</string>
+		<string>error_msg_resnotfound</string>
+		<string>error_msg_runtimeassertion</string>
 		<string>error_msg</string>
 		<string>error_obj</string>
 		<string>error_pop</string>
@@ -1756,6 +1789,7 @@
 		<string>ftp_putdata</string>
 		<string>ftp_putfile</string>
 		<string>generateforeach</string>
+		<string>hash_primes</string>
 		<string>http_char_colon</string>
 		<string>http_char_cr</string>
 		<string>http_char_htab</string>
@@ -1763,6 +1797,7 @@
 		<string>http_char_question</string>
 		<string>http_char_space</string>
 		<string>http_default_files</string>
+		<string>http_read_headers</string>
 		<string>http_read_timeout_secs</string>
 		<string>http_server_apps_path</string>
 		<string>http_server_request_logger</string>
@@ -1962,13 +1997,36 @@
 		<string>java_jvm_create</string>
 		<string>java_jvm_getenv</string>
 		<string>jdbc_initialize</string>
+		<string>json_back_slash</string>
+		<string>json_back_space</string>
+		<string>json_close_array</string>
+		<string>json_close_object</string>
+		<string>json_colon</string>
+		<string>json_comma</string>
 		<string>json_consume_array</string>
 		<string>json_consume_object</string>
 		<string>json_consume_string</string>
 		<string>json_consume_token</string>
+		<string>json_cr</string>
+		<string>json_debug</string>
 		<string>json_deserialize</string>
+		<string>json_e_lower</string>
+		<string>json_e_upper</string>
+		<string>json_f_lower</string>
+		<string>json_form_feed</string>
+		<string>json_forward_slash</string>
+		<string>json_lf</string>
+		<string>json_n_lower</string>
+		<string>json_negative</string>
+		<string>json_open_array</string>
+		<string>json_open_object</string>
+		<string>json_period</string>
+		<string>json_quote_double</string>
 		<string>json_rpccall</string>
 		<string>json_serialize</string>
+		<string>json_t_lower</string>
+		<string>json_tab</string>
+		<string>json_white_space</string>
 		<string>keycolumn_name</string>
 		<string>keycolumn_value</string>
 		<string>keyfield_name</string>
@@ -2001,6 +2059,8 @@
 		<string>lassoapp_mime_type_csv</string>
 		<string>lassoapp_mime_type_doc</string>
 		<string>lassoapp_mime_type_docx</string>
+		<string>lassoapp_mime_type_eof</string>
+		<string>lassoapp_mime_type_eot</string>
 		<string>lassoapp_mime_type_gif</string>
 		<string>lassoapp_mime_type_html</string>
 		<string>lassoapp_mime_type_ico</string>
@@ -2159,6 +2219,26 @@
 		<string>method_name</string>
 		<string>micros</string>
 		<string>millis</string>
+		<string>mongo_insert_continue_on_error</string>
+		<string>mongo_insert_no_validate</string>
+		<string>mongo_insert_none</string>
+		<string>mongo_query_await_data</string>
+		<string>mongo_query_exhaust</string>
+		<string>mongo_query_no_cursor_timeout</string>
+		<string>mongo_query_none</string>
+		<string>mongo_query_oplog_replay</string>
+		<string>mongo_query_partial</string>
+		<string>mongo_query_slave_ok</string>
+		<string>mongo_query_tailable_cursor</string>
+		<string>mongo_remove_none</string>
+		<string>mongo_remove_single_remove</string>
+		<string>mongo_update_multi_update</string>
+		<string>mongo_update_no_validate</string>
+		<string>mongo_update_none</string>
+		<string>mongo_update_upsert</string>
+		<string>mustache_compile_file</string>
+		<string>mustache_compile_string</string>
+		<string>mustache_include</string>
 		<string>mysqlds</string>
 		<string>namespace_global</string>
 		<string>namespace_import</string>
@@ -2294,6 +2374,7 @@
 		<string>sys_clock</string>
 		<string>sys_clockspersec</string>
 		<string>sys_credits</string>
+		<string>sys_daemon</string>
 		<string>sys_databasespath</string>
 		<string>sys_detach_exec</string>
 		<string>sys_difftime</string>
@@ -2303,6 +2384,7 @@
 		<string>sys_eol</string>
 		<string>sys_erand48</string>
 		<string>sys_errno</string>
+		<string>sys_exec_pid_to_os_pid</string>
 		<string>sys_exec</string>
 		<string>sys_exit</string>
 		<string>sys_fork</string>
@@ -2336,9 +2418,11 @@
 		<string>sys_kill</string>
 		<string>sys_lcong48</string>
 		<string>sys_librariespath</string>
+		<string>sys_library</string>
 		<string>sys_listtraits</string>
 		<string>sys_listtypes</string>
 		<string>sys_listunboundmethods</string>
+		<string>sys_load_dynamic_library</string>
 		<string>sys_loadlibrary</string>
 		<string>sys_lrand48</string>
 		<string>sys_masterhomepath</string>
@@ -2391,6 +2475,7 @@
 		<string>sys_unsetenv</string>
 		<string>sys_usercapimodulepath</string>
 		<string>sys_userstartuppath</string>
+		<string>sys_version</string>
 		<string>sys_wait_exec</string>
 		<string>sys_waitpid</string>
 		<string>sys_wcontinued</string>
@@ -2612,6 +2697,7 @@
 		<string>web_response_nodesentry</string>
 		<string>web_router_database</string>
 		<string>web_router_initialize</string>
+		<string>websocket_handler_timeout</string>
 		<string>wexitstatus</string>
 		<string>wifcontinued</string>
 		<string>wifexited</string>
