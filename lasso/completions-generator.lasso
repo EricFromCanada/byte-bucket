@@ -19,8 +19,8 @@ database_initialize
 // This forces all possible available types and methods to be registered
 local(srcs =
 	(:
-		dir(sys_masterHomePath + 'LassoLibraries/builtins/')->eachFilePath,
-		dir(sys_masterHomePath + 'LassoLibraries/lassoserver/')->eachFilePath
+		dir(sys_masterHomePath + '/LassoLibraries/builtins/')->eachFilePath,
+		dir(sys_masterHomePath + '/LassoLibraries/lassoserver/')->eachFilePath
 	)
 )
 
