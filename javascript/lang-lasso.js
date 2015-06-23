@@ -45,10 +45,10 @@ PR['registerLangHandler'](
           [PR['PR_TAG'],          /^[[\]]|<\?(?:lasso(?:script)?|=)|\?>|noprocess\b|no_square_brackets\b/i],
           // single-line or block comments
           [PR['PR_COMMENT'],      /^\/\/[^\r\n]*|\/\*[\s\S]*?\*\//],
-          // numeral as decimal or scientific notation
-          [PR['PR_LITERAL'],      /^\d*\.\d+(?:e[-+]?\d+)?|-?infinity\b|NaN\b/i],
           // member variables or keyword parameters
-          [PR['PR_ATTRIB_NAME'],  /^-[a-z_][\w.]*|\.\s*'[a-z_][\w.]*'/i],
+          [PR['PR_ATTRIB_NAME'],  /^-(?!infinity)[a-z_][\w.]*|\.\s*'[a-z_][\w.]*'/i],
+          // numeral as decimal or scientific notation
+          [PR['PR_LITERAL'],      /^\d*\.\d+(?:e[-+]?\d+)?|infinity\b|NaN\b/i],
           // tag literals
           [PR['PR_ATTRIB_VALUE'], /^::\s*[a-z_][\w.]*/i],
           // constants

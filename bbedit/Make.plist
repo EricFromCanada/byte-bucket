@@ -146,7 +146,7 @@
 		<key>String Pattern</key>
 		<string>(?x:
 			(?&gt;	"	(?s: \\. | [^"] )*?		(?: " | $)	)	|
-			(?&gt;	'	(?s: \\. | [^'] )*?		(?: ' | $)	)   |
+			(?&gt;	'	(?s: \\. | [^'] )*?		(?: ' | $)	)	|
 			(?&gt;	`	(?s: \\. | [^`] )*?		(?: ` | $)	)
 		)</string>
 		<key>Identifier and Keyword Character Class</key>
