@@ -4,7 +4,7 @@
 <!--
 	BBEdit / TextWrangler codeless language module for Lasso files.
 	Eric Knibbe
-	Version 0.3
+	Version 0.4
 
 	Released under a Creative Commons Attribution-ShareAlike License:
 	<http://creativecommons.org/licenses/by-sa/4.0/>
@@ -93,8 +93,8 @@
 				(?(?=['"])
 					.+?(?=\s+/?define_(?:tag|type))
 				|
-					(\s*\((?>[^()]++|(?3))*\))?(?:\s*::\s*[a-z_][\w.]*)?\s*=>
-					(\s*\{(?>[^{}]++|(?4))*\})?
+					(\s*\((?>[^()]++|(?5))*\))?(?:\s*::\s*[a-z_][\w.]*)?\s*=>
+					(\s*\{(?>[^{}]++|(?6))*\})?
 				)
 			)
 		)]]></string>
