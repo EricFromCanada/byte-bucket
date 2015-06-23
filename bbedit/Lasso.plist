@@ -68,7 +68,7 @@
 		<string><![CDATA[(?sx:
 			//[^\r]*$			(?# line comment)	|
 			/\*.*?\*/			(?# block comment)	|
-			::[a-z_][\w.]*		(?# tag literal)	|
+			::\s*[a-z_][\w.]*	(?# tag literal)	|
 			^\#![ \S]+lasso9\b	(?# hashbang)		|
 			<\?(?:LassoScript|lasso\b|=)|\?>|\[|\]	(?# delimiter)
 		)]]></string>
@@ -93,7 +93,7 @@
 				(?(?=['"])
 					.+?(?=\s+/?define_(?:tag|type))
 				|
-					(\s*\((?>[^()]++|(?3))*\))?\s*=>
+					(\s*\((?>[^()]++|(?3))*\))?(?:\s*::\s*[a-z_][\w.]*)?\s*=>
 					(\s*\{(?>[^{}]++|(?4))*\})?
 				)
 			)
