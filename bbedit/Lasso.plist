@@ -1405,6 +1405,10 @@
 		<string>curl_netrc_ignored</string>
 		<string>curl_netrc_optional</string>
 		<string>curl_netrc_required</string>
+		<string>curl_sslversion_default</string>
+		<string>curl_sslversion_sslv2</string>
+		<string>curl_sslversion_sslv3</string>
+		<string>curl_sslversion_tlsv1</string>
 		<string>curl_version_asynchdns</string>
 		<string>curl_version_debug</string>
 		<string>curl_version_gssnegotiate</string>
