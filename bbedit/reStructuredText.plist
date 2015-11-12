@@ -4,7 +4,7 @@
 <!--
 	BBEdit / TextWrangler codeless language module for reStructuredText files.
 	Eric Knibbe
-	Version 2.0.1
+	Version 2.0.2
 
 	Released under a Creative Commons Attribution-ShareAlike License:
 	<http://creativecommons.org/licenses/by-sa/4.0/>
@@ -12,7 +12,7 @@
 	Parses each section title as a function name so they show up in the
 	function popup. Will also highlight directives, directive options, field
 	markers, roles, substitutions, references, targets, interpreted text, and
-	comment blocks, plus URLs in BBEdit 11 or later.
+	comment blocks, plus URLs in BBEdit 11 / TextWrangler 5 or later.
 
 	Requires BBEdit 8.5 / TextWrangler 3.5 or later. To install, copy to either:
 
@@ -21,7 +21,8 @@
 
 	and relaunch BBEdit or TextWrangler. Also, recommended settings for the
 	reStructuredText language are auto-indent and auto-expand tabs enabled, tab
-	width set to 3 spaces, soft wrap text disabled, and page guide set to 80.
+	width set to 3 spaces, soft wrap text disabled, ensure file ends with line
+	break enabled, strip trailing whitespace enabled, and page guide set to 80.
 
 	Known issues:
 	- CLMs can't indent function popup entries nor nest sidebar fold markers
@@ -131,7 +132,7 @@
 					(?P<pad>[ \t]*)\.\. (
 						[ \t]+ (
 							\b(?!(py|c|cpp|js|rst|ada|anon|cl|c?make|coffee|dqn|dragon|el|erl|f|
-									go|http|java|jinja|ls|mat|php|op|rb|scl|spec|wasp):)
+									go|java|jinja|ls|mat|php|op|rb|scl|spec|wasp):|http:(?!//))
 									(?>[a-z0-9]([-._+:](?=[a-z0-9]))?)+
 							(?(?=\ ?:)
 								\ ?:((:(?!\s) | [^:])[^\r]* | $)
@@ -147,6 +148,10 @@
 				)+
 			)
 		)]]></string>
+		<key>Number Pattern</key><!-- appropriating for URLs -->
+		<string><![CDATA[(?x:
+			(?<!\.\.\ )\b[a-z][\w.+-]+:(?:/{1,3}|[?+]?[a-z0-9%])[^\s()<>]+[^\s`!()\[\]{};:'".,<>?]
+		)]]></string>
 		<key>Function Pattern</key>
 		<string><![CDATA[(?x:
 			(?P<function>
@@ -161,14 +166,11 @@
 				) | (?-m)$
 			)
 		)]]></string>
-		<key>Number Pattern</key><!-- appropriating for URLs -->
-		<string><![CDATA[(?x:
-			(?<!\.\.\ )\b[a-z][\w.+-]+:(?:/{1,3}|[?+]?[a-z0-9%])[^\s()<>]+[^\s`!()\[\]{};:'".,<>?]
-		)]]></string>
 		<key>Skip Pattern</key>
 		<string><![CDATA[(?x:
 			(?P>string) |
-			(?P>comment)
+			(?P>comment) |
+			(?P>number)
 		)]]></string>
 	</dict>
 	<key>BBLMKeywordList</key><!-- reStructuredText directives -->
