@@ -4,17 +4,18 @@
 <!--
 	BBEdit codeless language module for Apache configuration files.
 	John Gruber  <http://daringfireball.net/>
-	Version 1.0.9 (unofficial)
-	Tue 3 Feb 2015
+	Version 1.0.10 (unofficial)
+	Sun 14 Feb 2016
 
 	Released under a Creative Commons Attribution-ShareAlike License:
 	<http://creativecommons.org/licenses/by-sa/2.0/>
 	
-	Requires BBEdit 8.0 or higher. To install, copy here:
+	Requires BBEdit 8.0 / TextWrangler 3.5 or higher. To install, copy to either:
 	
 		~/Library/Application Support/BBEdit/Language Modules/
+		~/Library/Application Support/TextWrangler/Language Modules/
 	
-	and relaunch BBEdit.
+	and relaunch BBEdit or TextWrangler.
 -->
 <dict>
 	<key>BBEditDocumentType</key>
@@ -27,6 +28,9 @@
 	<false/>
 	<key>BBLMKeywordList</key>
 	<array>
+
+		<!-- New for Apache 2.5: -->
+		<string>LogLevelOverride</string>
 
 		<!-- New for Apache 2.4: -->
 		<string>AllowMethods</string>
@@ -96,6 +100,7 @@
 		<string>CacheStaleOnError</string>
 		<string>CacheStoreExpired</string>
 		<string>CGIDScriptTimeout</string>
+		<string>CGIPassAuth</string>
 		<string>ChrootDir</string>
 		<string>DBDInitSQL</string>
 		<string>DefaultRuntimeDir</string>
@@ -113,6 +118,7 @@
 		<string>Error</string>
 		<string>ErrorLogFormat</string>
 		<string>FallbackResource</string>
+		<string>GlobalLog</string>
 		<string>GprofDir</string>
 		<string>HeartbeatAddress</string>
 		<string>HeartbeatListen</string>
@@ -132,6 +138,7 @@
 		<string>LDAPRetries</string>
 		<string>LDAPRetryDelay</string>
 		<string>LDAPTimeout</string>
+		<string>ListenCoresBucketsRatio</string>
 		<string>LogMessage</string>
 		<string>LuaAuthzProvider</string>
 		<string>LuaCodeCache</string>
