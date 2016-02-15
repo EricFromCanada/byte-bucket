@@ -71,11 +71,9 @@ JavaScript
   Contributed a lexer for the Lasso programming language for highlight.js_, a
   JS-based syntax highlighter. Included since version 7.4.
 
-`Lasso lexer for google-code-prettify`_ (demo_)
-  Also wrote a Lasso lexer for google-code-prettify_, another JS-based syntax
-  highlighter. Hoping to eventually get it working on stackoverflow.com. Star
-  the merge request here:
-  http://code.google.com/p/google-code-prettify/issues/detail?id=311
+`Lasso lexer for code-prettify`_
+  Also wrote a Lasso lexer for code-prettify_, another JS-based syntax
+  highlighter.
 
 Lasso
 -----
@@ -118,9 +116,8 @@ Find me on Twitter_.
 .. _touch-menus-plus.js: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/javascript/touch-menus-plus.js
 .. _Lasso lexer for highlight.js: https://github.com/isagalaev/highlight.js
 .. _highlight.js: https://highlightjs.org/
-.. _Lasso lexer for google-code-prettify: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/javascript/lang-lasso.js
-.. _demo: http://ericfromcanada.bitbucket.org/javascript/demo-lasso.html
-.. _google-code-prettify: https://code.google.com/p/google-code-prettify/
+.. _Lasso lexer for code-prettify: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/javascript/lang-lasso.js
+.. _code-prettify: https://github.com/google/code-prettify
 .. _completions-generator.lasso: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/lasso/completions-generator.lasso
 .. _sphinxifier.lasso: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/lasso/sphinxifier.lasso
 .. _Lasso domain for Sphinx: https://pypi.python.org/pypi/sphinxcontrib-lassodomain/
