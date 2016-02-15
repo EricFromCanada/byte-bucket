@@ -4,7 +4,7 @@
 <!--
 	BBEdit / TextWrangler codeless language module for reStructuredText files.
 	Eric Knibbe
-	Version 2.0.2
+	Version 2.0.3
 
 	Released under a Creative Commons Attribution-ShareAlike License:
 	<http://creativecommons.org/licenses/by-sa/4.0/>
@@ -19,10 +19,16 @@
 		~/Library/Application Support/BBEdit/Language Modules/
 		~/Library/Application Support/TextWrangler/Language Modules/
 
-	and relaunch BBEdit or TextWrangler. Also, recommended settings for the
-	reStructuredText language are auto-indent and auto-expand tabs enabled, tab
-	width set to 3 spaces, soft wrap text disabled, ensure file ends with line
-	break enabled, strip trailing whitespace enabled, and page guide set to 80.
+	and relaunch BBEdit or TextWrangler. 
+	
+	Recommended settings for reStructuredText in Preferences > Languages:
+	- auto-indent: enabled
+	- auto-expand tabs: enabled
+	- soft wrap text: disabled
+	- tab width: 3 spaces
+	- ensure file ends with line break: enabled
+	- strip trailing whitespace: enabled
+	- page guide: 80 characters
 
 	Known issues:
 	- CLMs can't indent function popup entries nor nest sidebar fold markers
@@ -59,7 +65,7 @@
 		</dict>
 	</array>
 	<key>BBLMReferenceSearchURLTemplate</key>
-	<string>http://sphinx-doc.org/search.html?q=__SYMBOLNAME__</string>
+	<string>http://www.sphinx-doc.org/en/stable/search.html?q=__SYMBOLNAME__</string>
 	<key>BBLMCommentLineDefault</key>
 	<string>.. </string>
 	<key>BBLMColorsSyntax</key>
