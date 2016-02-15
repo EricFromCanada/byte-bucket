@@ -150,7 +150,7 @@
 	<key>BBLMLanguageDisplayName</key>
 	<string>Make</string>
 	<key>BBLMReferenceSearchURLTemplate</key>
-	<string>http://www.gnu.org/software/make/manual/make.html#index-__SYMBOLNAME__</string>
+	<string>http://www.google.com/search?q=__SYMBOLNAME__+Make+site:www.gnu.org</string>
 	<key>BBLMScansFunctions</key>
 	<true/>
 	<key>BBLMSupportsTextCompletion</key>
