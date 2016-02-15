@@ -29,7 +29,6 @@
 			<string>com.barebones.bblm.keyword</string>
 			<key>Keywords</key>
 			<array>
-				<string>-include</string>
 				<string>define</string>
 				<string>else</string>
 				<string>endef</string>
@@ -39,14 +38,22 @@
 				<string>ifeq</string>
 				<string>ifndef</string>
 				<string>ifneq</string>
-				<string>include</string>
 				<string>load</string>
 				<string>override</string>
 				<string>private</string>
-				<string>sinclude</string>
 				<string>undefine</string>
 				<string>unexport</string>
 				<string>vpath</string>
+			</array>
+		</dict>
+		<dict>
+			<key>RunKind</key>
+			<string>com.barebones.bblm.file-include</string>
+			<key>Keywords</key>
+			<array>
+				<string>-include</string>
+				<string>include</string>
+				<string>sinclude</string>
 			</array>
 		</dict>
 		<dict>
