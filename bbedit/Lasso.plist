@@ -68,7 +68,6 @@
 		<string><![CDATA[(?sx:
 			//[^\r]*$			(?# line comment)	|
 			/\*.*?\*/			(?# block comment)	|
-			::\s*[a-z_][\w.]*	(?# tag literal)	|
 			^\#![ \S]+lasso9\b	(?# hashbang)		|
 			<\?(?:LassoScript|lasso\b|=)|\?>|\[|\]	(?# delimiter)
 		)]]></string>
@@ -78,6 +77,11 @@
 			'(?>\\.|[^'])*?'	(?# single quote)	|
 			`[^`]*`				(?# backtick)		|
 			[#$][a-z_][\w.]*|\#\d+	(?# variable)
+		)]]></string>
+		<key>Number Pattern</key>
+		<string><![CDATA[(?x:
+			(?<!(?:\w|\.))(?:\d*\.\d+(?:e[-+]?\d+)?|0x[\da-f]+|\d+)|infinity\b|NaN\b	|
+			::\s*[a-z_][\w.]*	(?# tag literal)
 		)]]></string>
 		<key>Function Pattern</key>
 		<string><![CDATA[(?sx:
@@ -100,8 +104,9 @@
 		)]]></string>
 		<key>Skip Pattern</key>
 		<string><![CDATA[(?x:
-			(?P>string) |
-			(?P>comment)
+			(?P>string)		|
+			(?P>comment)	|
+			(?P>number)
 		)]]></string>
 	</dict>
 	<key>BBLMKeywordList</key>
