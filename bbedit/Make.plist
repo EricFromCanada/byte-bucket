@@ -161,11 +161,19 @@
 		<string>#.*$</string>
 		<key>Function Pattern</key>
 		<string>^(?P&lt;function&gt;(?P&lt;function_name&gt;[\S]+?):.*$(\r[ \t]+.*)*)</string>
+		<key>Number Pattern</key><!-- appropriating for .PHONY -->
+		<string>^\.PHONY:.*$</string>
 		<key>String Pattern</key>
 		<string>(?x:
 			(?&gt;	"	(?s: \\. | [^"] )*?		(?: " | $)	)	|
 			(?&gt;	'	(?s: \\. | [^'] )*?		(?: ' | $)	)	|
 			(?&gt;	`	(?s: \\. | [^`] )*?		(?: ` | $)	)
+		)</string>
+		<key>Skip Pattern</key>
+		<string>(?x:
+			(?P&gt;comment)	|
+			(?P&gt;number)	|
+			(?P&gt;string)
 		)</string>
 		<key>Identifier and Keyword Character Class</key>
 		<string>[:alnum:]_\.\-</string>
