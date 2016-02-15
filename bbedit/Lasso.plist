@@ -94,7 +94,7 @@
 					.+?(?=\s+/?define_(?:tag|type))
 				|
 					(?P<parens>\s*\((?>[^()]++|(?P>parens))*\))?(?:\s*::\s*[a-z_][\w.]*)?\s*=>
-					(?P<braces>\s*\{(?>[^{}]++|(?P>braces))*\})?
+					(?:\s*frozen)?(?P<braces>\s*\{(?>[^{}]++|(?P>braces))*\})?
 				)
 			)
 		)]]></string>
