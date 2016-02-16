@@ -837,6 +837,7 @@
 		<string>proxy-sendchunks</string>
 		<string>proxy-sendcl</string>
 		<string>proxy-sendextracrlf</string>
+		<string>ssl-unclean-shutdown</string>
 	</array>
 	<key>BBLMScansFunctions</key>
 	<true/>
