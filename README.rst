@@ -1,19 +1,9 @@
-.. title:: Eric's bits of code
-
-==============================
- ericfromcanada.bitbucket.org
-==============================
-
-Various pieces of code I've written, in case someone else finds them useful.
-
-`Browse all files`_
-
 AppleScript
 -----------
 
 `close Safari Web Inspector script`_
   Before Safari 6, the Web Inspector shortcut would only open it. Attach
-  this AppleScript to another shortcut to make it closeable.
+  this AppleScript to another shortcut to make it closable.
 
 bash
 ----
@@ -37,11 +27,8 @@ BBEdit
 `reStructuredText codeless language module`_
   Language module for BBEdit and TextWrangler which highlights elements
   in reStructuredText files and lists section titles in the function pop-up
-  menu. Recognizes both standard reST directives and Sphinx additions.
-
-  I recommend also setting these options for editing reStructuredText: enabling
-  auto-indent and auto-expand tabs, setting tab width to 3 spaces, disabling
-  soft wrap text, and setting the page guide to 80 characters.
+  menu. Recognizes both standard reST directives and Sphinx additions. See its
+  comments for my recommended editing settings.
 
 `Lasso codeless language module`_
    Language module for BBEdit and TextWrangler which adds both Lasso 8- and
@@ -125,5 +112,3 @@ Find me on Twitter_.
 .. _Pygments: http://pygments.org/
 .. _restview: https://github.com/mgedmin/restview
 .. _Twitter: https://twitter.com/EricFromCanada
-
-.. generate HTML version using `rst2html.py README.rst > index.html`
