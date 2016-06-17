@@ -4,7 +4,7 @@
 <!--
 	BBEdit / TextWrangler codeless language module for Lasso files.
 	Eric Knibbe
-	Version 1.0
+	Version 1.1
 
 	Released under a Creative Commons Attribution-ShareAlike License:
 	<http://creativecommons.org/licenses/by-sa/4.0/>
@@ -68,6 +68,7 @@
 		<string><![CDATA[(?sx:
 			//[^\r]*$			(?# line comment)	|
 			/\*.*?\*/			(?# block comment)	|
+			<!--.*?-->			(?# HTML comment)	|
 			^\#![ \S]+lasso9\b	(?# hashbang)
 		)]]></string>
 		<key>String Pattern</key>
