@@ -169,7 +169,7 @@
 		<key>Function Pattern</key>
 		<string>^(?P&lt;function&gt;(?P&lt;function_name&gt;[\S]+?):.*$(\r[ \t]+.*)*)</string>
 		<key>Number Pattern</key><!-- appropriating for .PHONY -->
-		<string>^\.PHONY:.*$</string>
+		<string>^\.PHONY:[^\\\r]*(\\\r[^\\\r]*)*</string>
 		<key>String Pattern</key>
 		<string>(?x:
 			(?&gt;	"	(?s: \\. | [^"] )*?		(?: " | $)	)	|
