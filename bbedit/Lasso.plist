@@ -4,7 +4,7 @@
 <!--
 	BBEdit / TextWrangler codeless language module for Lasso files.
 	Eric Knibbe
-	Version 1.1
+	Version 1.2
 
 	Released under a Creative Commons Attribution-ShareAlike License:
 	<http://creativecommons.org/licenses/by-sa/4.0/>
@@ -66,22 +66,22 @@
 		<string><![CDATA[\w.\[/\]<\?=>]]></string>
 		<key>Comment Pattern</key>
 		<string><![CDATA[(?sx:
-			//[^\r]*$			(?# line comment)	|
-			/\*.*?\*/			(?# block comment)	|
-			<!--.*?-->			(?# HTML comment)	|
-			^\#![ \S]+lasso9\b	(?# hashbang)
+			//[^\r]*$					(?# line comment)	|
+			/\*.*?\*/					(?# block comment)	|
+			<!--.*?-->					(?# HTML comment)	|
+			^\#![ \S]+lasso9\b			(?# hashbang)
 		)]]></string>
 		<key>String Pattern</key>
 		<string><![CDATA[(?sx:
-			"(?>\\.|[^"])*?"	(?# double quote)	|
-			'(?>\\.|[^'])*?'	(?# single quote)	|
-			`[^`]*`				(?# backtick)		|
+			"(?>\\.|[^"])*?"			(?# double quote)	|
+			'(?>\\.|[^'])*?'			(?# single quote)	|
+			`[^`]*`						(?# backtick)		|
 			\#\d+\b|[#$][a-z_][\w.]*	(?# variable)
 		)]]></string>
 		<key>Number Pattern</key>
 		<string><![CDATA[(?x:
-			(?<!(?:\w|\.))(?:\d*\.\d+(?:e[-+]?\d+)?|0x[\da-f]+|\d+)|infinity\b|NaN\b	|
-			::\s*[a-z_][\w.]*	(?# tag literal)
+			(?<!(?:\w|\.))(?:\d*\.\d+(?:e[-+]?\d+)?|0x[\da-f]+|\d+)|(infinity|NaN)\b	|
+			::\s*[a-z_][\w.]*			(?# tag literal)
 		)]]></string>
 		<key>Function Pattern</key>
 		<string><![CDATA[(?sx:
@@ -217,6 +217,9 @@
 				<string>abort</string>
 				<string>case</string>
 				<string>else</string>
+				<string>fail_if</string>
+				<string>fail_ifnot</string>
+				<string>fail</string>
 				<string>if_empty</string>
 				<string>if_false</string>
 				<string>if_null</string>
@@ -1763,10 +1766,7 @@
 				<string>evdns_resolve_ipv6</string>
 				<string>evdns_resolve_reverse_ipv6</string>
 				<string>evdns_resolve_reverse</string>
-				<string>fail_if</string>
-				<string>fail_ifnot</string>
 				<string>fail_now</string>
-				<string>fail</string>
 				<string>failure_clear</string>
 				<string>fastcgi_createfcgirequest</string>
 				<string>fastcgi_handlecon</string>
@@ -2057,6 +2057,7 @@
 				<string>json_open_array</string>
 				<string>json_open_object</string>
 				<string>json_period</string>
+				<string>json_positive</string>
 				<string>json_quote_double</string>
 				<string>json_rpccall</string>
 				<string>json_serialize</string>
@@ -2184,6 +2185,7 @@
 				<string>lcapi_loadmodules</string>
 				<string>lcapi_updatedatasourceslist</string>
 				<string>ldap_scope_base</string>
+				<string>ldap_scope_children</string>
 				<string>ldap_scope_onelevel</string>
 				<string>ldap_scope_subtree</string>
 				<string>library_once</string>
@@ -2830,6 +2832,7 @@
 				<string>zip_unchange_archive</string>
 				<string>zip_unchange</string>
 				<string>zlib_version</string>
+				<string>.</string>
 			</array>
 		</dict>
 	</array>
