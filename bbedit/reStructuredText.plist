@@ -4,7 +4,7 @@
 <!--
 	BBEdit / TextWrangler codeless language module for reStructuredText files.
 	Eric Knibbe
-	Version 2.0.3
+	Version 2.1
 
 	Released under a Creative Commons Attribution-ShareAlike License:
 	<http://creativecommons.org/licenses/by-sa/4.0/>
@@ -14,7 +14,7 @@
 	markers, roles, substitutions, references, targets, interpreted text, and
 	comment blocks, plus URLs in BBEdit 11 / TextWrangler 5 or later.
 
-	Requires BBEdit 8.5 / TextWrangler 3.5 or later. To install, copy to either:
+	Requires BBEdit 11.6 / TextWrangler 5.5 or later. To install, copy to either:
 
 		~/Library/Application Support/BBEdit/Language Modules/
 		~/Library/Application Support/TextWrangler/Language Modules/
@@ -36,8 +36,6 @@
 	- comments starting on the file's 1st or 2nd line often aren't highlighted
 	- can't highlight comments sharing a line with or directly following
 	  directives due to backtracking limitations in regular expressions
-	- highlights directives containing single colons as comments,
-	  e.g. directives specifying an unlisted Sphinx domain
 	- requires all lines of a comment to use the same padding sequence,
 	  e.g. doesn't highlight a comment whose first line starts with a space and
 	  subsequent lines start with a tab, which is still acceptable indentation
@@ -137,9 +135,7 @@
 				[ \t]*\.\.[ \t]*\r[ \t]*$ | (
 					(?P<pad>[ \t]*)\.\. (
 						[ \t]+ (
-							\b(?!(py|c|cpp|js|rst|ada|anon|cl|c?make|coffee|dqn|dragon|el|erl|f|
-									go|java|jinja|ls|mat|php|op|rb|scl|spec|wasp):|http:(?!//))
-									(?>[a-z0-9]([-._+:](?=[a-z0-9]))?)+
+							\b(?>[a-z0-9]([-._+:](?=[a-z0-9]))?)+
 							(?(?=\ ?:)
 								\ ?:((:(?!\s) | [^:])[^\r]* | $)
 								| ([^a-z0-9][^\r]* | $)
@@ -154,9 +150,13 @@
 				)+
 			)
 		)]]></string>
-		<key>Number Pattern</key><!-- appropriating for URLs -->
+		<key>Number Pattern</key><!-- URLs and domain directives -->
 		<string><![CDATA[(?x:
-			(?<!\.\.\ )\b[a-z][\w.+-]+:(?:/{1,3}|[?+]?[a-z0-9%])[^\s()<>]+[^\s`!()\[\]{};:'".,<>?]
+			\b[a-z][\w.+-]+:(?:/{1,3}|[?+]?[a-z0-9%])[^\s()<>]+[^\s`!()\[\]{};:'".,<>?](::)?
+		)]]></string>
+		<key>Keyword Pattern</key><!-- enumerated list markers -->
+		<string><![CDATA[(?x:
+			^\s*(([-*+•‣⁃])|(?P<enum>[0-9]+|[ivxlcdm]+|[a-z]|\#)[.)]|\((?P>enum)\))[ \t]
 		)]]></string>
 		<key>Function Pattern</key>
 		<string><![CDATA[(?x:
@@ -179,130 +179,148 @@
 			(?P>number)
 		)]]></string>
 	</dict>
-	<key>BBLMKeywordList</key><!-- reStructuredText directives -->
+	<key>BBLMKeywords</key>
 	<array>
-		<string>..</string>
-		<string>::</string>
-		<string>attention::</string>
-		<string>caution::</string>
-		<string>danger::</string>
-		<string>error::</string>
-		<string>important::</string>
-		<string>note::</string>
-		<string>tip::</string>
-		<string>hint::</string>
-		<string>warning::</string>
-		<string>admonition::</string>
-		<string>sidebar::</string>
-		<string>topic::</string>
-		<string>line-block::</string><!-- deprecated -->
-		<string>parsed-literal::</string>
-		<string>code::</string>
-		<string>math::</string>
-		<string>rubric::</string>
-		<string>epigraph::</string>
-		<string>highlights::</string>
-		<string>pull-quote::</string>
-		<string>compound::</string>
-		<string>container::</string>
-		<!-- <string>questions::</string> --><!-- future -->
-		<!-- <string>qa::</string> --><!-- alias -->
-		<!-- <string>faq::</string> --><!-- alias -->
-		<string>table::</string>
-		<string>csv-table::</string>
-		<string>list-table::</string>
-		<string>image::</string>
-		<string>figure::</string>
-		<string>contents::</string>
-		<string>sectnum::</string>
-		<string>section-numbering::</string><!-- alias -->
-		<string>header::</string>
-		<string>footer::</string>
-		<!-- <string>footnotes::</string> --><!-- future -->
-		<!-- <string>citations::</string> --><!-- future -->
-		<string>target-notes::</string>
-		<string>meta::</string>
-		<!-- <string>imagemap::</string> --><!-- future -->
-		<string>raw::</string>
-		<string>include::</string>
-		<string>replace::</string>
-		<string>unicode::</string>
-		<string>class::</string>
-		<string>role::</string>
-		<string>default-role::</string>
-		<string>title::</string>
-		<string>date::</string>
-		<string>restructuredtext-test-directive::</string>
-	</array>
-	<key>BBLMPredefinedNameList</key><!-- Sphinx directives -->
-	<array>
-		<string>acks::</string><!-- undocumented -->
-		<string>centered::</string><!-- deprecated -->
-		<string>code-block::</string>
-		<string>codeauthor::</string>
-		<string>cssclass::</string><!-- old -->
-		<string>default-domain::</string>
-		<string>deprecated::</string>
-		<string>describe::</string><!-- old -->
-		<string>envvar::</string>
-		<string>glossary::</string>
-		<string>highlight::</string>
-		<string>highlightlang::</string><!-- old -->
-		<string>hlist::</string>
-		<string>index::</string>
-		<string>literalinclude::</string>
-		<string>moduleauthor::</string><!-- undocumented -->
-		<string>object::</string>
-		<string>only::</string>
-		<string>option::</string>
-		<string>cmdoption::</string><!-- old -->
-		<string>productionlist::</string>
-		<string>program::</string>
-		<string>rst-class::</string>
-		<string>sectionauthor::</string>
-		<string>seealso::</string>
-		<string>sourcecode::</string><!-- old -->
-		<string>tabularcolumns::</string>
-		<string>toctree::</string>
-		<string>versionadded::</string>
-		<string>versionchanged::</string>
-		<string>module::</string>
-		<string>currentmodule::</string>
-		<string>data::</string>
-		<string>exception::</string>
-		<string>function::</string>
-		<string>attribute::</string>
-		<string>method::</string>
-		<string>staticmethod::</string>
-		<string>classmethod::</string>
-		<string>decorator::</string>
-		<string>decoratormethod::</string>
-		<string>member::</string>
-		<string>macro::</string>
-		<string>type::</string>
-		<string>var::</string>
-		<string>namespace::</string>
-		<string>directive::</string>
-		<string>automodule::</string>
-		<string>autoclass::</string>
-		<string>autoexception::</string>
-		<string>autofunction::</string>
-		<string>autodata::</string>
-		<string>automethod::</string>
-		<string>autoattribute::</string>
-		<string>autosummary::</string>
-		<string>testsetup::</string>
-		<string>testcleanup::</string>
-		<string>doctest::</string>
-		<string>testcode::</string>
-		<string>testoutput::</string>
-		<string>graphviz::</string>
-		<string>graph::</string>
-		<string>digraph::</string>
-		<string>inheritance-diagram::</string>
-		<string>ifconfig::</string>
-		<string>todo::</string>
-		<string>todolist::</string>
+		<dict>
+			<key>RunKind</key>
+			<string>com.barebones.bblm.preprocessor</string>
+			<key>Keywords</key>
+			<array>
+				<string>..</string>
+				<string>::</string>
+			</array>
+		</dict>
+		<dict>
+			<key>RunKind</key>
+			<string>com.barebones.bblm.keyword</string><!-- reStructuredText directives -->
+			<key>Keywords</key>
+			<array>
+				<string>attention::</string>
+				<string>caution::</string>
+				<string>danger::</string>
+				<string>error::</string>
+				<string>important::</string>
+				<string>note::</string>
+				<string>tip::</string>
+				<string>hint::</string>
+				<string>warning::</string>
+				<string>admonition::</string>
+				<string>sidebar::</string>
+				<string>topic::</string>
+				<string>line-block::</string><!-- deprecated -->
+				<string>parsed-literal::</string>
+				<string>code::</string>
+				<string>math::</string>
+				<string>rubric::</string>
+				<string>epigraph::</string>
+				<string>highlights::</string>
+				<string>pull-quote::</string>
+				<string>compound::</string>
+				<string>container::</string>
+				<!-- <string>questions::</string> --><!-- future -->
+				<!-- <string>qa::</string> --><!-- alias -->
+				<!-- <string>faq::</string> --><!-- alias -->
+				<string>table::</string>
+				<string>csv-table::</string>
+				<string>list-table::</string>
+				<string>image::</string>
+				<string>figure::</string>
+				<string>contents::</string>
+				<string>sectnum::</string>
+				<string>section-numbering::</string><!-- alias -->
+				<string>header::</string>
+				<string>footer::</string>
+				<!-- <string>footnotes::</string> --><!-- future -->
+				<!-- <string>citations::</string> --><!-- future -->
+				<string>target-notes::</string>
+				<string>meta::</string>
+				<!-- <string>imagemap::</string> --><!-- future -->
+				<string>raw::</string>
+				<string>include::</string>
+				<string>replace::</string>
+				<string>unicode::</string>
+				<string>class::</string>
+				<string>role::</string>
+				<string>default-role::</string>
+				<string>title::</string>
+				<string>date::</string>
+				<string>restructuredtext-test-directive::</string>
+			</array>
+		</dict>
+		<dict>
+			<key>RunKind</key>
+			<string>com.barebones.bblm.predefined-symbol</string><!-- Sphinx directives -->
+			<key>Keywords</key>
+			<array>
+				<string>acks::</string><!-- undocumented -->
+				<string>centered::</string><!-- deprecated -->
+				<string>code-block::</string>
+				<string>codeauthor::</string>
+				<string>cssclass::</string><!-- old -->
+				<string>default-domain::</string>
+				<string>deprecated::</string>
+				<string>describe::</string><!-- old -->
+				<string>envvar::</string>
+				<string>glossary::</string>
+				<string>highlight::</string>
+				<string>highlightlang::</string><!-- old -->
+				<string>hlist::</string>
+				<string>index::</string>
+				<string>literalinclude::</string>
+				<string>moduleauthor::</string><!-- undocumented -->
+				<string>object::</string>
+				<string>only::</string>
+				<string>option::</string>
+				<string>cmdoption::</string><!-- old -->
+				<string>productionlist::</string>
+				<string>program::</string>
+				<string>rst-class::</string>
+				<string>sectionauthor::</string>
+				<string>seealso::</string>
+				<string>sourcecode::</string><!-- old -->
+				<string>tabularcolumns::</string>
+				<string>toctree::</string>
+				<string>versionadded::</string>
+				<string>versionchanged::</string>
+				<string>module::</string>
+				<string>currentmodule::</string>
+				<string>data::</string>
+				<string>exception::</string>
+				<string>function::</string>
+				<string>attribute::</string>
+				<string>method::</string>
+				<string>staticmethod::</string>
+				<string>classmethod::</string>
+				<string>decorator::</string>
+				<string>decoratormethod::</string>
+				<string>member::</string>
+				<string>macro::</string>
+				<string>type::</string>
+				<string>var::</string>
+				<string>namespace::</string>
+				<string>directive::</string>
+				<string>automodule::</string>
+				<string>autoclass::</string>
+				<string>autoexception::</string>
+				<string>autofunction::</string>
+				<string>autodata::</string>
+				<string>automethod::</string>
+				<string>autoattribute::</string>
+				<string>autosummary::</string>
+				<string>testsetup::</string>
+				<string>testcleanup::</string>
+				<string>doctest::</string>
+				<string>testcode::</string>
+				<string>testoutput::</string>
+				<string>graphviz::</string>
+				<string>graph::</string>
+				<string>digraph::</string>
+				<string>inheritance-diagram::</string>
+				<string>ifconfig::</string>
+				<string>todo::</string>
+				<string>todolist::</string>
+			</array>
+		</dict>
 	</array>
 </dict>
 </plist>
