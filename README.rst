@@ -28,7 +28,7 @@ BBEdit
   Language module for BBEdit and TextWrangler which highlights elements
   in reStructuredText files and lists section titles in the function pop-up
   menu. Recognizes both standard reST directives and Sphinx additions. See its
-  comments for my recommended editing settings.
+  comments for my recommended editor settings.
 
 `Lasso codeless language module`_
    Language module for BBEdit and TextWrangler which adds both Lasso 8- and
@@ -38,7 +38,7 @@ BBEdit
 
 `Apache 2.4 Configuration codeless language module`_
    Update of John Gruber's `Apache Configuration Language Module`_ to include
-   Apache 2.4 keywords and some bugfixes.
+   variables, Apache 2.4 keywords, and some bugfixes.
 
 `Make codeless language module`_
    Update of BBEdit's / TextWrangler's built-in module to include more keywords
@@ -87,7 +87,7 @@ Python
   Contributed CSS, syntax highlighting, and request handling improvements to
   restview, a tool for previewing reST documents in a web browser.
 
-Find me on Twitter_.
+More `about me`_.
 
 
 .. _Browse all files: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/src/
@@ -111,4 +111,4 @@ Find me on Twitter_.
 .. _Lasso lexer for Pygments: https://bitbucket.org/EricFromCanada/pygments-main
 .. _Pygments: http://pygments.org/
 .. _restview: https://github.com/mgedmin/restview
-.. _Twitter: https://twitter.com/EricFromCanada
+.. _about me: https://about.me/eric3knibbe
