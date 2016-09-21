@@ -101,9 +101,9 @@ More `about me`_.
 .. _Lasso codeless language module: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bbedit/Lasso.plist
 .. _Make codeless language module: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bbedit/Make.plist
 .. _touch-menus-plus.js: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/javascript/touch-menus-plus.js
-.. _Lasso lexer for highlight.js: https://github.com/isagalaev/highlight.js
+.. _Lasso lexer for highlight.js: https://github.com/isagalaev/highlight.js/blob/master/src/languages/lasso.js
 .. _highlight.js: https://highlightjs.org/
-.. _Lasso lexer for code-prettify: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/javascript/lang-lasso.js
+.. _Lasso lexer for code-prettify: https://github.com/google/code-prettify/blob/master/src/lang-lasso.js
 .. _code-prettify: https://github.com/google/code-prettify
 .. _completions-generator.lasso: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/lasso/completions-generator.lasso
 .. _sphinxifier.lasso: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/lasso/sphinxifier.lasso

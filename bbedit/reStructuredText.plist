@@ -42,7 +42,7 @@
 	- roles directly following inline markup delimiters for emphasis or literal
 	  text need an escaped space in front to be highlighted
 
-	Feedback is welcome.		<http://ericfromcanada.bitbucket.org/>
+	Feedback is welcome.		<https://ericfromcanada.bitbucket.io/>
 -->
 <dict>
 	<key>BBEditDocumentType</key>
