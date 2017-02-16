@@ -30,7 +30,76 @@
 	<array>
 
 		<!-- New for Apache 2.5: -->
+		<string>AllowHandlers</string>
+		<string>AsyncFilter</string>
+		<string>BrotliAlterETag</string>
+		<string>BrotliCompressionMaxInputBlock</string>
+		<string>BrotliCompressionQuality</string>
+		<string>BrotliCompressionWindow</string>
+		<string>BrotliFilterNote</string>
+		<string>CGIDRequestTimeout</string>
+		<string>CheckBasenameMatch</string>
+		<string>CryptoCipher</string>
+		<string>CryptoDriver</string>
+		<string>CryptoIV</string>
+		<string>CryptoKey</string>
+		<string>CryptoSize</string>
+		<string>CTAuditStorage</string>
+		<string>CTLogClient</string>
+		<string>CTLogConfigDB</string>
+		<string>CTMaxSCTAge</string>
+		<string>CTProxyAwareness</string>
+		<string>CTSCTStorage</string>
+		<string>CTServerHelloSCTLimit</string>
+		<string>CTStaticLogConfig</string>
+		<string>CTStaticSCTs</string>
+		<string>DeflateAlterETag</string>
+		<string>FirehoseConnectionInput</string>
+		<string>FirehoseConnectionOutput</string>
+		<string>FirehoseProxyConnectionInput</string>
+		<string>FirehoseProxyConnectionOutput</string>
+		<string>FirehoseRequestInput</string>
+		<string>FirehoseRequestOutput</string>
+		<string>HttpContentLengthHeadZero</string>
+		<string>HttpExpectStrict</string>
+		<string>HttpProtocol</string>
+		<string>IdleShutdown</string>
+		<string>IfFile</string>
+		<string>/IfFile</string>
 		<string>LogLevelOverride</string>
+		<string>MacroIgnoreBadNesting</string>
+		<string>MacroIgnoreEmptyArgs</string>
+		<string>PolicyConditional</string>
+		<string>PolicyConditionalURL</string>
+		<string>PolicyEnvironment</string>
+		<string>PolicyFilter</string>
+		<string>PolicyKeepalive</string>
+		<string>PolicyKeepaliveURL</string>
+		<string>PolicyLength</string>
+		<string>PolicyLengthURL</string>
+		<string>PolicyMaxage</string>
+		<string>PolicyMaxageURL</string>
+		<string>PolicyNocache</string>
+		<string>PolicyNocacheURL</string>
+		<string>PolicyType</string>
+		<string>PolicyTypeURL</string>
+		<string>PolicyValidation</string>
+		<string>PolicyValidationURL</string>
+		<string>PolicyVary</string>
+		<string>PolicyVaryURL</string>
+		<string>PolicyVersion</string>
+		<string>PolicyVersionURL</string>
+		<string>ProxyFCGIBackendType</string>
+		<string>ProxyFCGISetEnvIf</string>
+		<string>ProxyWebsocketAsync</string>
+		<string>ProxyWebsocketAsyncDelay</string>
+		<string>ProxyWebsocketIdleTimeout</string>
+		<string>RegisterHttpMethod</string>
+		<string>RemoteIPProxyProtocol</string>
+		<string>SessionExpiryUpdateInterval</string>
+		<string>SSLOCSPNoverify</string>
+		<string>SSLOCSPResponderCertificateFile</string>
+		<string>Warning</string>
 
 		<!-- New for Apache 2.4: -->
 		<string>AllowMethods</string>
