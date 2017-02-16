@@ -4,8 +4,8 @@
 <!--
 	BBEdit codeless language module for Apache configuration files.
 	John Gruber  <http://daringfireball.net/>
-	Version 1.0.10 (unofficial)
-	Sun 14 Feb 2016
+	Version 1.0.11 (unofficial)
+	Sun 12 Feb 2017
 
 	Released under a Creative Commons Attribution-ShareAlike License:
 	<http://creativecommons.org/licenses/by-sa/2.0/>
@@ -925,46 +925,24 @@
 
 	<key>Language Features</key>
 	<dict>
-		<key>Close Block Comments</key>
+		<key>Comment Pattern</key>
+		<string>^\s*#.*$</string>
+		<key>Function Pattern</key>
+		<string>(?P&lt;function&gt;&lt;Macro (?P&lt;function_name&gt;\S+)( \S+?)*&gt;)[\s\S]*?&lt;/Macro&gt;</string>
+		<key>Number Pattern</key>
 		<string></string>
-		<key>Close Parameter Lists</key>
-		<string></string>
-		<key>Close Statement Blocks</key>
-		<string>/Macro</string>
-		<key>Close Strings 1</key>
-		<string>'</string>
-		<key>Close Strings 2</key>
-		<string>"</string>
-		<key>End-of-line Ends Strings 1</key>
-		<false/>
-		<key>End-of-line Ends Strings 2</key>
-		<false/>
-		<key>Escape Char in Strings 1</key>
-		<string>\</string>
-		<key>Escape Char in Strings 2</key>
-		<string>\</string>
-		<key>Identifier and Keyword Characters</key>
-		<string>0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz^-_./{}</string>
-		<key>Open Block Comments</key>
-		<string></string>
-		<key>Open Line Comments</key>
-		<string>#</string>
-		<key>Open Parameter Lists</key>
-		<string></string>
-		<key>Open Statement Blocks</key>
-		<string>Macro</string>
-		<key>Open Strings 1</key>
-		<string>'</string>
-		<key>Open Strings 2</key>
-		<string>"</string>
-		<key>Prefix for Functions</key>
-		<string></string>
-		<key>Prefix for Procedures</key>
-		<string>Macro</string>
-		<key>Terminator for Prototypes 1</key>
-		<string></string>
-		<key>Terminator for Prototypes 2</key>
-		<string></string>
+		<key>String Pattern</key>
+		<string>(?sx:
+			"[^"\\]*(?:\\.[^"\\]*)*"	(?# double quote)	|
+			'[^'\\]*(?:\\.[^'\\]*)*'	(?# single quote)
+		)</string>
+		<key>Skip Pattern</key>
+		<string>(?x:
+			(?P&gt;comment)	|
+			(?P&gt;string)
+		)</string>
+		<key>Identifier and Keyword Character Class</key>
+		<string>-\w^./{}</string>
 	</dict>
 </dict>
 </plist>
