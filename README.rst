@@ -87,6 +87,13 @@ Python
   Contributed CSS, syntax highlighting, and request handling improvements to
   restview, a tool for previewing reST documents in a web browser.
 
+Ruby
+----
+
+`Lasso lexer for Rouge`_
+  Contributed a lexer for the Lasso programming language for the Rouge_
+  syntax highlighter. Included since Rouge 2.0.8.
+
 More `about me`_.
 
 
@@ -111,4 +118,6 @@ More `about me`_.
 .. _Lasso lexer for Pygments: https://bitbucket.org/EricFromCanada/pygments-main
 .. _Pygments: http://pygments.org/
 .. _restview: https://github.com/mgedmin/restview
+.. _Lasso lexer for Rouge: https://github.com/EricFromCanada/rouge
+.. _Rouge: http://rouge.jneen.net/
 .. _about me: https://about.me/eric3knibbe
