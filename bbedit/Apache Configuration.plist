@@ -23,7 +23,7 @@
 	<key>BBLMColorsSyntax</key>
 	<true/>
 	<key>BBLMCommentLineDefault</key>
-	<string>#</string>
+	<string># </string>
 	<key>BBLMIsCaseSensitive</key>
 	<false/>
 	<key>BBLMKeywordList</key>

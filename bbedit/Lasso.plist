@@ -47,7 +47,7 @@
 	<key>BBLMReferenceSearchURLTemplate</key>
 	<string>http://reference.lassosoft.com/Reference.LassoApp?__SYMBOLNAME__</string>
 	<key>BBLMCommentLineDefault</key>
-	<string>//</string>
+	<string>// </string>
 	<key>BBLMCommentPrefixDefault</key>
 	<string>/*</string>
 	<key>BBLMCommentSuffixDefault</key>

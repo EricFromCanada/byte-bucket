@@ -7,7 +7,7 @@
 	<key>BBLMColorsSyntax</key>
 	<true/>
 	<key>BBLMCommentLineDefault</key>
-	<string>#</string>
+	<string># </string>
 	<key>BBLMSuffixMap</key>
 	<array>
 		<dict>
