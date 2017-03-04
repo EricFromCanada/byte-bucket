@@ -1,24 +1,24 @@
-#!/usr/bin/lasso9
-/*[*/
+#!/usr/bin/env lasso9
 /*
   Given a set of Lasso files or element names, outputs reference docs for each
   element for the Lasso domain for Sphinx. Since Lasso defaults to not retaining
-  docComments, prefix with `env LASSO9_RETAIN_COMMENTS=1` when running from the
-  command line. Generates reST markup like so (with extra line breaks):
+  docComments, prefix with `export LASSO9_RETAIN_COMMENTS=1 LASSO9_NO_INTERPRETER=1`
+  when running from the command line. Generates reST markup like so (with extra
+  line breaks):
 
   method:: signature
     docstring                     <-- docComment content before @-prefixed attribute lines
     :param name: description          <-- from "@param name description" in docComment
     :param type name: description     <-- type inserted if not ::any
-    :param ...: description        <-- if signature has ... & docComment has @param rest or @param ...
-    :param restname: description    <-- if signature has ...restname & docComment has @param restname
+    :param ...: description        <-- if signature has ... & docComment has "@param rest" or "@param ..."
+    :param restname: description    <-- if signature has ...restname & docComment has "@param restname"
     :return: description          <-- from "@return description" in docComment
     :rtype: return type           <-- rtype inserted if return type not ::any
     :see: resource            <-- from "@see resource" in docComment
   trait:: name
     docstring
     :see: resource
-    :import: traitname
+    :import: traitnames   <-- trait list inserted from `import` commands
     require:: signature
       ...                 <-- same as method::
     provide:: signature
@@ -26,11 +26,11 @@
   type:: name
     docstring
     :see: resource
-    :parent: typename
-    member:: signature
-      ...                 <-- same as method::
-    :import: traitname
+    :parent: typename     <-- parent type inserted from `parent` command
+    :import: traitnames   <-- trait list inserted from `trait { }` block
     provide:: signature
+      ...                 <-- same as method::
+    member:: signature
       ...                 <-- same as method::
   thread:: name
     ...               <-- same as type::
@@ -38,17 +38,11 @@
   Known limitations:
   - won't generate :import: lines for traits added later with ->addTrait
   - Lasso applies a docComment to only the first require statement in a group
-  - Lasso has no way to show which member methods are public/protected/private (#7494)
-  - a trait will see its requires disappear as imports are added (#7581)
   - data elements and therefore automatic getters/setters can't have docstrings
   - little error handling, e.g. when finding @param lines with no matching parameter
+  - can't fetch default parameter values from the code; must be added to output manually
   - uses auto-collect; might be faster with output to variable instead
 */
-
-not sys_getenv('LASSO9_RETAIN_COMMENTS') ?
-  fail('This program requires the LASSO9_RETAIN_COMMENTS environment variable be set to 1')
-$argc == 1 ?
-  fail('Specify --find=<type or trait regex> and/or one or more Lasso files to read as arguments')
 
 /**!
   Type containing description and attributes of a given tag's doc comment.
@@ -57,15 +51,18 @@ $argc == 1 ?
   @see      http://sphinx-doc.org/domains.html#info-field-lists
 */
 define docObject => type {
-  data indent             // string to use as indent
-  data description = ''   // first block of text before @attribute lines
-  data paramsorder = array()  // each param's name, since params is an unordered container
-  data paramskeyed = array()  // whether each param is a keyword parameter
-  data params = map()     // each is ('pname' = pair(::ptype, 'pdesc')) from #element & @param lines
-  data others = array()   // each is (pair('attribute', 'value')) from other @attribute lines
-  data result = pair()    // (::rtype, 'rdesc') from #element & @return
+  data indent               // string to use as indent
+  data description = ''     // first block of text before @attribute lines
+  data paramsorder = array  // each param's name, since params is an unordered container
+  data paramskeyed = array  // whether each param is a keyword parameter
+  data params = map         // each is ('pname' = pair(::ptype, 'pdesc')) from #element & @param lines
+  data others = array       // each is (pair('attribute', 'value')) from other @attribute lines
+  data result = pair        // (::rtype, 'rdesc') from #element & @return
 
-  // #element can be a tag or signature, or anything supporting ->docComment
+  /**!
+    @param element  can be a tag or signature, or anything supporting ->docComment
+    @param indent   characters to use for indentation
+  */
   public onCreate(element, indent::string='   ') => {
     .'indent' = #indent
 
@@ -104,7 +101,7 @@ define docObject => type {
     skip 1
     let words = #item->trim&split(' ')  // array('param','name','Words','about','parameter')
     let word1 = string_removetrailing(#words->first, ':')   // attribute type
-    let word2 = string_removetrailing(#words->second, ':')  // name if attribute is param, otherwise description
+    let word2 = string_removetrailing(string_removeleading(#words->second, '-'), ':')  // name if attribute is param, otherwise description
     do {
       local(ptype = ::any)
       if (#word1 == 'param') => {
@@ -198,7 +195,7 @@ define string_wrap(
     local('line' = #i)
     #trim ? #line->trim
     if(#line->size < #length) => {
-      #out += #indent + #line + #linebreak
+      #out->append(#indent + #line + #linebreak)
     else
       local(
         'lineIn' = #line,
@@ -212,12 +209,12 @@ define string_wrap(
           #offset -= 1
         }
         #offset == 0 ? #offset = #length
-        local('chunk') = #lineIn->substring(1, #offset)
-        #lineOut += #indent + #chunk + #linebreak
+        local('chunk') = #lineIn->sub(1, #offset)
+        #lineOut->append(#indent + #chunk + #linebreak)
         #lineIn->removeleading(#chunk)
       }
-      #lineIn->size ? #lineOut += #indent + #lineIn + #linebreak
-      #out += #lineOut
+      #lineIn->size ? #lineOut->append(#indent + #lineIn + #linebreak)
+      #out->append(#lineOut)
     }
   }
   return(#out)
@@ -225,16 +222,20 @@ define string_wrap(
 
 /**!
   A reST-friendly output method for the signature type.
+  @param withType            print member methods prefixed by their type instead of indented
+  @param withSquareBrackets  surround optional parameters with square brackets
   @return   signature as reST string
   @author   Eric Knibbe
 */
-define signature->asReString => {
+define signature->asReString(-withType=false, -withSquareBrackets=false) => {
   local(
     output = .methodName->asString + '(',
     num = 0,
     opt = false,
     size = .paramDescs->size
   )
+  #withType && .typename->asString->isAlpha(1) ?
+    #output = .typename->asString + '->' + #output
   with param in .paramDescs
   let name = #param->get(1)
   let type = #param->get(2)
@@ -242,11 +243,13 @@ define signature->asReString => {
   do {
     if (!#opt && #flags->bitTest(1)) => {
       #opt = true
-      #output->append('[')
+      #withSquareBrackets ?
+        #output->append('[')
     }
     if (#opt && !#flags->bitTest(1)) => {
       #opt = false
-      #output->append(']')
+      #withSquareBrackets ?
+        #output->append(']')
     }
     #num != 0 ?
       #output->append(', ')
@@ -256,18 +259,24 @@ define signature->asReString => {
     #output->append(#name->asString)
     #type != ::any ?
       #output->append('::' + #type->asString)
+    not #withSquareBrackets && #flags->bitTest(1) ?
+      #output->append('= ?')
     #opt && #num==#size && !.restName ?
-      #output->append(']')
+      #withSquareBrackets ?
+        #output->append(']')
     !#opt && #num==#size && .restName ?
-      #output->append('[')
+      #withSquareBrackets ?
+        #output->append('[')
   }
   if (.restName) => {
-    #size == 0 ?
-      #output->append('[') | #output->append(', ')
+    #size > 0 ?
+      #output->append(', ') | #withSquareBrackets ?
+        #output->append('[')
     #output->append('...')
     .restName != ::rest ?
       #output->append(.restName->asString)
-    #output->append(']')
+    #withSquareBrackets ?
+      #output->append(']')
   }
   #output->append(')')
   .returnType != ::any ?
@@ -280,9 +289,11 @@ define signature->asReString => {
   @param element    the subject of the docs, can be ::tag or ::signature
   @param directive  what directive to use, e.g. type::
   @param nesting    what level to nest the output (0 = no nesting)
+  @param typed      value for asReString's withType param
+  @param squarebrackets value for asReString's withSquareBrackets param
   @author   Eric Knibbe
 */
-define writeDocs(element, directive::string, nesting::integer=0) => {^
+define writeDocs(element, directive::string, nesting::integer=0, -typed=false, -squarebrackets=false) => {^
 
   // check if #element is a thread or thread's type
   if (#element->type == ::tag) => {
@@ -302,7 +313,8 @@ define writeDocs(element, directive::string, nesting::integer=0) => {^
   // initial directive
   '\n' + #indent*#nesting + '.. ' + #directive + ':: '
   #element->type == ::signature ?
-    #element->asReString + '\n\n' | #element->asString->removeTrailing('_thread$')& + '\n\n'
+    #element->asReString(-withType=#typed, -withSquareBrackets=#squarebrackets) + '\n\n'
+    | #element->asString->removeTrailing('_thread$')& + '\n\n'
 
   // items from docComment
   #docElement->description
@@ -350,7 +362,7 @@ define writeDocs(element, directive::string, nesting::integer=0) => {^
         #element->getType->trait->asString != 'any' &&
         #element->getType->trait->asString !>> #element->getType->parent->asString
         ) => {
-      local(imports = array())
+      local(imports = array)
       if (#element->getType->trait->subTraits->size != 0 &&
           #element->getType->trait->subTraits->first->asString != '_'
           ) => {
@@ -393,10 +405,11 @@ define writeDocs(element, directive::string, nesting::integer=0) => {^
     with member in #element->getType->listMethods
     let m_name = #member->methodName->asString
     where #member->typeName == #element
+    where not #member->flags->bitAnd(0x0C) // skip private and protected methods
     where not #m_name->beginsWith("'") // skip 'x'() but not _x() x=() x()
     order by #m_name->isAlpha(1), #m_name
     do {^
-      writeDocs(#member, 'member', #nesting+1)
+      writeDocs(#member, 'member', #nesting+(#typed? 0 | 1), -typed=#typed, -squarebrackets=#squarebrackets)
     ^}
 
   }
@@ -408,79 +421,166 @@ define writeDocs(element, directive::string, nesting::integer=0) => {^
   generate reST markup for. Each new type, trait, and method can be read off the
   end of the lists returned by the sys_list* methods.
 */
-iterate($argv) => {
-  loop_count == 1 ? loop_continue
-  $argv->first->endsWith(loop_value) ? loop_continue  // prevent script from reading itself
-  local(
-    typecount_orig = sys_listTypes->size,     // staticarray of tags
-    traitcount_orig = sys_listTraits->size,   // staticarray of tags
-    methodcount_orig = sys_listUnboundMethods->size,  // staticarray of signatures
-    currentfile = file(loop_value),
-    typelist = array(),
-    traitlist = array()
+define usage(exit_status::integer=-1) => {
+    local(cmd) = $argv->get(1)->lastComponent
+    stdoutnl("\
+usage: " + #cmd + " [options] [file paths]
+
+    The " + #cmd + " command prints reST markup describing types, traits, and
+    methods in the given files or loaded in the current Lasso installation.
+    
+    If one or more file paths are provided, only types, traits, and methods
+    defined in the files and not already loaded into Lasso are printed.
+    
+    Must be run with the LASSO9_RETAIN_COMMENTS and LASSO9_NO_INTERPRETER
+    environment variables set to 1.
+
+Options
+-------
+    -m <string or regex pattern>
+        Only print types, traits, and methods matching the given pattern.
+    
+    -typed
+        Print member methods without indentation, prefixed with their type name.
+    
+    -squarebrackets
+        Surround optional parameters in square brackets when printing signatures.
+    
+    -h
+        Displays this help and exits."
+    )
+    sys_exit(#exit_status)
+}
+
+// default options
+local(
+  opts = $argv->asArray->remove(1,1)&,
+  pattern = regexp(-find='^(?![$]).+', -ignoreCase),
+  paths = array,
+  typed = false,
+  squarebrackets = false,
+  type_skip = 0,
+  trait_skip = 0, 
+  method_skip = 0,
+  typelist = array,
+  traitlist = array,
+  methodlist = array,
+)
+
+// ensure env var and arguments are provided
+not sys_getenv('LASSO9_RETAIN_COMMENTS') || not sys_getenv('LASSO9_NO_INTERPRETER') || $argc == 1 ?
+  usage
+
+while(#opts->size > 0) => {
+    match(bytes(#opts->first)) => {
+
+    // -m: read the next argument and set it as the search pattern
+    case(bytes('-m'))
+      // ignore anything starting with $ and remove surrounding quotes
+      #pattern->findpattern = '^(?![$])' + #opts(2)->replace('"','')&replace("'",'')&
+      #opts->remove(1,1)
+
+    // -typed: set #typed to true
+    case(bytes('-typed'))
+      #typed = true
+
+    // -squarebrackets: set #squarebrackets to true
+    case(bytes('-squarebrackets'))
+      #squarebrackets = true
+
+    // -h: print help and exit
+    case(bytes('-h'))
+      usage(0)
+
+    // otherwise, assume the argument is a file name
+    case
+      #paths->insert(#opts->first)
+    }
+  #opts->remove(1,1)
+}
+
+// Load and register contents of $LASSO9_MASTER_HOME/LassoModules/
+// database_initialize
+
+// Load all of the libraries from builtins and lassoserver
+// This forces all possible available types and methods to be registered
+local(srcs =
+  (:
+    dir(sys_masterHomePath + '/LassoLibraries/builtins/')->eachFilePath,
+    dir(sys_masterHomePath + '/LassoLibraries/lassoserver/')->eachFilePath
   )
+)
+with topLevelDir in delve(#srcs)
+where not #topLevelDir->lastComponent->beginsWith('.')
+do protect => {
+  handle_error => {
+//     stdoutnl('Unable to load: ' + #topLevelDir + ' ' + error_msg)
+  }
+  library_thread_loader->loadLibrary(#topLevelDir)
+//   stdoutnl('Loaded: ' + #topLevelDir)
+}
 
-  // if argument is --find=<type or trait regex>, include the results in the output
-  if (loop_value->beginsWith('--find=')) => {
-    local(findarg = '^(?![$])' + loop_value->sub(8)->replace('"','')&replace("'",'')&)
-    sys_listTypes->forEach => {
-      regexp(-find=#findarg, -input=#1->asString, -ignoreCase)->matches ?
-        stdoutnl('\n' + '='*#1->asString->size +
-                 '\n' + #1->asString +
-                 '\n' + '='*#1->asString->size +
-                 '\n' + writeDocs(#1, 'type'))
+// if files were provided, take note of the currently-registered types and traits, read each file, and print only the new items
+if (#paths->size > 0) => {
+
+  local(
+    type_skip = sys_listTypes->size,     // staticarray of tags
+    trait_skip = sys_listTraits->size,   // staticarray of tags
+    method_skip = sys_listUnboundMethods->size,  // staticarray of signatures
+  )  
+
+  with path in #paths
+  let f = file(#path)
+  do {
+    if(not #f->exists) => {
+      file_stderr->writeString(error_code_resNotFound + ':' + error_msg_resNotFound + ' - ' + #path + sys_eol)
+      sys_exit(1)
     }
-    sys_listTraits->forEach => {
-      regexp(-find=#findarg, -input=#1->asString, -ignoreCase)->matches ?
-        stdoutnl('\n' + '='*#1->asString->size +
-                 '\n' + #1->asString +
-                 '\n' + '='*#1->asString->size +
-                 '\n' + writeDocs(#1, 'trait'))
-    }
-    loop_continue
+    sourcefile(#f, -autoCollect=false)->invoke
   }
+}
 
-  // read each specified file
-  sourcefile(#currentfile, -autoCollect=false)->invoke
-  stdoutnl(
-    '\n' + '='*#currentfile->name->size +
-    '\n' + #currentfile->name +
-    '\n' + '='*#currentfile->name->size
-  )    // print the filename as a heading
+// create lists of types, traits, methods to print
+with type in sys_listTypes
+skip #type_skip
+where #type->asString->contains(#pattern, -ignoreCase)
+where not #type->asString->endsWith('$')  // skip thread objects
+do {
+  #typelist->insert(#type)
+}
 
-  // create lists of new types & traits
-  with type in sys_listTypes
-  skip #typecount_orig
-  where not #type->asString->endsWith('$')  // skip thread objects
-  do {
-    #typelist->insert(#type)
-  }
-  with trait in sys_listTraits
-  skip #traitcount_orig
-  where not #trait->asString->beginsWith('$') // skip traits made by combining other traits
-  do {
-    #traitlist->insert(#trait)
-  }
+with trait in sys_listTraits
+skip #trait_skip
+where #trait->asString->contains(#pattern, -ignoreCase)
+where not #trait->asString->beginsWith('$') // skip traits made by combining other traits (redundant)
+do {
+  #traitlist->insert(#trait)
+}
 
-  // write markup for new unbound methods (must occur before writing types, or this file's methods are included)
-  with method in sys_listUnboundMethods
-  skip #methodcount_orig
-  where #method->methodName->asString->isalpha(1)     // skip private methods
-  where not #typelist->contains(#method->methodName)  // skip auto-generated type & trait methods
-  where not #traitlist->contains(#method->methodName)
-  do {
-    stdoutnl(writeDocs(#method, 'method'))
-  }
+with method in sys_listUnboundMethods
+skip #method_skip
+where #method->asString->contains(#pattern, -ignoreCase)
+where #method->methodName->asString->isalpha(1)     // skip private methods
+where not #typelist->contains(#method->methodName)  // skip auto-generated type & trait methods
+where not #traitlist->contains(#method->methodName)
+do {
+  #methodlist->insert(#method)
+}
 
-  // write markup for new types
-  with type in #typelist
-  do {
-    stdoutnl(writeDocs(#type, 'type'))
-  }
-
-  // write markup for new traits
-  with trait in #traitlist
-  do {
-    stdoutnl(writeDocs(#trait, 'trait'))
-  }
+// write out markup
+with x in #typelist
+do {
+  stdoutnl('\n' + #x->asString +
+       '\n' + '='*#x->asString->size)
+  stdoutnl(writeDocs(#x, 'type', 0, -typed=#typed, -squarebrackets=#squarebrackets)) // must specify 3rd param due to #7408
+}
+with y in #traitlist
+do {
+  stdoutnl('\n' + #y->asString +
+       '\n' + '='*#y->asString->size)
+  stdoutnl(writeDocs(#y, 'trait', 0, -typed=#typed, -squarebrackets=#squarebrackets))
+}
+with z in #methodlist
+do {
+  stdoutnl(writeDocs(#z, 'method'))
 }
