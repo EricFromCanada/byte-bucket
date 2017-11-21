@@ -2625,6 +2625,7 @@
 				<string>uchar_bidi_control</string>
 				<string>uchar_bidi_mirrored</string>
 				<string>uchar_bidi_mirroring_glyph</string>
+				<string>uchar_bidi_paired_bracket</string>
 				<string>uchar_block</string>
 				<string>uchar_canonical_combining_class</string>
 				<string>uchar_case_folding</string>

@@ -1,7 +1,14 @@
 AppleScript
 -----------
 
-`close Safari Web Inspector script`_
+`arrange windows`_
+  Arranges windows for specified applications across two screens, because
+  application windows don't preserve their positions on an external display if
+  it's unplugged or sleeps (unless "Displays have separate Spaces" is enabled).
+  `More info here
+  <https://ericfromcanada.github.io/output/2017/arrange-windows-script.html>`_.
+
+`close Safari Web Inspector`_
   Before Safari 6, the Web Inspector shortcut would only open it. Attach
   this AppleScript to another shortcut to make it closable.
 
@@ -37,8 +44,9 @@ BBEdit
    tag literals, and variables.
 
 `Apache 2.4 Configuration codeless language module`_
-   Update of John Gruber's `Apache Configuration Language Module`_ to include
-   variables, Apache 2.4 keywords, and some bugfixes.
+   Update of John Gruber's `Apache Configuration Language Module
+   <http://daringfireball.net/projects/apacheconfig/>`_ to include variables,
+   Apache 2.4 keywords, and some bugfixes.
 
 `Make codeless language module`_
    Update of BBEdit's / TextWrangler's built-in module to include more keywords
@@ -55,11 +63,13 @@ JavaScript
   reveal are displayed.
 
 `Lasso lexer for highlight.js`_
-  Contributed a lexer for the Lasso programming language for highlight.js_, a
-  JS-based syntax highlighter. Included since version 7.4.
+  Contributed a lexer for the Lasso programming language for `highlight.js
+  <https://highlightjs.org/>`_, a JS-based syntax highlighter. Included since
+  version 7.4.
 
 `Lasso lexer for code-prettify`_
-  Also wrote a Lasso lexer for code-prettify_, another JS-based syntax
+  Also wrote a Lasso lexer for `code-prettify
+  <https://github.com/google/code-prettify>`_, another JS-based syntax
   highlighter.
 
 Lasso
@@ -80,8 +90,8 @@ Python
    descriptions of Lasso syntax.
 
 `Lasso lexer for Pygments`_
-  Contributed a lexer for the Lasso programming language for the Pygments_
-  syntax highlighter. Included since Pygments 1.6.
+  Contributed a lexer for the Lasso programming language for the `Pygments
+  <http://pygments.org/>`_ syntax highlighter. Included since version 1.6.
 
 `restview`_
   Contributed CSS, syntax highlighting, and request handling improvements to
@@ -92,31 +102,28 @@ Ruby
 
 `Lasso lexer for Rouge`_
   Contributed a lexer for the Lasso programming language for the Rouge_
-  syntax highlighter. Included since Rouge 2.0.8.
+  syntax highlighter. Included since version 2.0.8.
 
 More `about me`_.
 
 
 .. _Browse all files: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/src/
-.. _close Safari Web Inspector script: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/applescript/close%20Safari%20Web%20Inspector.applescript
+.. _arrange windows: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/applescript/arrange%20windows.applescript
+.. _close Safari Web Inspector: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/applescript/close%20Safari%20Web%20Inspector.applescript
 .. _keyputter.sh: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bash/keyputter.sh
 .. _svn-user-htdigest.sh: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bash/svn-user-htdigest.sh
 .. _Time-Machine-NASifier.command: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bash/Time-Machine-NASifier.command
 .. _reStructuredText codeless language module: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bbedit/reStructuredText.plist
 .. _Apache 2.4 Configuration codeless language module: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bbedit/Apache%20Configuration.plist
-.. _Apache Configuration Language Module: http://daringfireball.net/projects/apacheconfig/
 .. _Lasso codeless language module: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bbedit/Lasso.plist
 .. _Make codeless language module: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bbedit/Make.plist
 .. _touch-menus-plus.js: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/javascript/touch-menus-plus.js
 .. _Lasso lexer for highlight.js: https://github.com/isagalaev/highlight.js/blob/master/src/languages/lasso.js
-.. _highlight.js: https://highlightjs.org/
 .. _Lasso lexer for code-prettify: https://github.com/google/code-prettify/blob/master/src/lang-lasso.js
-.. _code-prettify: https://github.com/google/code-prettify
 .. _completions-generator.lasso: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/lasso/completions-generator.lasso
 .. _sphinxifier.lasso: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/lasso/sphinxifier.lasso
 .. _Lasso domain for Sphinx: https://pypi.python.org/pypi/sphinxcontrib-lassodomain/
 .. _Lasso lexer for Pygments: https://bitbucket.org/EricFromCanada/pygments-main
-.. _Pygments: http://pygments.org/
 .. _restview: https://github.com/mgedmin/restview
 .. _Lasso lexer for Rouge: https://github.com/EricFromCanada/rouge
 .. _Rouge: http://rouge.jneen.net/
