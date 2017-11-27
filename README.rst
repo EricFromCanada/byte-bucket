@@ -12,6 +12,16 @@ AppleScript
   Before Safari 6, the Web Inspector shortcut would only open it. Attach
   this AppleScript to another shortcut to make it closable.
 
+`HTMLize Selected Text`_
+  Runs selected text through Markdown.pl and SmartyPants.pl, and converts any
+  MacRoman non-ASCII characters to HTML entities. (A relic from before UTF-8 was
+  the standard online.)
+
+`Journler2Blogger`_
+  Uses the logic from HTMLize Selected Text to prepare a Journler entry for
+  submission to Blogger. Includes the ability to convert rich text styles to
+  HTML.
+
 bash
 ----
 
@@ -110,6 +120,8 @@ More `about me`_.
 .. _Browse all files: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/src/
 .. _arrange windows: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/applescript/arrange%20windows.applescript
 .. _close Safari Web Inspector: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/applescript/close%20Safari%20Web%20Inspector.applescript
+.. _HTMLize Selected Text: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/applescript/HTMLize%20Selected%20Text.applescript
+.. _Journler2Blogger: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/applescript/Journler2Blogger.applescript
 .. _keyputter.sh: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bash/keyputter.sh
 .. _svn-user-htdigest.sh: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bash/svn-user-htdigest.sh
 .. _Time-Machine-NASifier.command: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bash/Time-Machine-NASifier.command
