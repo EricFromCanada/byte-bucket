@@ -4,7 +4,7 @@
 <!--
 	BBEdit / TextWrangler codeless language module for reStructuredText files.
 	Eric Knibbe
-	Version 2.1
+	Version 2.1.1
 
 	Released under a Creative Commons Attribution-ShareAlike License:
 	<http://creativecommons.org/licenses/by-sa/4.0/>
@@ -56,10 +56,6 @@
 		<dict>
 			<key>BBLMLanguageSuffix</key>
 			<string>.rst</string>
-		</dict>
-		<dict>
-			<key>BBLMLanguageSuffix</key>
-			<string>.txt</string>
 		</dict>
 	</array>
 	<key>BBLMReferenceSearchURLTemplate</key>
