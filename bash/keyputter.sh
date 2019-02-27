@@ -11,6 +11,6 @@ USER=${1:-root}
 while read HOST
 do
 	echo "Installing on ${HOST}..."
-	cat ~/.ssh/id_rsa.pub | ssh ${USER}@${HOST} 'test ! -d "~/.ssh" && mkdir -p ~/.ssh; cat - >> ~/.ssh/authorized_keys; type restorecon >/dev/null 2>&1 && restorecon -R ~/.ssh'
+	cat ~/.ssh/id_rsa.pub | ssh ${USER}@${HOST} '[ -d "~/.ssh" ] || mkdir -p ~/.ssh; cat - >> ~/.ssh/authorized_keys; type restorecon >/dev/null 2>&1 && restorecon -R ~/.ssh'
 done <<EOF
 server.com
