@@ -62,6 +62,8 @@ BBEdit
    Update of BBEdit's / TextWrangler's built-in module to include more keywords
    from GNU make.
 
+All these are also listed among the language modules at `BBEdit Extras`_.
+
 JavaScript
 ----------
 
@@ -114,10 +116,10 @@ Ruby
   Contributed a lexer for the Lasso programming language for the Rouge_
   syntax highlighter. Included since version 2.0.8.
 
-More `about me`_.
+More `about me`_ and `things I've written`_.
 
 
-.. _Browse all files: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/src/
+.. _Browse all files: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/src
 .. _arrange windows: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/applescript/arrange%20windows.applescript
 .. _close Safari Web Inspector: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/applescript/close%20Safari%20Web%20Inspector.applescript
 .. _HTMLize Selected Text: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/applescript/HTMLize%20Selected%20Text.applescript
@@ -129,14 +131,16 @@ More `about me`_.
 .. _Apache 2.4 Configuration codeless language module: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bbedit/Apache%20Configuration.plist
 .. _Lasso codeless language module: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bbedit/Lasso.plist
 .. _Make codeless language module: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/bbedit/Make.plist
+.. _BBEdit Extras: http://www.bbeditextras.org/wiki/index.php?title=Codeless_Language_Modules
 .. _touch-menus-plus.js: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/javascript/touch-menus-plus.js
 .. _Lasso lexer for highlight.js: https://github.com/isagalaev/highlight.js/blob/master/src/languages/lasso.js
 .. _Lasso lexer for code-prettify: https://github.com/google/code-prettify/blob/master/src/lang-lasso.js
 .. _completions-generator.lasso: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/lasso/completions-generator.lasso
 .. _sphinxifier.lasso: https://bitbucket.org/EricFromCanada/ericfromcanada.bitbucket.org/raw/default/lasso/sphinxifier.lasso
-.. _Lasso domain for Sphinx: https://pypi.python.org/pypi/sphinxcontrib-lassodomain/
-.. _Lasso lexer for Pygments: https://bitbucket.org/EricFromCanada/pygments-main
+.. _Lasso domain for Sphinx: https://pypi.python.org/pypi/sphinxcontrib-lassodomain
+.. _Lasso lexer for Pygments: https://bitbucket.org/birkenfeld/pygments-main/src/66535d7e85e5afe4b32fa45dcc1c321766dc9994/pygments/lexers/javascript.py#lines-548
 .. _restview: https://github.com/mgedmin/restview
-.. _Lasso lexer for Rouge: https://github.com/EricFromCanada/rouge
-.. _Rouge: http://rouge.jneen.net/
+.. _Lasso lexer for Rouge: https://github.com/jneen/rouge/blob/master/lib/rouge/lexers/lasso.rb
+.. _Rouge: http://rouge.jneen.net
 .. _about me: https://about.me/eric3knibbe
+.. _things I've written: https://ericfromcanada.github.io
