@@ -59,7 +59,7 @@ BBEdit
 
 `Apache 2.4 Configuration codeless language module`_
    Update of John Gruber's `Apache Configuration Language Module
-   <http://daringfireball.net/projects/apacheconfig/>`_ to include variables,
+   <https://daringfireball.net/projects/apacheconfig/>`_ to include variables,
    Apache 2.4 keywords, and some bugfixes.
 
 `Make codeless language module`_
@@ -108,7 +108,7 @@ Python
 
 `Lasso lexer for Pygments`_
   Contributed a lexer for the Lasso programming language for the `Pygments
-  <http://pygments.org/>`_ syntax highlighter. Included since version 1.6.
+  <https://pygments.org/>`_ syntax highlighter. Included since version 1.6.
 
 `restview`_
   Contributed CSS, syntax highlighting, and request handling improvements to
@@ -116,6 +116,10 @@ Python
 
 Ruby
 ----
+
+`Homebrew`_
+  Numerous contributions to Homebrew's commands, documentation, messaging, and
+  `online package browser <https://formulae.brew.sh/>`_.
 
 `Lasso lexer for Rouge`_
   Contributed a lexer for the Lasso programming language for the `Rouge
@@ -141,8 +145,9 @@ More `about me`_ and `things I've written`_.
 .. _completions-generator.lasso: https://github.com/EricFromCanada/byte-bucket/blob/master/lasso/completions-generator.lasso
 .. _sphinxifier.lasso: https://github.com/EricFromCanada/byte-bucket/blob/master/lasso/sphinxifier.lasso
 .. _Lasso domain for Sphinx: https://pypi.org/project/sphinxcontrib-lassodomain/
-.. _Lasso lexer for Pygments: https://bitbucket.org/birkenfeld/pygments-main/src/66535d7e85e5afe4b32fa45dcc1c321766dc9994/pygments/lexers/javascript.py#lines-548
+.. _Lasso lexer for Pygments: https://github.com/pygments/pygments/blob/master/pygments/lexers/javascript.py#L546
 .. _restview: https://github.com/mgedmin/restview
+.. _Homebrew: https://brew.sh/
 .. _Lasso lexer for Rouge: https://github.com/rouge-ruby/rouge/blob/master/lib/rouge/lexers/lasso.rb
 .. _about me: https://about.me/eric3knibbe
 .. _things I've written: https://ericfromcanada.github.io
