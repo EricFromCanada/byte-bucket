@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<!--
+	BBEdit / TextWrangler codeless language module for Liquid template files.
+	Eric Knibbe
+	Version 1.0
+
+	Released under a Creative Commons Attribution-ShareAlike License:
+	<http://creativecommons.org/licenses/by-sa/4.0/>
+
+	Highlights only markup between Liquid delimiters, marking everything else as
+	comments. Supports keywords added in Liquid 5.0.0. 
+
+	Requires BBEdit 11.6 / TextWrangler 5.5 or later. To install, copy to either:
+
+		~/Library/Application Support/BBEdit/Language Modules/
+		~/Library/Application Support/TextWrangler/Language Modules/
+
+	and relaunch BBEdit or TextWrangler.
+
+	Feedback is welcome.		<https://ericfromcanada.github.io/>
+-->
+<dict>
+	<key>BBEditDocumentType</key>
+	<string>CodelessLanguageModule</string>
+	<key>BBLMLanguageDisplayName</key>
+	<string>Liquid</string>
+	<key>BBLMLanguageCode</key>
+	<string>lqtl</string>
+	<key>BBLMSuffixMap</key>
+	<array>
+		<dict>
+			<key>BBLMLanguageSuffix</key>
+			<string>.liquid</string>
+		</dict>
+	</array>
+	<key>BBLMReferenceSearchURLTemplate</key>
+	<string>https://shopify.github.io/liquid/filters/__SYMBOLNAME__/</string>
+	<key>BBLMCommentPrefixDefault</key>
+	<string>{% comment %}</string>
+	<key>BBLMCommentSuffixDefault</key>
+	<string>{% endcomment %}</string>
+	<key>BBLMColorsSyntax</key>
+	<true/>
+	<key>BBLMScansFunctions</key>
+	<false/>
+	<key>BBLMCanSpellCheckCodeRuns</key>
+	<false/>
+	<key>BBLMIsCaseSensitive</key>
+	<false/>
+	<key>Language Features</key>
+	<dict>
+		<key>Identifier and Keyword Character Class</key>
+		<string>\w</string>
+		<key>Comment Pattern</key>
+		<string><![CDATA[(?sx:
+			(?:\A|-?[%}]})
+			.*?
+			(?:{[{%]-?|\Z)				(?# between delimiters)	|
+			(?<=\bcomment)\s*-?%}
+			.*?
+			{%-?\s*(?=endcomment\b)		(?# block comment)		|
+			\#.*?.(?=$|-?[}%]})			(?# inline comment)
+		)]]></string>
+		<key>String Pattern</key>
+		<string><![CDATA[(?sx:
+			"[^"]*"						(?# double quote)	|
+			'[^']*'						(?# single quote)
+		)]]></string>
+		<key>Number Pattern</key>
+		<string><![CDATA[(?x:
+			(?<![\w-])-?(?:\d+\.\d+|\d+)
+		)]]></string>
+		<key>Keyword Pattern</key>
+		<string><![CDATA[(?x:
+			\bend(?!comment|raw)\w+\b	(?# closed blocks)	|
+			(?<=\|)\s*\w+\b				(?# custom filters)	|
+			\.\.?|[[\]()]				(?# punctuation)
+		)]]></string>
+		<key>Skip Pattern</key>
+		<string><![CDATA[(?x:
+			(?P>string)		|
+			(?P>comment)	|
+			(?P>number)
+		)]]></string>
+	</dict>
+	<key>BBLMKeywords</key>
+	<array>
+		<dict>
+			<key>RunKind</key>
+			<string>com.barebones.bblm.preprocessor</string>
+			<key>Keywords</key>
+			<array>
+				<string>comment</string>
+				<string>endcomment</string>
+				<string>raw</string>
+				<string>endraw</string>
+			</array>
+		</dict>
+		<dict>
+			<key>RunKind</key>
+			<string>com.barebones.bblm.variable</string>
+			<key>Keywords</key>
+			<array>
+				<string>true</string>
+				<string>false</string>
+				<string>nil</string>
+				<string>empty</string>
+				<string>blank</string>
+			</array>
+		</dict>
+		<dict>
+			<key>RunKind</key>
+			<string>com.barebones.bblm.keyword</string>
+			<key>Keywords</key>
+			<array>
+				<string>and</string>
+				<string>or</string>
+				<string>contains</string>
+				<string>if</string>
+				<string>unless</string>
+				<string>elsif</string>
+				<string>else</string>
+				<string>case</string>
+				<string>when</string>
+				<string>for</string>
+				<string>in</string>
+				<string>ifchanged</string>
+				<string>cycle</string>
+				<string>tablerow</string>
+				<string>assign</string>
+				<string>capture</string>
+				<string>increment</string>
+				<string>decrement</string>
+				<string>include</string>
+				<string>render</string>
+				<string>liquid</string>
+				<string>echo</string>
+			</array>
+		</dict>
+		<dict>
+			<key>RunKind</key>
+			<string>com.barebones.bblm.predefined-symbol</string>
+			<key>Keywords</key>
+			<array>
+				<string>break</string>
+				<string>continue</string>
+				<string>reversed</string>
+				<string>forloop</string>
+				<string>parentloop</string>
+				<string>first</string>
+				<string>index</string>
+				<string>index0</string>
+				<string>last</string>
+				<string>length</string>
+				<string>rindex</string>
+				<string>rindex0</string>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>

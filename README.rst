@@ -57,6 +57,11 @@ BBEdit
    not supported by the current BBEdit language module such as ticked strings,
    tag literals, and variables.
 
+`Liquid codeless language module`_
+   Language module for BBEdit and TextWrangler which highlights only markup
+   between Liquid delimiters, marking everything else as	comments. Supports
+   keywords added in Liquid 5.0.0.
+
 `Apache 2.4 Configuration codeless language module`_
    Update of John Gruber's `Apache Configuration Language Module
    <https://daringfireball.net/projects/apacheconfig/>`_ to include variables,
@@ -137,6 +142,7 @@ More `about me`_ and `things I've written`_.
 .. _Time-Machine-NASifier.command: https://github.com/EricFromCanada/byte-bucket/blob/master/bash/Time-Machine-NASifier.command
 .. _reStructuredText codeless language module: https://github.com/EricFromCanada/byte-bucket/blob/master/bbedit/reStructuredText.plist
 .. _Lasso codeless language module: https://github.com/EricFromCanada/byte-bucket/blob/master/bbedit/Lasso.plist
+.. _Liquid codeless language module: https://github.com/EricFromCanada/byte-bucket/blob/master/bbedit/Liquid.plist
 .. _Apache 2.4 Configuration codeless language module: https://github.com/EricFromCanada/byte-bucket/blob/master/bbedit/Apache%20Configuration.plist
 .. _Make codeless language module: https://github.com/EricFromCanada/byte-bucket/blob/master/bbedit/Make.plist
 .. _touch-menus-plus.js: https://github.com/EricFromCanada/byte-bucket/blob/master/javascript/touch-menus-plus.js
