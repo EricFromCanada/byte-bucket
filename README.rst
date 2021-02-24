@@ -67,7 +67,7 @@ BBEdit
    <https://daringfireball.net/projects/apacheconfig/>`_ to include variables,
    Apache 2.4 keywords, and some bugfixes.
 
-`Make codeless language module`_
+`Make 4.3 codeless language module`_
    Update of BBEdit's / TextWrangler's built-in module to include more keywords
    from GNU make.
 
@@ -144,7 +144,7 @@ More `about me`_ and `things I've written`_.
 .. _Lasso codeless language module: https://github.com/EricFromCanada/byte-bucket/blob/master/bbedit/Lasso.plist
 .. _Liquid codeless language module: https://github.com/EricFromCanada/byte-bucket/blob/master/bbedit/Liquid.plist
 .. _Apache 2.4 Configuration codeless language module: https://github.com/EricFromCanada/byte-bucket/blob/master/bbedit/Apache%20Configuration.plist
-.. _Make codeless language module: https://github.com/EricFromCanada/byte-bucket/blob/master/bbedit/Make.plist
+.. _Make 4.3 codeless language module: https://github.com/EricFromCanada/byte-bucket/blob/master/bbedit/Make.plist
 .. _touch-menus-plus.js: https://github.com/EricFromCanada/byte-bucket/blob/master/javascript/touch-menus-plus.js
 .. _Lasso lexer for highlight.js: https://github.com/highlightjs/highlight.js/blob/master/src/languages/lasso.js
 .. _Lasso lexer for code-prettify: https://github.com/google/code-prettify/blob/master/src/lang-lasso.js

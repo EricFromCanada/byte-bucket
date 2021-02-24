@@ -109,6 +109,7 @@
 				<string>.DEFAULT</string>
 				<string>.DELETE_ON_ERROR</string>
 				<string>.EXPORT_ALL_VARIABLES</string>
+				<string>.EXTRA_PREREQS</string>
 				<string>.FEATURES</string>
 				<string>.IGNORE</string>
 				<string>.INCLUDE_DIRS</string>
@@ -125,6 +126,7 @@
 				<string>.SECONDARY</string>
 				<string>.SECONDEXPANSION</string>
 				<string>.SHELLFLAGS</string>
+				<string>.SHELLSTATUS</string>
 				<string>.SILENT</string>
 				<string>.SUFFIXES</string>
 				<string>.VARIABLES</string>
