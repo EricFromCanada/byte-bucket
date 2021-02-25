@@ -4,7 +4,7 @@
 <!--
 	BBEdit / TextWrangler codeless language module for Liquid template files.
 	Eric Knibbe
-	Version 1.0
+	Version 1.1
 
 	Released under a Creative Commons Attribution-ShareAlike License:
 	<http://creativecommons.org/licenses/by-sa/4.0/>
@@ -56,11 +56,11 @@
 		<key>Comment Pattern</key>
 		<string><![CDATA[(?sx:
 			(?:\A|-?[%}]})
-			.*?
-			(?:{[{%]-?|\Z)				(?# between delimiters)	|
+			.*?(?:{[{%]-?|\Z)			(?# between delimiters)	|
+			(?<=\braw)\s*-?%}
+			.*?{%-?\s*(?=endraw\b)		(?# raw block)			|
 			(?<=\bcomment)\s*-?%}
-			.*?
-			{%-?\s*(?=endcomment\b)		(?# block comment)		|
+			.*?{%-?\s*(?=endcomment\b)	(?# block comment)		|
 			\#.*?.(?=$|-?[}%]})			(?# inline comment)
 		)]]></string>
 		<key>String Pattern</key>
@@ -74,14 +74,15 @@
 		)]]></string>
 		<key>Keyword Pattern</key>
 		<string><![CDATA[(?x:
-			\bend(?!comment|raw)\w+\b	(?# closed blocks)	|
+			(?<={%|%-)\s*
+			\b(?!comment|raw)\w+\b		(?# tag names)	|
 			(?<=\|)\s*\w+\b				(?# custom filters)	|
 			\.\.?|[[\]()]				(?# punctuation)
 		)]]></string>
 		<key>Skip Pattern</key>
 		<string><![CDATA[(?x:
-			(?P>string)		|
 			(?P>comment)	|
+			(?P>string)		|
 			(?P>number)
 		)]]></string>
 	</dict>
@@ -119,18 +120,25 @@
 				<string>or</string>
 				<string>contains</string>
 				<string>if</string>
+				<string>endif</string>
 				<string>unless</string>
+				<string>endunless</string>
 				<string>elsif</string>
 				<string>else</string>
 				<string>case</string>
+				<string>endcase</string>
 				<string>when</string>
 				<string>for</string>
+				<string>endfor</string>
 				<string>in</string>
 				<string>ifchanged</string>
+				<string>endifchanged</string>
 				<string>cycle</string>
 				<string>tablerow</string>
+				<string>endtablerow</string>
 				<string>assign</string>
 				<string>capture</string>
+				<string>endcapture</string>
 				<string>increment</string>
 				<string>decrement</string>
 				<string>include</string>

@@ -59,7 +59,7 @@ BBEdit
 
 `Liquid codeless language module`_
    Language module for BBEdit and TextWrangler which highlights only markup
-   between Liquid delimiters, marking everything else as	comments. Supports
+   between Liquid delimiters, marking everything else as comments. Supports
    keywords added in Liquid 5.0.0.
 
 `Apache 2.4 Configuration codeless language module`_
