@@ -4,7 +4,7 @@
 <!--
 	BBEdit / TextWrangler codeless language module for Liquid template files.
 	Eric Knibbe
-	Version 1.1
+	Version 1.2
 
 	Released under a Creative Commons Attribution-ShareAlike License:
 	<http://creativecommons.org/licenses/by-sa/4.0/>
@@ -61,11 +61,11 @@
 			.*?{%-?\s*(?=endraw\b)		(?# raw block)			|
 			(?<=\bcomment)\s*-?%}
 			.*?{%-?\s*(?=endcomment\b)	(?# block comment)		|
-			\#.*?.(?=$|-?[}%]})			(?# inline comment)
+			\#-?\s.*?.(?=$|-?[}%]})		(?# inline comment)
 		)]]></string>
 		<key>String Pattern</key>
 		<string><![CDATA[(?sx:
-			"[^"]*"						(?# double quote)	|
+			"[^"]*"						(?# double quote)		|
 			'[^']*'						(?# single quote)
 		)]]></string>
 		<key>Number Pattern</key>
@@ -74,9 +74,10 @@
 		)]]></string>
 		<key>Keyword Pattern</key>
 		<string><![CDATA[(?x:
-			(?<={%|%-)\s*
-			\b(?!comment|raw)\w+\b		(?# tag names)	|
-			(?<=\|)\s*\w+\b				(?# custom filters)	|
+			(?<={%|%-)\s*\b
+			(?!comment|raw|break|continue)
+			\w+\b						(?# tag names)			|
+			(?<=\|)\s*\w+\b				(?# filters)			|
 			\.\.?|[[\]()]				(?# punctuation)
 		)]]></string>
 		<key>Skip Pattern</key>
@@ -143,8 +144,18 @@
 				<string>decrement</string>
 				<string>include</string>
 				<string>render</string>
+				<string>with</string>
+				<string>as</string>
 				<string>liquid</string>
 				<string>echo</string>
+				<string>first</string>
+				<string>last</string>
+				<string>size</string>
+				<string>length</string>
+				<string>index</string>
+				<string>index0</string>
+				<string>rindex</string>
+				<string>rindex0</string>
 			</array>
 		</dict>
 		<dict>
@@ -157,13 +168,6 @@
 				<string>reversed</string>
 				<string>forloop</string>
 				<string>parentloop</string>
-				<string>first</string>
-				<string>index</string>
-				<string>index0</string>
-				<string>last</string>
-				<string>length</string>
-				<string>rindex</string>
-				<string>rindex0</string>
 			</array>
 		</dict>
 	</array>
