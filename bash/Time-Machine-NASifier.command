@@ -11,14 +11,11 @@
 # flag is set on the bundle's Info.plist file using chflags.
 
 # set our working dir to where the current script is, which is where the bundle will be created
-HERE=$(cd "${BASH_SOURCE[0]%/*}" && echo "$PWD/${0##*/}")
-cd "$(dirname "${HERE}")"
+HERE=$( cd "${BASH_SOURCE[0]%/*}" && echo "$PWD/${0##*/}" )
+cd "$( dirname "${HERE}" )"
 
 # shortcut for the tab character
-TAB="$(printf '\t')"
-
-# name of the backup volume when mounted
-VOLNAME="Time Machine Backups"
+TAB="$( printf '\t' )"
 
 # hardware UUID
 HWUUID=$( system_profiler SPHardwareDataType | grep 'Hardware UUID:' | sed s/\ \*Hardware\ UUID:\ //g )
@@ -29,16 +26,25 @@ HWMODEL=$( system_profiler SPHardwareDataType | grep 'Model Identifier:' | sed s
 # hardware name (as set in the Sharing prefpane)
 HWNAME=$( system_profiler SPSoftwareDataType | grep 'Computer Name:' | sed s/\ \*Computer\ Name:\ //g )
 
-# disk image suffix (use "backupbundle" since 10.15 Catalina)
-SUFFIX=$([ `uname -r | cut -d . -f 1` -ge 19 ] && echo "backupbundle" || echo "sparsebundle")
+# name & filesystem of the backup volume when mounted
+if [[ ${OSTYPE:6} -lt 20 ]]; then
+	VOLNAME="Time Machine Backups"
+	FILESYSTEM="Journaled HFS+"
+else
+	VOLNAME="Backups of ${HWNAME}"
+	FILESYSTEM="Case-sensitive APFS"
+fi
+
+# disk image suffix
+SUFFIX=$( [ ${OSTYPE:6} -eq 19 ] && echo "backupbundle" || echo "sparsebundle" )
 
 echo -e "\nGenerating Time Machine disk image on $( basename "$PWD" )..."
 hdiutil create \
--size 8g \
+-size 32g \
 -type SPARSEBUNDLE \
 -layout GPTSPUD \
--fs "Journaled HFS+" \
 -volname "${VOLNAME}" \
+-fs "${FILESYSTEM}" \
 -tgtimagekey sparse-band-size=262144 \
 -nospotlight \
 -attach \

@@ -40,7 +40,7 @@ bash
 
 `Time-Machine-NASifier.command`_
   Creates a Time Machine bundle for the current Mac with larger 128MB band files
-  (up from 8MB) to improve performance when backing up to a non-HFS+ NAS.
+  (up from 8MB) to improve performance when backing up to a NAS over AFP or SMB.
 
 BBEdit
 ------
