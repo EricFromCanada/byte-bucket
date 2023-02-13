@@ -4,7 +4,7 @@
 <!--
 	BBEdit / TextWrangler codeless language module for Liquid template files.
 	Eric Knibbe
-	Version 1.2
+	Version 1.3
 
 	Released under a Creative Commons Attribution-ShareAlike License:
 	<http://creativecommons.org/licenses/by-sa/4.0/>
@@ -61,7 +61,7 @@
 			.*?{%-?\s*(?=endraw\b)		(?# raw block)			|
 			(?<=\bcomment)\s*-?%}
 			.*?{%-?\s*(?=endcomment\b)	(?# block comment)		|
-			\#-?\s.*?.(?=$|-?[}%]})		(?# inline comment)
+			\#.*?(?=$|-?[}%]})			(?# inline comment)
 		)]]></string>
 		<key>String Pattern</key>
 		<string><![CDATA[(?sx:
@@ -156,6 +156,11 @@
 				<string>index0</string>
 				<string>rindex</string>
 				<string>rindex0</string>
+				<string>row</string>
+				<string>col</string>
+				<string>col0</string>
+				<string>col_first</string>
+				<string>col_last</string>
 			</array>
 		</dict>
 		<dict>
@@ -168,6 +173,7 @@
 				<string>reversed</string>
 				<string>forloop</string>
 				<string>parentloop</string>
+				<string>tablerowloop</string>
 			</array>
 		</dict>
 	</array>
