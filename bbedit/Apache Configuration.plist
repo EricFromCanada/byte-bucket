@@ -4,8 +4,8 @@
 <!--
 	BBEdit codeless language module for Apache configuration files.
 	John Gruber  <http://daringfireball.net/>
-	Version 1.0.11 (unofficial)
-	Sun 12 Feb 2017
+	Version 1.0.12 (unofficial)
+	13 Feb 2023
 
 	Released under a Creative Commons Attribution-ShareAlike License:
 	<http://creativecommons.org/licenses/by-sa/2.0/>
@@ -53,6 +53,7 @@
 		<string>CTServerHelloSCTLimit</string>
 		<string>CTStaticLogConfig</string>
 		<string>CTStaticSCTs</string>
+		<string>DefaultStateDir</string>
 		<string>DeflateAlterETag</string>
 		<string>FirehoseConnectionInput</string>
 		<string>FirehoseConnectionOutput</string>
