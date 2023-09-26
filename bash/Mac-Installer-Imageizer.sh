@@ -43,7 +43,8 @@ if [ $# -eq 1 ]; then
        [ ! -e "${INSTALLER}"/Contents/SharedSupport/SharedSupport.dmg ]; then
         echo 'Path is not valid: cannot find file "InstallESD.dmg" or "SharedSupport.dmg".'
         exit 1
-    elif [ -e "${INSTALLER}"/Contents/SharedSupport/SharedSupport.dmg ]; then
+    elif [ -e "${INSTALLER}"/Contents/SharedSupport/BaseSystem.dmg ] ||
+         [ -e "${INSTALLER}"/Contents/SharedSupport/SharedSupport.dmg ]; then
         echo 'Running "createinstallmedia" command; your password will be necessary.'
         sudo -v
         USE_CREATEINSTALLMEDIA=1
@@ -62,7 +63,7 @@ hdiutil create -size 16g -type SPARSE -layout SPUD -fs HFS+J -ov /tmp/"${MACOS}"
 # mount destination disk image
 hdiutil attach /tmp/"${MACOS}".sparseimage -noverify -nobrowse -mountpoint /Volumes/install_build
 
-# for macOS 11+, run `createinstallmedia`, then skip to disk image finalization
+# for macOS 10.13+, run `createinstallmedia`, then skip to disk image finalization
 if [ -n "${USE_CREATEINSTALLMEDIA}" ]; then
     sudo "${INSTALLER}"/Contents/Resources/createinstallmedia --nointeraction --volume /Volumes/install_build
 
@@ -87,9 +88,9 @@ case "${MACOS}" in
     "Mavericks" | "Yosemite" | "El Capitan" | "Sierra")
         asr restore -source /Volumes/install_app/BaseSystem.dmg -target /Volumes/install_build -noprompt -noverify -erase
         ;;
-    "High Sierra" | "Mojave" | "Catalina")
-        asr restore -source "${INSTALLER}"/Contents/SharedSupport/BaseSystem.dmg -target /Volumes/install_build -noprompt -noverify -erase || :
-        ;;
+    #"High Sierra" | "Mojave" | "Catalina")
+    #    asr restore -source "${INSTALLER}"/Contents/SharedSupport/BaseSystem.dmg -target /Volumes/install_build -noprompt -noverify -erase || :
+    #    ;;
 esac
 sleep 2
 
@@ -107,9 +108,9 @@ case "${MACOS}" in
         rm -v /Volumes/install_build/System/Installation/Packages
         rsync -av --exclude "EFIPayloads/*" --exclude "SMCPayloads/*/" /Volumes/install_app/Packages /Volumes/install_build/System/Installation/
         ;;
-    "High Sierra" | "Mojave" | "Catalina")
-        ditto -V /Volumes/install_app/Packages /Volumes/install_build/System/Installation/
-        ;;
+    #"High Sierra" | "Mojave" | "Catalina")
+    #    ditto -V /Volumes/install_app/Packages /Volumes/install_build/System/Installation/
+    #    ;;
     *)
         ;;
 esac
