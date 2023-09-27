@@ -6,7 +6,7 @@
 # Creates a bootable disk image in the current directory from the given macOS or OS X installer app.
 # More info: https://ericfromcanada.github.io/output/2022/macos-installer-disk-images-for-virtualization.html
 #
-# Supports Mac OS X 10.7 Lion through macOS 12 Monterey (and beyond, probably).
+# Supports Mac OS X 10.7 Lion through macOS 14 Sonoma (and beyond, probably).
 
 # disk image output format
 OUTPUT="dmg" # VMware Fusion and ESXi can read DMG disk images; other apps may require "iso"
@@ -65,10 +65,19 @@ hdiutil attach /tmp/"${MACOS}".sparseimage -noverify -nobrowse -mountpoint /Volu
 
 # for macOS 10.13+, run `createinstallmedia`, then skip to disk image finalization
 if [ -n "${USE_CREATEINSTALLMEDIA}" ]; then
-    sudo "${INSTALLER}"/Contents/Resources/createinstallmedia --nointeraction --volume /Volumes/install_build
-
     # grab full OS version
-    VERSION=$( defaults read /Volumes/"Install macOS ${MACOS}"/System/Library/CoreServices/SystemVersion ProductVersion )
+    if [ -e "${INSTALLER}"/Contents/SharedSupport/SharedSupport.dmg ]; then
+      sleep 2
+      hdiutil attach "${INSTALLER}"/Contents/SharedSupport/SharedSupport.dmg -noverify -nobrowse -mountpoint /Volumes/shared_support
+      [ -e /Volumes/shared_support/com_apple_MobileAsset_MacSoftwareUpdate/com_apple_MobileAsset_MacSoftwareUpdate.xml ] || exit 1
+      VERSION=$( /usr/libexec/PlistBuddy -c "print Assets:0:OSVersion" /Volumes/shared_support/com_apple_MobileAsset_MacSoftwareUpdate/com_apple_MobileAsset_MacSoftwareUpdate.xml )
+      hdiutil detach /Volumes/shared_support
+    else
+      [ -e "${INSTALLER}"/Contents/SharedSupport/InstallInfo.plist ] || exit 1
+      VERSION=$( /usr/libexec/PlistBuddy -c "print 'Payload Image Info':version" "${INSTALLER}"/Contents/SharedSupport/InstallInfo.plist )
+    fi
+
+    sudo "${INSTALLER}"/Contents/Resources/createinstallmedia --nointeraction --volume /Volumes/install_build
 
     # detach destination disk image
     hdiutil detach -force /Volumes/"Install macOS ${MACOS}"
