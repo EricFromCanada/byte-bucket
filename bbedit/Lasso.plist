@@ -4,7 +4,7 @@
 <!--
 	BBEdit / TextWrangler codeless language module for Lasso files.
 	Eric Knibbe
-	Version 1.4
+	Version 1.5
 
 	Released under a Creative Commons Attribution-ShareAlike License:
 	<http://creativecommons.org/licenses/by-sa/4.0/>
@@ -26,9 +26,9 @@
 	<key>BBEditDocumentType</key>
 	<string>CodelessLanguageModule</string>
 	<key>BBLMLanguageDisplayName</key>
-	<string>Lasso</string>
+	<string>Lasso 8/9</string>
 	<key>BBLMLanguageCode</key>
-	<string>laso</string>
+	<string>Ls89</string>
 	<key>BBLMSuffixMap</key>
 	<array>
 		<dict>
@@ -45,7 +45,7 @@
 		</dict>
 	</array>
 	<key>BBLMReferenceSearchURLTemplate</key>
-	<string>http://reference.lassosoft.com/Reference.LassoApp?__SYMBOLNAME__</string>
+	<string>http://lassoguide.com/search.html?q=__SYMBOLNAME__</string>
 	<key>BBLMCommentLineDefault</key>
 	<string>// </string>
 	<key>BBLMCommentPrefixDefault</key>
@@ -111,8 +111,8 @@
 		)]]></string>
 		<key>Skip Pattern</key>
 		<string><![CDATA[(?x:
-			(?P>string)		|
 			(?P>comment)	|
+			(?P>string)		|
 			(?P>number)
 		)]]></string>
 	</dict>
