@@ -69,10 +69,11 @@ BBEdit
 
 `Make 4.3 codeless language module`_
    Update of BBEdit's / TextWrangler's built-in module to include more keywords
-   from GNU make.
+   from GNU make. These changes have been integrated into BBEdit as of `version
+   13.5.5 <https://www.barebones.com/support/bbedit/notes-13.5.5.html>`_.
 
 All these are also listed among the language modules at `BBEdit Extras
-<http://www.bbeditextras.org/wiki/index.php?title=Codeless_Language_Modules>`_.
+<https://www.bbeditextras.org/codeless-language-modules/>`_.
 
 JavaScript
 ----------
